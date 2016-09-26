@@ -279,16 +279,16 @@ OverlapRemoverDict =     { "m_name"                       : "overlap_removal_SSD
 """ ELECTRON WORKING POINTS """
 
 path_el_eff = "ElectronEfficiencyCorrection/2015_2016/rel20.7/ICHEP_June2016_v3/"
-trigger_el_eff = "SINGLE_E_2015_e24_lhmedium_L1EM20VH_OR_e60_lhmedium_OR_e120_lhloose_2016_e24_lhtight_nod0_ivarloose_OR_e60_lhmedium_nod0_OR_e140_lhloose_nod0"
+trigger_el_eff = "SINGLE_E_2015_e24_lhmedium_L1EM20VH_OR_e60_lhmedium_OR_e120_lhloose_2016_e26_lhtight_nod0_ivarloose_OR_e60_lhmedium_nod0_OR_e140_lhloose_nod0"
 
-ElectronEfficiencyCorrectorDict = { "m_name"                  : "electronEfficiencyCorrectorTight",
-                                    "m_debug"                 : False,
+ElectronEfficiencyCorrectorDict = { "m_name"                  : "electronEfficiencyCorrectorLoose",
+                                    "m_debug"                 : True,
                                     "m_inContainerName"       : "Electrons_OR",
                                     "m_inputAlgoSystNames"    : "ElectronSelector_Syst",
-                                    "m_systNameReco"          : "",
-                                    "m_systNameIso"           : "",
-                                    "m_systNamePID"           : "",
-                                    "m_systNameTrig"          : "",
+                                    "m_systNameReco"          : "EL_EFF_Reco_TotalCorrUncertainty",
+                                    "m_systNameIso"           : "EL_EFF_Iso_TotalCorrUncertainty",
+                                    "m_systNamePID"           : "EL_EFF_ID_TotalCorrUncertainty",
+                                    "m_systNameTrig"          : "EL_EFF_Trigger_TotalCorrUncertainty",
                                     "m_systNameTrigMCEff"     : "",
                                     "m_outputSystNamesReco"   : "ElectronEfficiencyCorrector_RecoSyst",
                                     "m_outputSystNamesPID"    : "ElectronEfficiencyCorrector_PIDSyst",
@@ -298,13 +298,12 @@ ElectronEfficiencyCorrectorDict = { "m_name"                  : "electronEfficie
                                     "m_corrFileNameReco"      : path_el_eff + "offline/efficiencySF.offline.RecoTrk.root",
                                     "m_corrFileNamePID"       : path_el_eff + "offline/efficiencySF.offline.LooseAndBLayerLLH_d0z0_v11.root",
                                     "m_corrFileNameIso"       : path_el_eff + "isolation/efficiencySF.Isolation.LooseAndBLayerLLH_d0z0_v11_isolLoose.root", # comment if d0z0 cuts are NOT tight (TTVA)
-                                    "m_WorkingPointIDTrig"    : "LHLooseAndBLayer",
                                     "m_corrFileNameTrig"      : path_el_eff + "trigger/efficiencySF." + trigger_el_eff + ".LooseAndBLayerLLH_d0z0_v11_isolLoose.root",
                                     "m_corrFileNameTrigMCEff" : path_el_eff + "trigger/efficiency." + trigger_el_eff + ".LooseAndBLayerLLH_d0z0_v11_isolLoose.root",
                                    }
 
 ElectronEfficiencyCorrectorMediumDict = { "m_name"                    : "electronEfficiencyCorrectorMedium",
-                                          "m_debug"                 : False,
+                                          "m_debug"                 : True,
                                           "m_inContainerName"       : "Electrons_OR",
                                           "m_inputAlgoSystNames"    : "ElectronSelector_Syst",
                                           "m_systNameReco"          : "",
@@ -320,14 +319,13 @@ ElectronEfficiencyCorrectorMediumDict = { "m_name"                    : "electro
                                           "m_corrFileNameReco"      : path_el_eff + "offline/efficiencySF.offline.RecoTrk.root",
                                           "m_corrFileNamePID"       : path_el_eff + "offline/efficiencySF.offline.MediumLLH_d0z0_v11.root",
                                           "m_corrFileNameIso"       : path_el_eff + "isolation/efficiencySF.Isolation.MediumLLH_d0z0_v11_isolLoose.root", # comment if d0z0 cuts are NOT tight (TTVA)
-                                          "m_WorkingPointIDTrig"    : "LHMedium",
                                           "m_corrFileNameTrig"      : path_el_eff + "trigger/efficiencySF." + trigger_el_eff + ".MediumLLH_d0z0_v11_isolLoose.root",
                                           "m_corrFileNameTrigMCEff" : path_el_eff + "trigger/efficiency." + trigger_el_eff + ".MediumLLH_d0z0_v11_isolLoose.root",
                                        }
 
 
 ElectronEfficiencyCorrectorTightDict = { "m_name"                  : "electronEfficiencyCorrectorTight",
-                                         "m_debug"                 : False,
+                                         "m_debug"                 : True,
                                          "m_inContainerName"       : "Electrons_OR",
                                          "m_inputAlgoSystNames"    : "ElectronSelector_Syst",
                                          "m_systNameReco"          : "",
@@ -342,10 +340,9 @@ ElectronEfficiencyCorrectorTightDict = { "m_name"                  : "electronEf
                                          "m_outputSystNamesTrigMCEff"   : "ElectronEfficiencyCorrector_TrigMCEffSyst",
                                          "m_corrFileNameReco"      : path_el_eff + "offline/efficiencySF.offline.RecoTrk.root",
                                          "m_corrFileNamePID"       : path_el_eff + "offline/efficiencySF.offline.TightLLH_d0z0_v11.root",
-                                         "m_corrFileNameIso"       : path_el_eff + "isolation/efficiencySF.Isolation.TightLLH_d0z0_v11_isolTight.root", # comment if d0z0 cuts are NOT tight (TTVA)
-                                         "m_WorkingPointIDTrig"    : "LHTight",
-                                         "m_corrFileNameTrig"      : path_el_eff + "trigger/efficiencySF." + trigger_el_eff + ".TightLLH_d0z0_v11_isolTight.root",
-                                         "m_corrFileNameTrigMCEff" : path_el_eff + "trigger/efficiency." + trigger_el_eff + ".TightLLH_d0z0_v11_isolTight.root",
+                                         "m_corrFileNameIso"       : path_el_eff + "isolation/efficiencySF.Isolation.TightLLH_d0z0_v11_isolLoose.root", # comment if d0z0 cuts are NOT tight (TTVA)
+                                         "m_corrFileNameTrig"      : path_el_eff + "trigger/efficiencySF." + trigger_el_eff + ".TightLLH_d0z0_v11_isolLoose.root",
+                                         "m_corrFileNameTrigMCEff" : path_el_eff + "trigger/efficiency." + trigger_el_eff + ".TightLLH_d0z0_v11_isolLoose.root",
                                        }
 
 

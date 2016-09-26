@@ -5,7 +5,7 @@ import sys, os
 
 sys.path.insert(0, os.environ['ROOTCOREBIN']+"/user_scripts/SSDiLepAnalysis/")
 
-from config_SSDiLep import *
+from config_EE import *
 
 c = xAH_config()
 
