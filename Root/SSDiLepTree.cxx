@@ -162,6 +162,14 @@ void SSDiLepTree::AddElectronsUser(const std::string detailStrUser)
   m_tree->Branch("el_ancestorTruthPdgId",	       &m_electron_ancestorTruthPdgId);
   m_tree->Branch("el_ancestorTruthOrigin",	       &m_electron_ancestorTruthOrigin);
   m_tree->Branch("el_ancestorTruthStatus",	       &m_electron_ancestorTruthStatus);
+  //background electron variables
+  m_tree->Branch("el_bkgTruthType",             &m_electron_bkgTruthType);
+  m_tree->Branch("el_bkgTruthOrigin",           &m_electron_bkgTruthOrigin);
+  m_tree->Branch("el_bkgMotherPdgId",           &m_electron_bkgMotherPdgId);
+  m_tree->Branch("el_firstEgMotherTruthType",   &m_electron_firstEgMotherTruthType);
+  m_tree->Branch("el_firstEgMotherTruthOrigin", &m_electron_firstEgMotherTruthOrigin);
+  m_tree->Branch("el_firstEgMotherPdgId",       &m_electron_firstEgMotherPdgId);
+
 }
 
 //void SSDiLepTree::AddTausUser(const std::string detailStrUser)
@@ -245,6 +253,13 @@ void SSDiLepTree::ClearElectronsUser()
   m_electron_ancestorTruthPdgId.clear();
   m_electron_ancestorTruthOrigin.clear();
   m_electron_ancestorTruthStatus.clear();
+  //background electron variables
+  m_electron_bkgTruthType.clear();
+  m_electron_bkgTruthOrigin.clear();
+  m_electron_bkgMotherPdgId.clear();
+  m_electron_firstEgMotherTruthType.clear();
+  m_electron_firstEgMotherTruthOrigin.clear();
+  m_electron_firstEgMotherPdgId.clear();
 }
 
 void SSDiLepTree::ClearJetsUser( const std::string jetName )
@@ -386,6 +401,13 @@ void SSDiLepTree::FillElectronsUser( const xAOD::Electron* electron )
   static SG::AuxElement::Accessor< int >  ancestorTruthPdgIdAcc("ancestorTruthPdgId");
   static SG::AuxElement::Accessor< int >  ancestorTruthOriginAcc("ancestorTruthOrigin");
   static SG::AuxElement::Accessor< int >  ancestorTruthStatusAcc("ancestorTruthStatus");
+  //background electron variables
+  static SG::AuxElement::Accessor< int >  bkgTruthTypeAcc("bkgTruthType");
+  static SG::AuxElement::Accessor< int >  bkgTruthOriginAcc("bkgTruthOrigin");
+  static SG::AuxElement::Accessor< int >  bkgMotherPdgIdAcc("bkgMotherPdgId");
+  static SG::AuxElement::Accessor< int >  firstEgMotherTruthTypeAcc("firstEgMotherTruthType");
+  static SG::AuxElement::Accessor< int >  firstEgMotherTruthOriginAcc("firstEgMotherTruthOrigin");
+  static SG::AuxElement::Accessor< int >  firstEgMotherPdgIdAcc("firstEgMotherPdgId");
 
   //float calo_eta = ( electron->caloCluster() ) ? electron->caloCluster()->etaBE(2) : -999.0;
 
@@ -429,6 +451,19 @@ void SSDiLepTree::FillElectronsUser( const xAOD::Electron* electron )
   else   { m_electron_ancestorTruthOrigin.push_back(0); }
   if ( ancestorTruthStatusAcc.isAvailable( *electron ) )    { m_electron_ancestorTruthStatus.push_back( ancestorTruthStatusAcc( *electron ) ); }
   else   { m_electron_ancestorTruthStatus.push_back(0); }
+  //background electron variables
+  if ( bkgTruthTypeAcc.isAvailable( *electron ) )               { m_electron_bkgTruthType.push_back( bkgTruthTypeAcc( *electron ) ); }
+  else   { m_electron_bkgTruthType.push_back(0);             }
+  if ( bkgTruthOriginAcc.isAvailable( *electron ) )             { m_electron_bkgTruthOrigin.push_back( bkgTruthOriginAcc( *electron ) ); }
+  else   { m_electron_bkgTruthOrigin.push_back(0);           }
+  if ( bkgMotherPdgIdAcc.isAvailable( *electron ) )             { m_electron_bkgMotherPdgId.push_back( bkgMotherPdgIdAcc( *electron ) ); }
+  else   { m_electron_bkgMotherPdgId.push_back(0);           }
+  if ( firstEgMotherTruthTypeAcc.isAvailable( *electron ) )     { m_electron_firstEgMotherTruthType.push_back( firstEgMotherTruthTypeAcc( *electron ) ); }
+  else   { m_electron_firstEgMotherTruthType.push_back(0);   }
+  if ( firstEgMotherTruthOriginAcc.isAvailable( *electron ) )   { m_electron_firstEgMotherTruthOrigin.push_back( firstEgMotherTruthOriginAcc( *electron ) ); }
+  else   { m_electron_firstEgMotherTruthOrigin.push_back(0); }
+  if ( firstEgMotherPdgIdAcc.isAvailable( *electron ) )         { m_electron_firstEgMotherPdgId.push_back( firstEgMotherPdgIdAcc( *electron ) ); }
+  else   { m_electron_firstEgMotherPdgId.push_back(0);       }
 
 }
 

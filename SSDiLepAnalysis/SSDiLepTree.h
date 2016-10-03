@@ -68,6 +68,13 @@ class SSDiLepTree : public HelpTreeBase
     std::vector<int>   m_electron_ancestorTruthPdgId;
     std::vector<int>   m_electron_ancestorTruthOrigin;
     std::vector<int>   m_electron_ancestorTruthStatus;
+    std::vector<int>   m_electron_bkgTruthType;
+    std::vector<int>   m_electron_bkgTruthOrigin;
+    std::vector<int>   m_electron_bkgMotherPdgId;
+    std::vector<int>   m_electron_firstEgMotherTruthType;
+    std::vector<int>   m_electron_firstEgMotherTruthOrigin;
+    std::vector<int>   m_electron_firstEgMotherPdgId;
+    
 
     /* tau variables */
     //std::vector<int>   m_tau_isBDTTight;
