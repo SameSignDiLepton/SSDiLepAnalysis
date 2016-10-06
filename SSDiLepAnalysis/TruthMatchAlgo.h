@@ -35,7 +35,6 @@ public:
 
   std::string    m_inContainerName_Electrons;
   std::string    m_inContainerName_Muons;
-  std::string    m_inContainerName_Leptons;
 
   bool m_doMuonTruthPartMatching;
   bool m_doMuonTrackMatching;
@@ -58,30 +57,26 @@ private:
   int   m_cutflow_bin;      //!
 
   /* Initialise decorators */
+  SG::AuxElement::Decorator< std::vector< int > >*         m_HLpp_DaughtersDecor;            //!
+  SG::AuxElement::Decorator< std::vector< int > >*         m_HLmm_DaughtersDecor;            //!
+  SG::AuxElement::Decorator< std::vector< int > >*         m_HRpp_DaughtersDecor;            //!
+  SG::AuxElement::Decorator< std::vector< int > >*         m_HRmm_DaughtersDecor;            //!
+  
   SG::AuxElement::Decorator< char >* 	   m_isTruthMatchedDecor;	   //! /* has a lepton truth match */
   SG::AuxElement::Decorator< int >*  	   m_truthTypeDecor;		   //! /* type of the parent particle (according to MCTruthClassifier) - need it for muons since we have to retrieve this from the truth track */
   SG::AuxElement::Decorator< int >*  	   m_truthPdgIdDecor;		   //! /* pdgId of the match particle */
   SG::AuxElement::Decorator< int >*  	   m_truthOriginDecor;  	   //! /* origin of the parent particle - need it for muons since we have to retrieve this from the truth track */
   SG::AuxElement::Decorator< int >*  	   m_truthStatusDecor;  	   //! /* status of the match particle */
-  SG::AuxElement::Decorator< char >* 	   m_isChFlipDecor;		   //! /* reco has opposite charge wrt to primitive truth ancestor */
-  SG::AuxElement::Decorator< char >* 	   m_isBremDecor;		   //! /* reco is matched to a brem lepton (i.e, ancestor emitted a photon by brem) */
-  SG::AuxElement::Decorator< int >*  	   m_ancestorTruthTypeDecor;	   //! /* type of the primitive ancestor (according to MCTruthClassifier) - need it for brem leptons*/
-  SG::AuxElement::Decorator< int >*  	   m_ancestorTruthPdgIdDecor;	   //! /* pdgId of the primitive ancestor (according to MCTruthClassifier) - need it for brem leptons*/
-  SG::AuxElement::Decorator< int >*  	   m_ancestorTruthOriginDecor;     //! /* origin of the primitive ancestor (according to MCTruthClassifier) - need it for brem leptons*/
-  SG::AuxElement::Decorator< int >*  	   m_ancestorTruthStatusDecor;     //! /* status of the primitive ancestor (according to MCTruthClassifier) - need it for brem leptons*/
 
   /* Initialise accessors */
   SG::AuxElement::Accessor< float >*       m_mcEvtWeightAcc;		   //!
   SG::AuxElement::Accessor< char >*        m_isTruthMatchedAcc; 	   //!
-  SG::AuxElement::Accessor< char >*        m_isChFlipAcc;		   //!
-  SG::AuxElement::Accessor< char >*        m_isBremAcc; 		   //!
   typedef ElementLink< xAOD::TruthParticleContainer > TruthLink_t;
   SG::AuxElement::Accessor< TruthLink_t >* m_truthPLAcc; 	           //!
   SG::AuxElement::ConstAccessor< int >*    m_truthTypeAcc;		   //!  /* accessor to built-in xAOD attribute */
   SG::AuxElement::ConstAccessor< int >*    m_truthOriginAcc;		   //!  /* accessor to built-in xAOD attribute */
   SG::AuxElement::Accessor< float >*       m_truthMatchProbabilityAcc;     //!
-  SG::AuxElement::Accessor< int >*         m_ancestorTruthTypeAcc;         //!
-  SG::AuxElement::Accessor< int >*         m_ancestorTruthOriginAcc;       //!
+  
 
   // MC Truth Classifier
   MCTruthClassifier *m_MCTClassifier; //!
@@ -117,16 +112,14 @@ public:
   /
   /  2) retrieve the truth and origin information from the ID TrackParticle linked from the xAOD::Muon.
   /     This includes all types as defined by MCTruthClassifier for muons (i.e. also when the ID track is a pion).
-  /     Clearly this is available only within ID coverage (|eta|<2.5).
+  /     Clearly this is available only within ID coverage (|eta|<2.5). (this is not implemented in this version)
   /
   */
+  virtual EL::StatusCode applySignalTruthMatching ( const xAOD::EventInfo* eventInfo );
   virtual EL::StatusCode applyTruthMatchingMuon ( const xAOD::IParticle* recoParticle );
   virtual EL::StatusCode doMuonTruthPartMatching ( const xAOD::IParticle* recoParticle );
-  virtual EL::StatusCode doMuonTrackMatching ( const xAOD::IParticle* recoParticle );
-
   virtual EL::StatusCode applyTruthMatchingElectron ( const xAOD::IParticle* recoParticle );
 
-  virtual EL::StatusCode checkChargeFlip ( const xAOD::IParticle* recoPart, const xAOD::TruthParticle* matchTruth );
 
   // this is needed to distribute the algorithm to the workers
   ClassDef(TruthMatchAlgo, 1);
