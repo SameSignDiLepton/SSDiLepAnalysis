@@ -11,34 +11,44 @@ from xAH_config import xAH_config
 alg = ROOT.xAH.Algorithm()
 del alg
 
+# electron triggers
 trig_el = []
 #trig_el.append('HLT_2e12_lhloose_L12EM10VH')   #
 
+# muon triggers
 trig_mu = []
-#trig_mu.append('HLT_mu20_L1MU15')
-#trig_mu.append('HLT_mu24')
+trig_mu.append('HLT_mu20_L1MU15')
+trig_mu.append('HLT_mu24')
 trig_mu.append('HLT_mu26_imedium')
 trig_mu.append('HLT_mu50')
+trigmulist = ",".join(trig_mu)
 
-#trig_mu.append('HLT_mu26_ivarmedium')
-
+# all triggers
 all_triggers = trig_el + trig_mu
 triglist = ",".join(all_triggers)
 
+
+# list of years for configuring 
+# the trigger scale factor tool
+
+mutrigeffYears = "2015,2016"
+#mutrigeffYears = "2015"
+
 # This is just a RootCore path!!!
-path_ext = "$ROOTCOREBIN/data/SSDiLepAnalysis/External2016"
+#path_ext = "$ROOTCOREBIN/data/SSDiLepAnalysis/External2016"
+path_ext = "$ROOTCOREBIN/data/SSDiLepAnalysis/ExternalMerged"
 
 # merged
-#GRL_file = os.path.join(path_ext,
-#    "merged_GRL_2015_2016.xml")
+GRL_file = os.path.join(path_ext,
+    "merged_GRL_2015_2016.xml")
 
 # 2015
 #GRL_file = os.path.join(path_ext,
 #   "data15_13TeV.periodAllYear_DetStatus-v79-repro20-02_DQDefects-00-02-02_PHYS_StandardGRL_All_Good_25ns.xml")
 
 # 2016
-GRL_file = os.path.join(path_ext,
-    "data16_13TeV.periodAllYear_DetStatus-v81-pro20-10_DQDefects-00-02-02_PHYS_StandardGRL_All_Good_25ns.xml")
+#GRL_file = os.path.join(path_ext,
+#    "data16_13TeV.periodAllYear_DetStatus-v81-pro20-10_DQDefects-00-02-02_PHYS_StandardGRL_All_Good_25ns.xml")
 
 
 #-------------------
@@ -52,15 +62,15 @@ LUMICALC_files = []
 # ------
 # merged
 # ------
-#LUMICALC_files.append("ilumicalc_histograms_None_276262-304494_OflLumi-13TeV-005.root")
+LUMICALC_files.append("ilumicalc_histograms_None_276262-304494_OflLumi-13TeV-005.root")
 
 # prescaled
-#LUMICALC_files.append("ilumicalc_histograms_HLT_mu20_L1MU15_276262-304494_OflLumi-13TeV-005.root:HLT_mu20_L1MU15")
-#LUMICALC_files.append("ilumicalc_histograms_HLT_mu24_276262-304494_OflLumi-13TeV-005.root:HLT_mu24")
+LUMICALC_files.append("ilumicalc_histograms_HLT_mu20_L1MU15_276262-304494_OflLumi-13TeV-005.root:HLT_mu20_L1MU15")
+LUMICALC_files.append("ilumicalc_histograms_HLT_mu24_276262-304494_OflLumi-13TeV-005.root:HLT_mu24")
 
 # unprescaled
-#LUMICALC_files.append("ilumicalc_histograms_HLT_mu26_imedium_276262-304494_OflLumi-13TeV-005.root")
-#LUMICALC_files.append("ilumicalc_histograms_HLT_mu50_276262-304494_OflLumi-13TeV-005.root")
+LUMICALC_files.append("ilumicalc_histograms_HLT_mu26_imedium_276262-304494_OflLumi-13TeV-005.root:HLT_mu26_imedium")
+LUMICALC_files.append("ilumicalc_histograms_HLT_mu50_276262-304494_OflLumi-13TeV-005.root:HLT_mu50")
 
 
 # ------
@@ -73,22 +83,22 @@ LUMICALC_files = []
 #LUMICALC_files.append("ilumicalc_histograms_HLT_mu24_276262-284484_OflLumi-13TeV-005.root:HLT_mu24")
 
 # unprescaled
-#LUMICALC_files.append("ilumicalc_histograms_HLT_mu26_imedium_276262-284484_OflLumi-13TeV-005.root")
-#LUMICALC_files.append("ilumicalc_histograms_HLT_mu50_276262-284484_OflLumi-13TeV-005.root")
+#LUMICALC_files.append("ilumicalc_histograms_HLT_mu26_imedium_276262-284484_OflLumi-13TeV-005.root:HLT_mu26_imedium")
+#LUMICALC_files.append("ilumicalc_histograms_HLT_mu50_276262-284484_OflLumi-13TeV-005.root:HLT_mu50")
 
 
 # ------
 # 2016
 # ------
-LUMICALC_files.append("ilumicalc_histograms_None_297730-304494_OflLumi-13TeV-005.root")
+#LUMICALC_files.append("ilumicalc_histograms_None_297730-304494_OflLumi-13TeV-005.root")
 
 # prescaled
 #LUMICALC_files.append("ilumicalc_histograms_HLT_mu20_L1MU15_297730-304494_OflLumi-13TeV-005.root:HLT_mu20_L1MU15")
 #LUMICALC_files.append("ilumicalc_histograms_HLT_mu24_297730-304494_OflLumi-13TeV-005.root:HLT_mu24")
 
 # unprescaled
-LUMICALC_files.append("ilumicalc_histograms_HLT_mu50_297730-304494_OflLumi-13TeV-005.root")
-LUMICALC_files.append("ilumicalc_histograms_HLT_mu26_imedium_297730-304494_OflLumi-13TeV-005.root")
+#LUMICALC_files.append("ilumicalc_histograms_HLT_mu50_297730-304494_OflLumi-13TeV-005.root:HLT_mu26_imedium")
+#LUMICALC_files.append("ilumicalc_histograms_HLT_mu26_imedium_297730-304494_OflLumi-13TeV-005.root:HLT_mu50")
 
 
 for idx,file in enumerate(LUMICALC_files):
@@ -104,21 +114,25 @@ for idx,file in enumerate(PRW_files):
     PRW_files[idx] = os.path.join(path_ext,file)
 PRW_config = ','.join(PRW_files)
 
+##path_el_eff = "ElectronEfficiencyCorrection/2015_2016/rel20.7/ICHEP_June2016_v3/"
 
 BasicEventSelectionDict = {"m_name"                       : "SSDiLep", 
                            "m_debug"                      : False,
                            "m_applyGRLCut"                : True,
                            "m_GRLxml"                     : GRL_file,
                            "m_doPUreweighting"            : True,
+                           #"m_triggersForDataUnPrescale"  : "HLT_mu20_L1MU15,HLT_mu24,HLT_mu50",
+                           ##"m_triggersForDataUnPrescale"  : "HLT_mu50",
                            "m_PU_default_channel"         : 410000,
                            "m_lumiCalcFileNames"          : LUMICALC_config,
                            "m_PRWFileNames"               : PRW_config,
                            "m_useMetaData"                : True, 
-                           #"m_derivationName"             : "HIGG3D3Kernel",
-                           "m_derivationName"             : "EXOT12Kernel",
+                           #"m_derivationName"             : "",
+                           "m_derivationName"             : "HIGG3D3Kernel",
+                           #"m_derivationName"             : "EXOT12Kernel",
                            #"m_derivationName"             : "EXOT0Kernel",
                            #"m_derivationName"             : "TOPQ1Kernel",
-                           "m_applyPrimaryVertexCut"      : False,
+                           "m_applyPrimaryVertexCut"      : True,
                            "m_vertexContainerName"        : "PrimaryVertices", 
                            "m_PVNTrack"                   : 3,
                            "m_applyEventCleaningCut"      : True,
@@ -221,17 +235,16 @@ MuonSelectorDict =       { "m_name"                       : "muonSelect_selectio
                            "m_muonType"                   : "Combined",
                            #"m_muonQuality"             : ROOT.xAOD.Muon.Loose,
                            "m_muonQualityStr"             : "Loose",
-                           "m_d0sig_max"                  : 10.0,
-                           "m_z0sintheta_max"             : 2.0,
+                           "m_d0sig_max"                  : 20.0,
+                           "m_z0sintheta_max"             : 20.0,
                            #"m_MinIsoWPCut"                : "Loose",
                            "m_MinIsoWPCut"                : "",
-                           "m_IsoWPList"                  : "Loose,GradientLoose,Gradient,FixedCutLoose,FixedCutTightTrackOnly,UserDefinedCut",
+                           "m_IsoWPList"                  : "Loose,GradientLoose,Gradient,FixedCutTightTrackOnly,UserDefinedCut",
                            "m_CaloIsoEff"                 : "0.1*x",
                            "m_TrackIsoEff"                : "0.1*x",
                            "m_CaloBasedIsoType"           : "topoetcone20",
                            "m_TrackBasedIsoType"          : "ptvarcone30",
-                           #"m_singleMuTrigChains"         : "HLT_mu24,HLT_mu20_L1MU15,HLT_mu26_imedium,HLT_mu50",
-                           "m_singleMuTrigChains"         : "HLT_mu26_imedium,HLT_mu50",
+                           "m_singleMuTrigChains"         : trigmulist,
                            "m_diMuTrigChains"             : "",
                          }                                
                                                           
@@ -257,7 +270,7 @@ ElectronSelectorDict =   { "m_name"                       : "electronSelect_sele
                            "m_readIDFlagsFromDerivation"  : True,
                            #"m_confDirPID"                 : "mc15_20150712",
                            "m_confDirPID"                 : "mc15_20160512",
-                           "m_doLHPIDcut"                 : False, # Saves the failed electrons
+                           "m_doLHPIDcut"                 : True, # Saves the failed electrons
                            "m_LHOperatingPoint"           : "Loose", # for loose ID, use "LooseAndBLayer" if NOT reading ID flags from DAOD
                            "m_doCutBasedPIDcut"           : False,
                            "m_CutBasedOperatingPoint"     : "IsEMLoose",
@@ -327,38 +340,212 @@ OverlapRemoverDict =     { "m_name"                       : "overlap_removal_SSD
                            "m_inputAlgoTaus"              : "",
                          }
 
+# --------------------
+# muon corrections
+# --------------------
 
-MuonEfficiencyCorrectorLooseDict = { "m_name"                  : "muonEfficiencyCorrectorLoose",
-                                "m_debug"                 : False,
-                                "m_inContainerName"       : "Muons_OR",
-                                "m_inputAlgoSystNames"    : "MuonSelector_Syst",
-                                "m_systNameReco"          : "",
-                                "m_systNameIso"           : "",
-                                "m_systNameTrig"          : "",
-                                "m_systNameTTVA"          : "",
-                                #"m_runNumber"             : 276329,
-                                #"m_runNumber"             : 300345,
-                                #"m_runNumber"             : 304494,
-                                "m_useRandomRunNumber"    : True,
-                                "m_outputSystNamesReco"   : "MuonEfficiencyCorrector_RecoSyst",
-                                "m_outputSystNamesIso"    : "MuonEfficiencyCorrector_IsoSyst",
-                                "m_outputSystNamesTrig"   : "MuonEfficiencyCorrector_TrigSyst",
-                                "m_outputSystNamesTTVA"   : "MuonEfficiencyCorrector_TTVASyst",
-                                "m_calibRelease"          : "160624_ICHEP",
-                                #"m_calibRelease"          : "160527_Rel20_7",
-                                #"m_calibRelease"          : "160523_Rel20_1",
-                                "m_WorkingPointReco"      : "Loose",
-                                "m_WorkingPointIso"       : "Loose",
-                                "m_WorkingPointRecoTrig"  : "Loose",
-                                "m_WorkingPointIsoTrig"   : "Loose",
-                                "m_WorkingPointTTVA"      : "TTVA",
-                                "m_SingleMuTrig"          : "HLT_mu26_imedium_OR_HLT_mu50",
-                                "m_DiMuTrig"              : "",
-                              }
+# name of config: reco+id wp
+
+MuonEfficiencyCorrectorLooseLooseDict = {  "m_name"                  : "muonEfficiencyCorrectorLooseLoose",
+                                      "m_debug"                 : False,
+                                      "m_inContainerName"       : "Muons_OR",
+                                      "m_inputAlgoSystNames"    : "MuonSelector_Syst",
+                                      "m_systNameReco"          : "",
+                                      "m_systNameIso"           : "",
+                                      "m_systNameTrig"          : "",
+                                      "m_systNameTTVA"          : "",
+                                      "m_useRandomRunNumber"    : True,
+                                      "m_Years"                 : mutrigeffYears,
+                                      "m_outputSystNamesReco"   : "MuonEfficiencyCorrector_RecoSyst",
+                                      "m_outputSystNamesIso"    : "MuonEfficiencyCorrector_IsoSyst",
+                                      "m_outputSystNamesTrig"   : "MuonEfficiencyCorrector_TrigSyst",
+                                      "m_outputSystNamesTTVA"   : "MuonEfficiencyCorrector_TTVASyst",
+                                      "m_calibRelease"          : "160624_ICHEP",
+                                      "m_WorkingPointReco"      : "Loose",
+                                      "m_WorkingPointIso"       : "Loose",
+                                      "m_WorkingPointRecoTrig"  : "Loose",
+                                      "m_WorkingPointIsoTrig"   : "Loose",
+                                      "m_WorkingPointTTVA"      : "TTVA",
+                                      "m_SingleMuTrig"          : "HLT_mu26_imedium_OR_HLT_mu50",
+                                      "m_DiMuTrig"              : "",
+                                    }
 
 
+MuonEfficiencyCorrectorLooseGradientDict = {  "m_name"                  : "muonEfficiencyCorrectorLooseGradient",
+                                      "m_debug"                 : False,
+                                      "m_inContainerName"       : "Muons_OR",
+                                      "m_inputAlgoSystNames"    : "MuonSelector_Syst",
+                                      "m_systNameReco"          : "",
+                                      "m_systNameIso"           : "",
+                                      "m_systNameTrig"          : "",
+                                      "m_systNameTTVA"          : "",
+                                      "m_useRandomRunNumber"    : True,
+                                      "m_Years"                 : mutrigeffYears,
+                                      "m_outputSystNamesReco"   : "MuonEfficiencyCorrector_RecoSyst",
+                                      "m_outputSystNamesIso"    : "MuonEfficiencyCorrector_IsoSyst",
+                                      "m_outputSystNamesTrig"   : "MuonEfficiencyCorrector_TrigSyst",
+                                      "m_outputSystNamesTTVA"   : "MuonEfficiencyCorrector_TTVASyst",
+                                      "m_calibRelease"          : "160624_ICHEP",
+                                      "m_WorkingPointReco"      : "Loose",
+                                      "m_WorkingPointIso"       : "Gradient",
+                                      "m_WorkingPointRecoTrig"  : "Loose",
+                                      "m_WorkingPointIsoTrig"   : "Gradient",
+                                      "m_WorkingPointTTVA"      : "TTVA",
+                                      "m_SingleMuTrig"          : "HLT_mu26_imedium_OR_HLT_mu50",
+                                      "m_DiMuTrig"              : "",
+                                    }
 
 
+MuonEfficiencyCorrectorMediumGradientDict = {  "m_name"                  : "muonEfficiencyCorrectorMediumGradient",
+                                      "m_debug"                 : False,
+                                      "m_inContainerName"       : "Muons_OR",
+                                      "m_inputAlgoSystNames"    : "MuonSelector_Syst",
+                                      "m_systNameReco"          : "",
+                                      "m_systNameIso"           : "",
+                                      "m_systNameTrig"          : "",
+                                      "m_systNameTTVA"          : "",
+                                      "m_useRandomRunNumber"    : True,
+                                      "m_Years"                 : mutrigeffYears,
+                                      "m_outputSystNamesReco"   : "MuonEfficiencyCorrector_RecoSyst",
+                                      "m_outputSystNamesIso"    : "MuonEfficiencyCorrector_IsoSyst",
+                                      "m_outputSystNamesTrig"   : "MuonEfficiencyCorrector_TrigSyst",
+                                      "m_outputSystNamesTTVA"   : "MuonEfficiencyCorrector_TTVASyst",
+                                      "m_calibRelease"          : "160624_ICHEP",
+                                      "m_WorkingPointReco"      : "Medium",
+                                      "m_WorkingPointIso"       : "Gradient",
+                                      "m_WorkingPointRecoTrig"  : "Medium",
+                                      "m_WorkingPointIsoTrig"   : "Gradient",
+                                      "m_WorkingPointTTVA"      : "TTVA",
+                                      "m_SingleMuTrig"          : "HLT_mu26_imedium_OR_HLT_mu50",
+                                      "m_DiMuTrig"              : "",
+                                    }
+
+
+MuonEfficiencyCorrectorLooseFixedCutTightTrackOnlyDict = {  "m_name"                  : "muonEfficiencyCorrectorLooseFixedCutTightTrackOnly",
+                                      "m_debug"                 : False,
+                                      "m_inContainerName"       : "Muons_OR",
+                                      "m_inputAlgoSystNames"    : "MuonSelector_Syst",
+                                      "m_systNameReco"          : "",
+                                      "m_systNameIso"           : "",
+                                      "m_systNameTrig"          : "",
+                                      "m_systNameTTVA"          : "",
+                                      "m_useRandomRunNumber"    : True,
+                                      "m_Years"                 : mutrigeffYears,
+                                      "m_outputSystNamesReco"   : "MuonEfficiencyCorrector_RecoSyst",
+                                      "m_outputSystNamesIso"    : "MuonEfficiencyCorrector_IsoSyst",
+                                      "m_outputSystNamesTrig"   : "MuonEfficiencyCorrector_TrigSyst",
+                                      "m_outputSystNamesTTVA"   : "MuonEfficiencyCorrector_TTVASyst",
+                                      "m_calibRelease"          : "160624_ICHEP",
+                                      "m_WorkingPointReco"      : "Loose",
+                                      "m_WorkingPointIso"       : "FixedCutTightTrackOnly",
+                                      "m_WorkingPointRecoTrig"  : "Loose",
+                                      "m_WorkingPointIsoTrig"   : "FixedCutTightTrackOnly",
+                                      "m_WorkingPointTTVA"      : "TTVA",
+                                      "m_SingleMuTrig"          : "HLT_mu26_imedium_OR_HLT_mu50",
+                                      "m_DiMuTrig"              : "",
+                                    }
+
+
+MuonEfficiencyCorrectorMediumFixedCutTightTrackOnlyDict = {  "m_name"                  : "muonEfficiencyCorrectorMediumFixedCutTightTrackOnly",
+                                      "m_debug"                 : False,
+                                      "m_inContainerName"       : "Muons_OR",
+                                      "m_inputAlgoSystNames"    : "MuonSelector_Syst",
+                                      "m_systNameReco"          : "",
+                                      "m_systNameIso"           : "",
+                                      "m_systNameTrig"          : "",
+                                      "m_systNameTTVA"          : "",
+                                      "m_useRandomRunNumber"    : True,
+                                      "m_Years"                 : mutrigeffYears,
+                                      "m_outputSystNamesReco"   : "MuonEfficiencyCorrector_RecoSyst",
+                                      "m_outputSystNamesIso"    : "MuonEfficiencyCorrector_IsoSyst",
+                                      "m_outputSystNamesTrig"   : "MuonEfficiencyCorrector_TrigSyst",
+                                      "m_outputSystNamesTTVA"   : "MuonEfficiencyCorrector_TTVASyst",
+                                      "m_calibRelease"          : "160624_ICHEP",
+                                      "m_WorkingPointReco"      : "Medium",
+                                      "m_WorkingPointIso"       : "FixedCutTightTrackOnly",
+                                      "m_WorkingPointRecoTrig"  : "Medium",
+                                      "m_WorkingPointIsoTrig"   : "FixedCutTightTrackOnly",
+                                      "m_WorkingPointTTVA"      : "TTVA",
+                                      "m_SingleMuTrig"          : "HLT_mu26_imedium_OR_HLT_mu50",
+                                      "m_DiMuTrig"              : "",
+                                    }
+
+
+MuonEfficiencyCorrectorLooseGradientLooseDict = {  "m_name"                  : "muonEfficiencyCorrectorLooseGradientLoose",
+                                      "m_debug"                 : False,
+                                      "m_inContainerName"       : "Muons_OR",
+                                      "m_inputAlgoSystNames"    : "MuonSelector_Syst",
+                                      "m_systNameReco"          : "",
+                                      "m_systNameIso"           : "",
+                                      "m_systNameTrig"          : "",
+                                      "m_systNameTTVA"          : "",
+                                      "m_useRandomRunNumber"    : True,
+                                      "m_Years"                 : mutrigeffYears,
+                                      "m_outputSystNamesReco"   : "MuonEfficiencyCorrector_RecoSyst",
+                                      "m_outputSystNamesIso"    : "MuonEfficiencyCorrector_IsoSyst",
+                                      "m_outputSystNamesTrig"   : "MuonEfficiencyCorrector_TrigSyst",
+                                      "m_outputSystNamesTTVA"   : "MuonEfficiencyCorrector_TTVASyst",
+                                      "m_calibRelease"          : "160624_ICHEP",
+                                      "m_WorkingPointReco"      : "Loose",
+                                      "m_WorkingPointIso"       : "GradientLoose",
+                                      "m_WorkingPointRecoTrig"  : "Loose",
+                                      "m_WorkingPointIsoTrig"   : "GradientLoose",
+                                      "m_WorkingPointTTVA"      : "TTVA",
+                                      "m_SingleMuTrig"          : "HLT_mu26_imedium_OR_HLT_mu50",
+                                      "m_DiMuTrig"              : "",
+                                    }
+
+
+MuonEfficiencyCorrectorMediumGradientLooseDict = {  "m_name"                  : "muonEfficiencyCorrectorMediumGradientLoose",
+                                      "m_debug"                 : False,
+                                      "m_inContainerName"       : "Muons_OR",
+                                      "m_inputAlgoSystNames"    : "MuonSelector_Syst",
+                                      "m_systNameReco"          : "",
+                                      "m_systNameIso"           : "",
+                                      "m_systNameTrig"          : "",
+                                      "m_systNameTTVA"          : "",
+                                      "m_useRandomRunNumber"    : True,
+                                      "m_Years"                 : mutrigeffYears,
+                                      "m_outputSystNamesReco"   : "MuonEfficiencyCorrector_RecoSyst",
+                                      "m_outputSystNamesIso"    : "MuonEfficiencyCorrector_IsoSyst",
+                                      "m_outputSystNamesTrig"   : "MuonEfficiencyCorrector_TrigSyst",
+                                      "m_outputSystNamesTTVA"   : "MuonEfficiencyCorrector_TTVASyst",
+                                      "m_calibRelease"          : "160624_ICHEP",
+                                      "m_WorkingPointReco"      : "Medium",
+                                      "m_WorkingPointIso"       : "GradientLoose",
+                                      "m_WorkingPointRecoTrig"  : "Medium",
+                                      "m_WorkingPointIsoTrig"   : "GradientLoose",
+                                      "m_WorkingPointTTVA"      : "TTVA",
+                                      "m_SingleMuTrig"          : "HLT_mu26_imedium_OR_HLT_mu50",
+                                      "m_DiMuTrig"              : "",
+                                    }
+
+
+# --------------------
+# electron corrections
+# --------------------
+"""
+ElectronEfficiencyCorrectorMediumDict = { "m_name"                    : "electronEfficiencyCorrectorMedium",
+                                          "m_debug"                 : False,
+                                          "m_inContainerName"       : "Electrons_OR",
+                                          "m_inputAlgoSystNames"    : "ElectronSelector_Syst",
+                                          "m_systNameReco"          : "",
+                                          "m_systNameIso"           : "",
+                                          "m_systNamePID"           : "",
+                                          "m_systNameTrig"          : "",
+                                          "m_systNameTrigMCEff"     : "",
+                                          "m_outputSystNamesReco"   : "ElectronEfficiencyCorrector_RecoSyst",
+                                          "m_outputSystNamesPID"    : "ElectronEfficiencyCorrector_PIDSyst",
+                                          "m_outputSystNamesIso"    : "ElectronEfficiencyCorrector_IsoSyst",
+                                          "m_outputSystNamesTrig"   : "ElectronEfficiencyCorrector_TrigSyst",
+                                          "m_outputSystNamesTrigMCEff"   : "ElectronEfficiencyCorrector_TrigMCEffSyst",
+                                          "m_corrFileNameReco"      : path_el_eff + "offline/efficiencySF.offline.RecoTrk.root",
+                                          "m_corrFileNamePID"       : path_el_eff + "offline/efficiencySF.offline.MediumLLH_d0z0_v11.root",
+                                          "m_corrFileNameIso"       : path_el_eff + "isolation/efficiencySF.Isolation.MediumLLH_d0z0_v11_isolLoose.root", # comment if d0z0 cuts are NOT tight (TTVA)
+                                          "m_WorkingPointIDTrig"    : "LHMedium",
+                                          "m_corrFileNameTrig"      : path_el_eff + "trigger/efficiencySF." + trigger_el_eff + ".MediumLLH_d0z0_v11_isolLoose.root",
+                                          "m_corrFileNameTrigMCEff" : path_el_eff + "trigger/efficiency." + trigger_el_eff + ".MediumLLH_d0z0_v11_isolLoose.root",
+                                       }
 ElectronEfficiencyCorrectorDict = { "m_name"                     : "electronEfficiencyCorrector",
                                     "m_debug"                    : False,
                                     "m_inContainerName"          : "Electrons_OR",
@@ -379,33 +566,6 @@ ElectronEfficiencyCorrectorDict = { "m_name"                     : "electronEffi
                                     #"m_corrFileNameTrig"         : "$ROOTCOREBIN/data/ElectronEfficiencyCorrection/efficiencySF.e12_lhloose_L1EM10VH.LooseAndBLayerLLH_d0z0_v8.2015.13TeV.rel20p0.25ns.v04.root",
                                     #"m_corrFileNameTrigMCEff"    : "$ROOTCOREBIN/data/ElectronEfficiencyCorrection/efficiency.e12_lhloose_L1EM10VH.LooseAndBLayerLLH_d0z0_v8.2015.13TeV.rel20p0.25ns.v04.root",
                                    }
-
-
-MuonEfficiencyCorrectorMediumDict = { "m_name"                  : "muonEfficiencyCorrectorMedium",
-                                     "m_debug"                 : False,
-                                     "m_inContainerName"       : "Muons_OR",
-                                     "m_inputAlgoSystNames"    : "MuonSelector_Syst",
-                                     "m_systNameReco"          : "",
-                                     "m_systNameIso"           : "",
-                                     "m_systNameTrig"          : "",
-                                     "m_systNameTTVA"          : "",
-                                     #"m_runNumber"             : 276329,
-                                     "m_useRandomRunNumber"    : True,
-                                     "m_outputSystNamesReco"   : "MuonEfficiencyCorrector_RecoSyst",
-                                     "m_outputSystNamesIso"    : "MuonEfficiencyCorrector_IsoSyst",
-                                     "m_outputSystNamesTrig"   : "MuonEfficiencyCorrector_TrigSyst",
-                                     "m_outputSystNamesTTVA"   : "MuonEfficiencyCorrector_TTVASyst",
-                                     "m_calibRelease"          : "160624_ICHEP",
-                                     "m_WorkingPointReco"      : "Loose",
-                                     "m_WorkingPointIso"       : "FixedCutLoose",
-                                     "m_WorkingPointRecoTrig"  : "Loose",
-                                     "m_WorkingPointIsoTrig"   : "FixedCutLoose",
-                                     "m_WorkingPointTTVA"      : "TTVA",
-                                     "m_SingleMuTrig"          : "HLT_mu26_imedium_OR_HLT_mu50",
-                                     "m_DiMuTrig"              : "",
-                                   }
-
-
 
 ElectronEfficiencyCorrectorMediumDict = { "m_name"                    : "electronEfficiencyCorrectorMedium",
                                          "m_debug"                    : False,
@@ -428,34 +588,6 @@ ElectronEfficiencyCorrectorMediumDict = { "m_name"                    : "electro
                                          #"m_corrFileNameTrigMCEff"    : "$ROOTCOREBIN/data/ElectronEfficiencyCorrection/efficiency.e12_lhloose_L1EM10VH.MediumLLH_d0z0_v8.2015.13TeV.rel20p0.25ns.v04.root",
                                        }
 
-
-
-MuonEfficiencyCorrectorTightDict = { "m_name"                  : "muonEfficiencyCorrectorTight",
-                                     "m_debug"                 : False,
-                                     "m_inContainerName"       : "Muons_OR",
-                                     "m_inputAlgoSystNames"    : "MuonSelector_Syst",
-                                     "m_systNameReco"          : "",
-                                     "m_systNameIso"           : "",
-                                     "m_systNameTrig"          : "",
-                                     "m_systNameTTVA"          : "",
-                                     #"m_runNumber"             : 276329,
-                                     "m_useRandomRunNumber"    : True,
-                                     "m_outputSystNamesReco"   : "MuonEfficiencyCorrector_RecoSyst",
-                                     "m_outputSystNamesIso"    : "MuonEfficiencyCorrector_IsoSyst",
-                                     "m_outputSystNamesTrig"   : "MuonEfficiencyCorrector_TrigSyst",
-                                     "m_outputSystNamesTTVA"   : "MuonEfficiencyCorrector_TTVASyst",
-                                     "m_calibRelease"          : "160624_ICHEP",
-                                     "m_WorkingPointReco"      : "Loose",
-                                     "m_WorkingPointIso"       : "FixedCutTightTrackOnly",
-                                     "m_WorkingPointRecoTrig"  : "Loose",
-                                     "m_WorkingPointIsoTrig"   : "FixedCutTightTrackOnly",
-                                     "m_WorkingPointTTVA"      : "TTVA",
-                                     "m_SingleMuTrig"          : "HLT_mu26_imedium_OR_HLT_mu50",
-                                     "m_DiMuTrig"              : "",
-                                   }
-
-
-
 ElectronEfficiencyCorrectorTightDict = { "m_name"                     : "electronEfficiencyCorrectorTight",
                                          "m_debug"                    : False,
                                          "m_inContainerName"          : "Electrons_OR",
@@ -476,6 +608,7 @@ ElectronEfficiencyCorrectorTightDict = { "m_name"                     : "electro
                                          #"m_corrFileNameTrig"         : "$ROOTCOREBIN/data/ElectronEfficiencyCorrection/efficiencySF.e12_lhloose_L1EM10VH.TightLLH_d0z0_v8.2015.13TeV.rel20p0.25ns.v04.root",
                                          #"m_corrFileNameTrigMCEff"    : "$ROOTCOREBIN/data/ElectronEfficiencyCorrection/efficiency.e12_lhloose_L1EM10VH.TightLLH_d0z0_v8.2015.13TeV.rel20p0.25ns.v04.root",
                                        }
+"""
 
 """
 TreeAlgoDict             = { "m_name"                  : "physics",

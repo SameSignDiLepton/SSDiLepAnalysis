@@ -1,15 +1,10 @@
 #!/bin/bash
 
-#inDS="data15_13TeV"
-#sample="DAOD_EXOT12.07668731._000011.pool.root.1"
-
-
-inDS="mc15_13TeV"
-sample="DAOD_EXOT12.07627500._000006.pool.root.1"
+inDS="EXOT12newtest"
+sample="DAOD_EXOT12.test_size_MC_DCH800_nightlyRel0_bkgElExtraVariables_20160921.pool.root"
 
 
 infilepath="/data/fscutti/${inDS}/${sample}"
-
 
 # ------------------------------------------------------------------------------------
 
