@@ -8,6 +8,8 @@
 #include <xAODAnaHelpers/TreeAlgo.h>
 #include <SSDiLepAnalysis/SSDiLepTree.h>
 
+#include "LPXKfactorTool/LPXKfactorTool.h"
+
 class SSDiLepTreeAlgo : public TreeAlgo
 {
   // put your configuration variables here as public variables.
@@ -17,6 +19,7 @@ public:
 
   // additional data members which are not already in xAH::TreeAlgo.h
   //std::string m_lepContainerName;
+  LPXKfactorTool *m_p_kfactorTool;  //!
 
   // this is a standard constructor
   SSDiLepTreeAlgo () :
@@ -29,12 +32,14 @@ public:
   // these are the functions inherited from Algorithm
 
   // overload only the ones that somehow differ from the original methods in TreeAlgo
+  virtual EL::StatusCode initialize (); 
   virtual EL::StatusCode execute ();
 
   // these are the functions not inherited from Algorithm
 
   // this is needed to distribute the algorithm to the workers
   ClassDef(SSDiLepTreeAlgo, 1);
+
 };
 
 #endif

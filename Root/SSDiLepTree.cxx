@@ -16,6 +16,7 @@ void SSDiLepTree::AddEventUser(const std::string detailStrUser)
 
   // event variables
   m_tree->Branch("isMC",              &m_is_mc, "isMC/I");
+  m_tree->Branch("LPXKfactor",        &m_LPXKfactor, "isMC/D");
   /* 
   m_tree->Branch("ystar",             &m_ystar, "ystar/F");
   m_tree->Branch("categoryFlag",      &m_categoryFlag, "categoryFlag/i");
@@ -288,6 +289,7 @@ void SSDiLepTree::FillEventUser( const xAOD::EventInfo* eventInfo )
 {
   if ( m_debug ) { Info("FillEventUser()", "Filling event"); }
   m_is_mc                =  ( eventInfo->eventType( xAOD::EventInfo::IS_SIMULATION ) );
+  m_LPXKfactor           =  eventInfo->auxdata< double >( "KfactorWeight" );
 }
 
 /*

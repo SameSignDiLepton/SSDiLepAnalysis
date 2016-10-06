@@ -26,7 +26,8 @@ class SSDiLepTree : public HelpTreeBase
   private:
 
     /* event variables*/
-    int           	m_is_mc;
+    int             m_is_mc;
+    double          m_LPXKfactor;
 
     /* jet variables */
     std::vector<float> m_jet_m;

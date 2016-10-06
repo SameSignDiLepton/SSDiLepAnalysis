@@ -16,11 +16,31 @@
 #include <xAODAnaHelpers/tools/ReturnCheck.h>
 #include <xAODAnaHelpers/tools/ReturnCheckConfig.h>
 
+#include "LPXKfactorTool/LPXKfactorTool.h"
+
 #include "TEnv.h"
 #include "TSystem.h"
 
 // this is needed to distribute the algorithm to the workers
 ClassImp(SSDiLepTreeAlgo)
+
+EL::StatusCode SSDiLepTreeAlgo :: initialize ()
+{
+  Info("initialize()", m_name.c_str());
+  m_event = wk()->xaodEvent();
+  m_store = wk()->xaodStore();
+
+  // get the file we created already
+  TFile* treeFile = wk()->getOutputFile ("tree");
+  treeFile->mkdir(m_name.c_str());
+  treeFile->cd(m_name.c_str());
+
+  m_p_kfactorTool = new LPXKfactorTool("LPXKfactorTool");
+  m_p_kfactorTool->setProperty("isMC15",true);
+  m_p_kfactorTool->initialize();
+
+  return EL::StatusCode::SUCCESS;
+}
 
 EL::StatusCode SSDiLepTreeAlgo :: execute ()
 {
@@ -128,6 +148,10 @@ EL::StatusCode SSDiLepTreeAlgo :: execute ()
   // get the primaryVertex
   const xAOD::Vertex* primaryVertex = HelperFunctions::getPrimaryVertex( vertices );
 
+  //LPXKfactorTool
+  //writes the nominal value only for now
+  m_p_kfactorTool->execute();
+
   for(const auto& systName: event_systNames){
 
     SSDiLepTree* helpTree = dynamic_cast<SSDiLepTree*>(m_trees[systName]);
@@ -226,6 +250,7 @@ EL::StatusCode SSDiLepTreeAlgo :: execute ()
     //}
 
     // fill the tree
+
     helpTree->Fill();
 
   }
