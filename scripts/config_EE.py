@@ -285,7 +285,7 @@ trigger_el_eff = "DI_E_2015_e17_lhloose_2016_e17_lhloose"
 
 ### no isolation
 ElectronEfficiencyCorrectorLooseDict = { "m_name"                  : "electronEfficiencyCorrectorLoose",
-                                    "m_debug"                 : True,
+                                    "m_debug"                 : False,
                                     "m_inContainerName"       : "Electrons_OR",
                                     "m_inputAlgoSystNames"    : "ElectronSelector_Syst",
                                     "m_systNameReco"          : "",
@@ -307,7 +307,7 @@ ElectronEfficiencyCorrectorLooseDict = { "m_name"                  : "electronEf
 
 # FixedCutLoose isolation
 ElectronEfficiencyCorrectorLooseFCLDict = { "m_name"                  : "electronEfficiencyCorrectorLooseFCL",
-                                    "m_debug"                 : True,
+                                    "m_debug"                 : False,
                                     "m_inContainerName"       : "Electrons_OR",
                                     "m_inputAlgoSystNames"    : "ElectronSelector_Syst",
                                     "m_systNameReco"          : "",
@@ -329,7 +329,7 @@ ElectronEfficiencyCorrectorLooseFCLDict = { "m_name"                  : "electro
 
 # LooseTrackOnly isolation
 ElectronEfficiencyCorrectorLooseLTODict = { "m_name"                    : "electronEfficiencyCorrectorLooseLTO",
-                                    "m_debug"                 : True,
+                                    "m_debug"                 : False,
                                     "m_inContainerName"       : "Electrons_OR",
                                     "m_inputAlgoSystNames"    : "ElectronSelector_Syst",
                                     "m_systNameReco"          : "",
@@ -353,7 +353,7 @@ ElectronEfficiencyCorrectorLooseLTODict = { "m_name"                    : "elect
 
 ### no isolation
 ElectronEfficiencyCorrectorMediumDict = { "m_name"                  : "electronEfficiencyCorrectorMedium",
-                                    "m_debug"                 : True,
+                                    "m_debug"                 : False,
                                     "m_inContainerName"       : "Electrons_OR",
                                     "m_inputAlgoSystNames"    : "ElectronSelector_Syst",
                                     "m_systNameReco"          : "",
@@ -375,7 +375,7 @@ ElectronEfficiencyCorrectorMediumDict = { "m_name"                  : "electronE
 
 # gradient isolation
 ElectronEfficiencyCorrectorMediumGradientDict = { "m_name"                  : "electronEfficiencyCorrectorMediumGradient",
-                                    "m_debug"                 : True,
+                                    "m_debug"                 : False,
                                     "m_inContainerName"       : "Electrons_OR",
                                     "m_inputAlgoSystNames"    : "ElectronSelector_Syst",
                                     "m_systNameReco"          : "",
@@ -397,7 +397,7 @@ ElectronEfficiencyCorrectorMediumGradientDict = { "m_name"                  : "e
 
 # loose isolation
 ElectronEfficiencyCorrectorMediumLooseDict = { "m_name"                  : "electronEfficiencyCorrectorMediumLoose",
-                                    "m_debug"                 : True,
+                                    "m_debug"                 : False,
                                     "m_inContainerName"       : "Electrons_OR",
                                     "m_inputAlgoSystNames"    : "ElectronSelector_Syst",
                                     "m_systNameReco"          : "",
@@ -419,7 +419,7 @@ ElectronEfficiencyCorrectorMediumLooseDict = { "m_name"                  : "elec
 
 # LooseTrackOnly isolation
 ElectronEfficiencyCorrectorMediumLTODict = { "m_name"                    : "electronEfficiencyCorrectorMediumLTO",
-                                    "m_debug"                 : True,
+                                    "m_debug"                 : False,
                                     "m_inContainerName"       : "Electrons_OR",
                                     "m_inputAlgoSystNames"    : "ElectronSelector_Syst",
                                     "m_systNameReco"          : "",
@@ -443,7 +443,7 @@ ElectronEfficiencyCorrectorMediumLTODict = { "m_name"                    : "elec
 
 ### no isolation
 ElectronEfficiencyCorrectorTightDict = { "m_name"                  : "electronEfficiencyCorrectorTight",
-                                    "m_debug"                 : True,
+                                    "m_debug"                 : False,
                                     "m_inContainerName"       : "Electrons_OR",
                                     "m_inputAlgoSystNames"    : "ElectronSelector_Syst",
                                     "m_systNameReco"          : "",
@@ -465,7 +465,7 @@ ElectronEfficiencyCorrectorTightDict = { "m_name"                  : "electronEf
 
 # gradient isolation
 ElectronEfficiencyCorrectorTightGradientDict = { "m_name"                  : "electronEfficiencyCorrectorTightGradient",
-                                    "m_debug"                 : True,
+                                    "m_debug"                 : False,
                                     "m_inContainerName"       : "Electrons_OR",
                                     "m_inputAlgoSystNames"    : "ElectronSelector_Syst",
                                     "m_systNameReco"          : "",
@@ -487,7 +487,7 @@ ElectronEfficiencyCorrectorTightGradientDict = { "m_name"                  : "el
 
 # loose isolation
 ElectronEfficiencyCorrectorTightLooseDict = { "m_name"                  : "electronEfficiencyCorrectorTightLoose",
-                                    "m_debug"                 : True,
+                                    "m_debug"                 : False,
                                     "m_inContainerName"       : "Electrons_OR",
                                     "m_inputAlgoSystNames"    : "ElectronSelector_Syst",
                                     "m_systNameReco"          : "",
@@ -509,7 +509,7 @@ ElectronEfficiencyCorrectorTightLooseDict = { "m_name"                  : "elect
 
 # LooseTrackOnly isolation
 ElectronEfficiencyCorrectorTightLTODict = { "m_name"                    : "electronEfficiencyCorrectorTightLTO",
-                                    "m_debug"                 : True,
+                                    "m_debug"                 : False,
                                     "m_inContainerName"       : "Electrons_OR",
                                     "m_inputAlgoSystNames"    : "ElectronSelector_Syst",
                                     "m_systNameReco"          : "",
@@ -531,7 +531,7 @@ ElectronEfficiencyCorrectorTightLTODict = { "m_name"                    : "elect
 
 # tight isolation
 ElectronEfficiencyCorrectorTightTightDict = { "m_name"                    : "electronEfficiencyCorrectorTightTight",
-                                    "m_debug"                 : True,
+                                    "m_debug"                 : False,
                                     "m_inContainerName"       : "Electrons_OR",
                                     "m_inputAlgoSystNames"    : "ElectronSelector_Syst",
                                     "m_systNameReco"          : "",
