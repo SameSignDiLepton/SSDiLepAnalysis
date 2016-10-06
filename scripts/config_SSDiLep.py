@@ -5,6 +5,10 @@ from optparse import OptionParser
 
 from xAH_config import xAH_config
 
+# ROOT config files like ilumicalc, PRW and GRLs are kept here:
+# https://www.dropbox.com/sh/19kljimhoo1ntjd/AADjOdx7xDK5YaHQywtuD6x2a?dl=0
+
+
 # Hack to force just-in-time libraries to load,
 # needed for Muon quality enum. Ask gstark@cern.ch for questions.
 #
