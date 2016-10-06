@@ -37,7 +37,6 @@ public:
   std::string    m_inContainerName_Muons;
 
   bool m_doMuonTruthPartMatching;
-  bool m_doMuonTrackMatching;
 
 private:
 

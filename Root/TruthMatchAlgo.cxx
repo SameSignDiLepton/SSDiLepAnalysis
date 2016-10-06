@@ -71,7 +71,6 @@ TruthMatchAlgo :: TruthMatchAlgo () :
   //m_inContainerName_Leptons     = "";
 
   m_doMuonTruthPartMatching     = false;
-  m_doMuonTrackMatching         = true;
 }
 
 TruthMatchAlgo::~TruthMatchAlgo() {}
