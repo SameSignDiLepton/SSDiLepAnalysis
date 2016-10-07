@@ -1,13 +1,16 @@
 #!/bin/bash
 
 #inDS="mc15_13TeV.361063.Sherpa_CT10_llll.merge.DAOD_EXOT12.e3836_s2608_s2183_r7725_r7676_p2666"
-inDS="public"
+#inDS="public"
+inDS="mc15_13TeV.301002.PowhegPythia8EvtGen_AZNLOCTEQ6L1_DYee_250M400.merge.DAOD_EXOT12.e3649_s2576_s2132_r7772_r7676_p2823"
 
 #sample="DAOD_EXOT12.08647446._000005.pool.root.1" #p2666
-sample="DAOD_EXOT12.test_size_MC_Zee_nightlyRel0_bkgElExtraVariables_20160922.pool.root" #p2666
+#sample="DAOD_EXOT12.test_size_MC_Zee_nightlyRel0_bkgElExtraVariables_20160922.pool.root" #p2666
+sample="DAOD_EXOT12.09520421._000001.pool.root.1" #p2666
 
 #infilepath="/afs/cern.ch/work/g/gorisek/miha/DxAOD_EXOT12/${inDS}/${sample}"
-infilepath="/afs/cern.ch/work/p/pleskot/${inDS}/${sample}"
+#infilepath="/afs/cern.ch/work/p/pleskot/${inDS}/${sample}"
+infilepath="/afs/cern.ch/work/g/gorisek/miha/${inDS}/${sample}"
 
 
 # ------------------------------------------------------------------------------------

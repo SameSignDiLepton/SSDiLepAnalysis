@@ -26,7 +26,8 @@ class SSDiLepTree : public HelpTreeBase
   private:
 
     /* event variables*/
-    int               m_is_mc;
+    int             m_is_mc;
+    double          m_LPXKfactor;
     std::vector<int>  m_HLpp_Daughters;
     std::vector<int>  m_HLmm_Daughters;
     std::vector<int>  m_HRpp_Daughters;
