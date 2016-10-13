@@ -2,7 +2,7 @@
 #include <EventLoop/StatusCode.h>
 #include <EventLoop/Worker.h>
 #include <EventLoop/OutputStream.h>
-
+#include "xAODEventInfo/EventInfo.h"
 #include <xAODJet/JetContainer.h>
 #include <xAODTracking/VertexContainer.h>
 #include <xAODEventInfo/EventInfo.h>
@@ -30,15 +30,21 @@ EL::StatusCode SSDiLepTreeAlgo :: initialize ()
   m_event = wk()->xaodEvent();
   m_store = wk()->xaodStore();
 
+  const xAOD::EventInfo* eventInfo(nullptr);
+  RETURN_CHECK("MuonEfficiencyCorrector::initialize()", HelperFunctions::retrieve(eventInfo, m_eventInfoContainerName, m_event, m_store, m_verbose) ,"");
+  m_isMC = ( eventInfo->eventType( xAOD::EventInfo::IS_SIMULATION ) );
+  
   // get the file we created already
   TFile* treeFile = wk()->getOutputFile ("tree");
   treeFile->mkdir(m_name.c_str());
   treeFile->cd(m_name.c_str());
-
-  m_p_kfactorTool = new LPXKfactorTool("LPXKfactorTool");
-  m_p_kfactorTool->setProperty("isMC15",true);
-  m_p_kfactorTool->initialize();
-
+  
+  //Initialize the tool here only for MC
+  if(m_isMC){
+    m_p_kfactorTool = new LPXKfactorTool("LPXKfactorTool");
+    m_p_kfactorTool->setProperty("isMC15",true);
+    m_p_kfactorTool->initialize();
+  } 
   return EL::StatusCode::SUCCESS;
 }
 
@@ -135,8 +141,10 @@ EL::StatusCode SSDiLepTreeAlgo :: execute ()
 
   //LPXKfactorTool
   //writes the nominal value only for now
-  m_p_kfactorTool->execute();
-
+  if(m_isMC){
+    m_p_kfactorTool->execute();
+  }
+  
   for(const auto& systName: event_systNames){
 
     SSDiLepTree* helpTree = dynamic_cast<SSDiLepTree*>(m_trees[systName]);
