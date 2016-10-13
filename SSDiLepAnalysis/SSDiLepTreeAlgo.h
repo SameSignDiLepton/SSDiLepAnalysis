@@ -40,6 +40,9 @@ public:
   // this is needed to distribute the algorithm to the workers
   ClassDef(SSDiLepTreeAlgo, 1);
 
+ private:
+  bool m_isMC;
+
 };
 
 #endif
