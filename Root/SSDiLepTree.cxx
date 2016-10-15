@@ -57,11 +57,11 @@ void SSDiLepTree::AddElectronsUser(const std::string detailStrUser)
   if ( m_debug ) { Info("AddElectronsUser()", "Adding branches w/ detail: %s", detailStrUser.c_str()); }
 
   // electron variables
-  m_tree->Branch("el_isTruthMatchedToElectron",   &m_electron_isTruthMatched);
-  m_tree->Branch("el_truthType",	          &m_electron_truthType);
-  m_tree->Branch("el_truthPdgId",	          &m_electron_truthPdgId);
+  //m_tree->Branch("el_isTruthMatchedToElectron",   &m_electron_isTruthMatched);
+  //m_tree->Branch("el_truthPdgId",           &m_electron_truthPdgId);
+  //m_tree->Branch("el_truthStatus",                &m_electron_truthStatus);
+  m_tree->Branch("el_truthType",            &m_electron_truthType);
   m_tree->Branch("el_truthOrigin",                &m_electron_truthOrigin);
-  m_tree->Branch("el_truthStatus",                &m_electron_truthStatus);
 
   // background variables
   // computed with background electron classification https://twiki.cern.ch/twiki/bin/view/AtlasProtected/EGammaTruthRun2
@@ -97,11 +97,11 @@ void SSDiLepTree::ClearMuonsUser()
 void SSDiLepTree::ClearElectronsUser()
 {
   // electron variables
-  m_electron_isTruthMatched.clear();
+  //m_electron_isTruthMatched.clear();
+  //m_electron_truthPdgId.clear();
+  //m_electron_truthStatus.clear();
   m_electron_truthType.clear();
-  m_electron_truthPdgId.clear();
   m_electron_truthOrigin.clear();
-  m_electron_truthStatus.clear();
 
   m_electron_bkgTruthType.clear();
   m_electron_bkgTruthOrigin.clear();
@@ -192,12 +192,11 @@ void SSDiLepTree::FillElectronsUser( const xAOD::Electron* electron )
 
   // access this info only to fill tag/probe branches
 
-  static SG::AuxElement::Accessor< char > isTruthMatchedAcc("isTruthMatched");
-  static SG::AuxElement::ConstAccessor< int >  truthTypeAcc("truthType");
-  static SG::AuxElement::Accessor< int >  truthPdgIdAcc("truthPdgId");
+  //static SG::AuxElement::Accessor< char > isTruthMatchedAcc("isTruthMatched");
+  //static SG::AuxElement::Accessor< int >  truthPdgIdAcc("truthPdgId");
+  //static SG::AuxElement::Accessor< int >  truthStatusAcc("truthStatus");
   static SG::AuxElement::ConstAccessor< int >  truthOriginAcc("truthOrigin");
-  static SG::AuxElement::Accessor< int >  truthStatusAcc("truthStatus");
-
+  static SG::AuxElement::ConstAccessor< int >  truthTypeAcc("truthType");
   static SG::AuxElement::Accessor< int >  bkgTruthTypeAcc("bkgTruthType");
   static SG::AuxElement::Accessor< int >  bkgTruthOriginAcc("bkgTruthOrigin");
   static SG::AuxElement::Accessor< int >  bkgMotherPdgIdAcc("bkgMotherPdgId");
@@ -205,17 +204,16 @@ void SSDiLepTree::FillElectronsUser( const xAOD::Electron* electron )
   static SG::AuxElement::Accessor< int >  firstEgMotherTruthOriginAcc("firstEgMotherTruthOrigin");
   static SG::AuxElement::Accessor< int >  firstEgMotherPdgIdAcc("firstEgMotherPdgId");
 
-  if ( isTruthMatchedAcc.isAvailable( *electron ) )    { m_electron_isTruthMatched.push_back( isTruthMatchedAcc( *electron ) ); }
-  else   { m_electron_isTruthMatched.push_back(-1); }
-  if ( truthPdgIdAcc.isAvailable( *electron ) )        { m_electron_truthPdgId.push_back( truthPdgIdAcc( *electron ) ); }
-  else   { m_electron_truthPdgId.push_back(0); }
+  //if ( isTruthMatchedAcc.isAvailable( *electron ) )    { m_electron_isTruthMatched.push_back( isTruthMatchedAcc( *electron ) ); }
+  //else   { m_electron_isTruthMatched.push_back(-1); }
+  //if ( truthPdgIdAcc.isAvailable( *electron ) )        { m_electron_truthPdgId.push_back( truthPdgIdAcc( *electron ) ); }
+  //else   { m_electron_truthPdgId.push_back(0); }
+  //if ( truthStatusAcc.isAvailable( *electron ) )       { m_electron_truthStatus.push_back( truthStatusAcc( *electron ) ); }
+  //else   { m_electron_truthStatus.push_back(0); }
   if ( truthTypeAcc.isAvailable( *electron ) )         { m_electron_truthType.push_back( truthTypeAcc( *electron ) ); }
   else   { m_electron_truthType.push_back(-1); }
   if ( truthOriginAcc.isAvailable( *electron ) )       { m_electron_truthOrigin.push_back( truthOriginAcc( *electron ) ); }
   else   { m_electron_truthOrigin.push_back(0); }
-  if ( truthStatusAcc.isAvailable( *electron ) )       { m_electron_truthStatus.push_back( truthStatusAcc( *electron ) ); }
-  else   { m_electron_truthStatus.push_back(0); }
-
   if ( bkgTruthTypeAcc.isAvailable( *electron ) )               { m_electron_bkgTruthType.push_back( bkgTruthTypeAcc( *electron ) ); }
   else   { m_electron_bkgTruthType.push_back(0);             }
   if ( bkgTruthOriginAcc.isAvailable( *electron ) )             { m_electron_bkgTruthOrigin.push_back( bkgTruthOriginAcc( *electron ) ); }

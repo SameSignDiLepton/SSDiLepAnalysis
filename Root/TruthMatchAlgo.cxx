@@ -243,9 +243,12 @@ EL::StatusCode TruthMatchAlgo :: execute ()
   RETURN_CHECK("TruthMatchAlgo::execute()", HelperFunctions::retrieve(inputMuons, m_inContainerName_Muons, m_event, m_store, m_verbose) ,"");
   if ( m_debug ) { Info( "execute", "Number of muons: %i", static_cast<int>(inputMuons->size()) ); }
   
+  /*
+  // not needed for now
   const xAOD::ElectronContainer* inputElectrons(nullptr);
   RETURN_CHECK("TruthMatchAlgo::execute()", HelperFunctions::retrieve(inputElectrons, m_inContainerName_Electrons, m_event, m_store, m_verbose) ,"");
   if ( m_debug ) { Info( "execute", "Number of electrons: %i", static_cast<int>(inputElectrons->size()) ); }
+  */
   
 
   if ( m_isMC ) {
@@ -267,6 +270,8 @@ EL::StatusCode TruthMatchAlgo :: execute ()
 
     } // end loop over muons
     
+    /**
+    // not needed for now
     for ( auto el_itr : *(inputElectrons) ) {
       if ( el_itr->type() == xAOD::Type::Electron ) {
        if ( m_debug ) { Info("execute()"," truth matching reco electron, pT = %2f ", el_itr->pt() / 1e3 ); }
@@ -277,7 +282,8 @@ EL::StatusCode TruthMatchAlgo :: execute ()
         }
       } 
     
-    } // end loop over electrons
+    } // end loop over electrons 
+    */
   
   } // end check isMC
 

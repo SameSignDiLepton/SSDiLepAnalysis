@@ -44,12 +44,12 @@ class SSDiLepTree : public HelpTreeBase
     std::vector<int> m_muon_truthStatus;
 
     /* electron variables */
-    std::vector<int>   m_electron_isTruthMatched;
+    //std::vector<int>   m_electron_isTruthMatched;
+    //std::vector<int>   m_electron_truthPdgId;
+    //std::vector<int>   m_electron_truthStatus;
     std::vector<int>   m_electron_truthType;
-    std::vector<int>   m_electron_truthPdgId;
-    std::vector<int>   m_electron_truthOrigin;
-    std::vector<int>   m_electron_truthStatus;
-    
+    std::vector<int>   m_electron_truthOrigin;    
+
     std::vector<int>   m_electron_bkgTruthType;
     std::vector<int>   m_electron_bkgTruthOrigin;
     std::vector<int>   m_electron_bkgMotherPdgId;
