@@ -36,7 +36,7 @@ public:
   std::string    m_inContainerName_Electrons;
   std::string    m_inContainerName_Muons;
 
-  bool m_doMuonTruthPartMatching;
+  bool m_doMuonTruthContMatching;
 
 private:
 
@@ -116,7 +116,7 @@ public:
   */
   virtual EL::StatusCode applySignalTruthMatching ( const xAOD::EventInfo* eventInfo );
   virtual EL::StatusCode applyTruthMatchingMuon ( const xAOD::IParticle* recoParticle );
-  virtual EL::StatusCode doMuonTruthPartMatching ( const xAOD::IParticle* recoParticle );
+  virtual EL::StatusCode doMuonTruthMatching ( const xAOD::IParticle* recoParticle, bool useTruthContainer );
   virtual EL::StatusCode applyTruthMatchingElectron ( const xAOD::IParticle* recoParticle );
 
 

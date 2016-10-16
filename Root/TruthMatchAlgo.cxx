@@ -70,7 +70,7 @@ TruthMatchAlgo :: TruthMatchAlgo () :
   m_inContainerName_Muons       = "";
   //m_inContainerName_Leptons     = "";
 
-  m_doMuonTruthPartMatching     = false;
+  m_doMuonTruthContMatching     = false;
 }
 
 TruthMatchAlgo::~TruthMatchAlgo() {}
@@ -191,8 +191,8 @@ EL::StatusCode TruthMatchAlgo :: initialize ()
 
   m_isTruthMatchedDecor = nullptr          ; m_isTruthMatchedDecor          = new SG::AuxElement::Decorator< char >("isTruthMatched");	        // has a lepton truth match
   m_truthPdgIdDecor = nullptr	           ; m_truthPdgIdDecor              = new SG::AuxElement::Decorator< int >("truthPdgId");		// pdgId of the match particle
-  m_truthTypeDecor = nullptr	           ; m_truthTypeDecor               = new SG::AuxElement::Decorator< int >("truthType"); 	        // type of the parent particle (according to MCTruthClassifier) - this decorates only muons (info is originally available only for the track!)
-  m_truthOriginDecor = nullptr	           ; m_truthOriginDecor             = new SG::AuxElement::Decorator< int >("truthOrigin"); 	        // origin of the parent particle - this decorates only muons (info is originally available only for the track!)
+  m_truthTypeDecor = nullptr	           ; m_truthTypeDecor               = new SG::AuxElement::Decorator< int >("truthType"); 	        // type of the parent particle (according to MCTruthClassifier) - this decorates only muons 
+  m_truthOriginDecor = nullptr	           ; m_truthOriginDecor             = new SG::AuxElement::Decorator< int >("truthOrigin"); 	        // origin of the parent particle - this decorates only muons 
   m_truthStatusDecor = nullptr	           ; m_truthStatusDecor             = new SG::AuxElement::Decorator< int >("truthStatus"); 	        // status of the match particle
 
 
@@ -454,59 +454,48 @@ EL::StatusCode TruthMatchAlgo ::  applyTruthMatchingMuon ( const xAOD::IParticle
   // It can be either done by finding the link to MuonTruthParticles container, or by matching the muon track (default for |eta| < 2.5)
   // See the header file for more info.
   //
-  //const xAOD::TruthParticleContainer* muonTruthPartContainer(nullptr);
-  //RETURN_CHECK("TruthMatchAlgo::applyTruthMatchingMuon()", HelperFunctions::retrieve(muonTruthPartContainer, "MuonTruthParticles", m_event, m_store, m_verbose) , "");
+  const xAOD::TruthParticleContainer* muonTruthPartContainer(nullptr);
+  RETURN_CHECK("TruthMatchAlgoDiMu::applyTruthMatchingMuon()", HelperFunctions::retrieve(muonTruthPartContainer, "MuonTruthParticles", m_event, m_store, m_verbose) , "");
+
+  // Use the MuonTruthParticles container to decorate the recoPart with 
+  // type and origin from MCTruthClassifier 
+  bool useMuonTruthContainer = m_doMuonTruthContMatching;
   
-  //const xAOD::TruthParticleContainer* TruthPartContainer(nullptr);
-  //RETURN_CHECK("TruthMatchAlgo::applyTruthMatchingMuon()", HelperFunctions::retrieve(TruthPartContainer, "TruthParticles", m_event, m_store, m_verbose) , "");
-
-
-  if ( this->doMuonTruthPartMatching( recoPart ) != EL::StatusCode::SUCCESS ) {
-    Error("applyTruthMatchingMuon()", "Problem with doMuonTruthPartMatching() for this forward muon ( | eta| > 2.5 ). Aborting");
+  if ( this->doMuonTruthMatching( recoPart, useMuonTruthContainer ) != EL::StatusCode::SUCCESS ) {
+    Error("applyTruthMatchingMuon()", "Problem with doMuonTruthMatching(). Aborting");
     return EL::StatusCode::FAILURE;
-  
-  } else if ( m_doMuonTruthPartMatching && ( this->doMuonTruthPartMatching( recoPart ) != EL::StatusCode::SUCCESS ) ) {
-
-     Error("applyTruthMatchingMuon()", "Problem with doMuonTruthPartMatching(). Aborting");
-     return EL::StatusCode::FAILURE;
-
   }
 
   return EL::StatusCode::SUCCESS;
 }
 
 
-EL::StatusCode TruthMatchAlgo :: doMuonTruthPartMatching ( const xAOD::IParticle* recoPart )
+EL::StatusCode TruthMatchAlgo :: doMuonTruthMatching ( const xAOD::IParticle* recoPart,  bool useTruthContainer )
 {
 
-   // decorate reconstructed particle with default values
-   //
    (*m_isTruthMatchedDecor)( *recoPart )	  = 0;
-   (*m_truthTypeDecor)( *recoPart )               = 0; // need it b/c for muons we need to pass from the track/muon truth container
    (*m_truthPdgIdDecor)( *recoPart )              = 0;
-   (*m_truthOriginDecor)( *recoPart )             = 0; // need it b/c for muons we need to pass from the track/muon truth container
    (*m_truthStatusDecor)( *recoPart )	          = -1;
+   
+   if ( useTruthContainer ) {
 
+     (*m_truthTypeDecor)( *recoPart )               = 0; 
+     (*m_truthOriginDecor)( *recoPart )             = 0; 
+   
+   }
+   
+   
    // get the truth muon matching the reco muon
    //
    const xAOD::TruthParticle* matchTruthMu(nullptr);
    
    
-   // from https://twiki.cern.ch/twiki/bin/view/Atlas/XAODMuon 
-   // 
-   //if(recoPart->isAvailable<ElementLink<xAOD::TruthParticleContainer> >("truthParticleLink")) {
-   //  ElementLink<xAOD::TruthParticleContainer> link = recoPart->auxdata<ElementLink<xAOD::TruthParticleContainer> >("truthParticleLink");
-   //    if(link.isValid()) {
-   //      matchTruthMu = *link;
-   //    }
-   //} 
-   
    if ( ! (*m_truthPLAcc).isAvailable( *recoPart ) ) {
-      Warning("doMuonTruthPartMatching()", "No link available to truth match for this reco muon. This shouldn't happen. Returning");
+      Warning("doMuonTruthMatching()", "No link available to truth match for this reco muon. This shouldn't happen. Returning");
       return StatusCode::SUCCESS;
    }
    if ( ! (*m_truthPLAcc)( *recoPart ).isValid() ) {
-      Warning("doMuonTruthPartMatching()", "Link to truth match for this reco muon is invalid. This shouldn't happen. Returning");
+      Warning("doMuonTruthMatching()", "Link to truth match for this reco muon is invalid. This shouldn't happen. Returning");
       return StatusCode::SUCCESS;
    }
    
@@ -516,7 +505,7 @@ EL::StatusCode TruthMatchAlgo :: doMuonTruthPartMatching ( const xAOD::IParticle
    // if there is no matching truth muon, return
    //
    if ( !matchTruthMu ) {
-      Warning("doMuonTruthPartMatching()", "No truth matching for this reco muon. This shouldn't happen. Returning");
+      Warning("doMuonTruthMatching()", "No truth matching for this reco muon. This shouldn't happen. Returning");
       return StatusCode::SUCCESS;
    }
 
@@ -529,21 +518,12 @@ EL::StatusCode TruthMatchAlgo :: doMuonTruthPartMatching ( const xAOD::IParticle
      (*m_isTruthMatchedDecor)( *recoPart ) = 0;
    }
 
-   // store the type of the match: pass the truth muon type info to the reco muon
-   //
-   if ( ! (*m_truthTypeAcc).isAvailable( *matchTruthMu ) ) {
-     Warning("doMuonTruthPartMatching()", "No truth type info available for this muon's matching truth particle. This shouldn't happen. Returning");
-     return StatusCode::SUCCESS;
-   }
-   int truthMatchType = (*m_truthTypeAcc)(*matchTruthMu);
-   (*m_truthTypeDecor)( *recoPart ) = truthMatchType;
-
    // store the pdgId of the match
    //
    static SG::AuxElement::Accessor< int > pdgIdAcc("pdgId");
    if ( pdgIdAcc.isAvailable( *matchTruthMu ) ) {
      
-     if ( m_debug ) { Info( "doMuonTruthPartMatching()", "decorating truthPdgId with value: %i", matchTruthMu->pdgId() ); }
+     if ( m_debug ) { Info( "doMuonTruthMatching()", "decorating truthPdgId with value: %i", matchTruthMu->pdgId() ); }
      (*m_truthPdgIdDecor)( *recoPart ) = matchTruthMu->pdgId();
 
    }
@@ -553,21 +533,35 @@ EL::StatusCode TruthMatchAlgo :: doMuonTruthPartMatching ( const xAOD::IParticle
    static SG::AuxElement::Accessor< int > statusAcc("status");
    if ( statusAcc.isAvailable( *matchTruthMu ) ) {
 
-     if ( m_debug ) { Info( "doMuonTruthPartMatching()", "decorating truthStatus with value: %i", matchTruthMu->status() ); }
+     if ( m_debug ) { Info( "doMuonTruthMatching()", "decorating truthStatus with value: %i", matchTruthMu->status() ); }
      (*m_truthStatusDecor)( *recoPart ) = matchTruthMu->status();
 
    }
+   
+   if ( useTruthContainer ) {
 
-   // store the pdgId of the parent particle of the match: pass the truth muon origin info to the reco muon
-   //
-   if ( ! (*m_truthOriginAcc).isAvailable( *matchTruthMu ) ) {
-     Warning("doMuonTruthPartMatching()", "No truth origin info available for this muon's matching truth particle. This shouldn't happen. Returning");
-     return StatusCode::SUCCESS;
-   }
-   int truthMatchOrigin = (*m_truthOriginAcc)(*matchTruthMu);
-   (*m_truthOriginDecor)( *recoPart ) = truthMatchOrigin;
+      // store the type of the match: pass the truth muon type info to the reco muon
+      //
+      if ( ! (*m_truthTypeAcc).isAvailable( *matchTruthMu ) ) {
+        Warning("doMuonTruthMatching()", "No truth type info available for this muon's matching truth particle. This shouldn't happen. Returning");
+        return StatusCode::SUCCESS;
+      }
+      int truthMatchType = (*m_truthTypeAcc)(*matchTruthMu);
+      (*m_truthTypeDecor)( *recoPart ) = truthMatchType;
+      
+      // store the pdgId of the parent particle of the match: pass the truth muon origin info to the reco muon
+      //
+      if ( ! (*m_truthOriginAcc).isAvailable( *matchTruthMu ) ) {
+        Warning("doMuonTruthMatching()", "No truth origin info available for this muon's matching truth particle. This shouldn't happen. Returning");
+        return StatusCode::SUCCESS;
+      }
+      int truthMatchOrigin = (*m_truthOriginAcc)(*matchTruthMu);
+      (*m_truthOriginDecor)( *recoPart ) = truthMatchOrigin;
+      return EL::StatusCode::SUCCESS;
 
-   return EL::StatusCode::SUCCESS;
+   } 
+
+  return EL::StatusCode::SUCCESS;
 
 }
 
