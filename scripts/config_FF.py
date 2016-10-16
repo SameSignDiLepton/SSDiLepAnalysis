@@ -632,7 +632,7 @@ TruthMatchAlgoDict       = { "m_name"                           : "truthMatching
                              "m_inContainerName_Electrons"      : "Electrons_OR",
                              "m_inContainerName_Muons"          : "Muons_OR",
                              "m_doMuonTrackMatching"            : False,
-                             "m_doMuonTruthPartMatching"        : True,
+                             "m_doMuonTruthContMatching"        : True,
                            }
 
 
