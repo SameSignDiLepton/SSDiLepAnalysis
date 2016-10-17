@@ -806,6 +806,8 @@ TruthMatchAlgoDict       = { "m_name"                           : "truthMatching
                            }
 
 
+electronPIDWorkingPoints     = "LooseAndBLayerLLH MediumLLH TightLLH " # space at the end
+electronIsolWorkingPoints    = "isolNoRequirement isolFixedCutLoose isolLooseTrackOnly isolGradient isolLoose isolTight " # space at the end
 SSDiLepTreeAlgoDict      = { "m_name"                  : "physics",
                              "m_debug"                 : False,
                              "m_muContainerName"       : "Muons_OR",
@@ -817,7 +819,7 @@ SSDiLepTreeAlgoDict      = { "m_name"                  : "physics",
                              "m_evtDetailStr"          : "pileup",
                              "m_trigDetailStr"         : "basic passTriggers menuKeys",
                              "m_muDetailStr"           : "kinematic trigger isolation quality trackparams effSF",
-                             "m_elDetailStr"           : "kinematic trigger isolation PID trackparams effSF",
+                             "m_elDetailStr"           : electronPIDWorkingPoints + electronIsolWorkingPoints + "kinematic trigger isolation PID trackparams effSF",
                              #"m_tauDetailStr"          : "kinematic",
                              "m_jetDetailStr"          : "kinematic energy flavorTag sfFTagFix77 truth",
                              "m_METDetailStr"          : "RefEle RefGamma Muons RefJet RefJetTrk SoftClus PVSoftTrk",
