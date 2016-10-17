@@ -22,16 +22,37 @@ trig_el.append('HLT_e24_lhmedium_L1EM18VH')
 trig_el.append('HLT_e60_lhmedium')   
 trig_el.append('HLT_e120_lhloose')   
 trig_el.append('HLT_2e17_lhloose')   
+#Trigger added for other studies
+trig_el.append('HLT_e26_lhtight_nod0_ivarloos')
+trig_el.append('HLT_e60_lhmedium_nod0')
+trig_el.append('HLT_e140_lhloose_nod0')
+trig_el.append('HLT_2e17_lhvloose_nod0')
 trigellist = ",".join(trig_el)
 
 # muon triggers
 trig_mu = []
 trig_mu.append('HLT_mu26_imedium')
 trig_mu.append('HLT_mu50')
+#Trigger added for other studies
+trig_mu.append('HLT_mu26_ivarmedium')
 trigmulist = ",".join(trig_mu)
 
+trig_mumu = []
+trig_mumu.append('HLT_2mu14')
+trig_mumu.append('HLT_mu22_mu8noL1')
+trigmumulist = ",".join(trig_mumu)
+
+#dilepton emu triggers
+trig_emu = [] 
+trig_emu.append('HLT_e17_lhloose_nod0_mu14')
+trig_emu.append('HLT_e26_lhmedium_nod0_L1EM22VHI_mu8noL1')
+trig_emu.append('HLT_e7_lhmedium_nod0_mu24')
+trigemulist=",".join(trig_emu)
+
+trigMuMuEMulist=",".join(trig_emu+trig_mumu)
+
 # all triggers
-all_triggers = trig_el + trig_mu
+all_triggers = trig_el + trig_mu + trig_emu + trig_mumu
 triglist = ",".join(all_triggers)
 
 
@@ -218,7 +239,7 @@ JetSelectorDict =        { "m_name"                       :  "jetSelect_selectio
                                                           
                                                           
 MuonSelectorDict =       { "m_name"                       : "muonSelect_selection",
-                           "m_debug"                      : False,
+                           "m_debug"                      : True,
                            "m_inContainerName"            : "Muons_Calib",
                            "m_outContainerName"           : "Muons_Selected",
                            "m_inputAlgoSystNames"         : "MuonCalibrator_Syst",
@@ -240,12 +261,12 @@ MuonSelectorDict =       { "m_name"                       : "muonSelect_selectio
                            "m_CaloBasedIsoType"           : "topoetcone20",
                            "m_TrackBasedIsoType"          : "ptvarcone30",
                            "m_singleMuTrigChains"         : trigmulist,
-                           "m_diMuTrigChains"             : "",
+                           "m_diMuTrigChains"             : trigMuMuEMulist,
                          }                                
                                                           
                                                           
 ElectronSelectorDict = { "m_name"                      : "electronSelect_selection",
-                         "m_debug"                     :  False,
+                         "m_debug"                     :  True,
                          "m_inContainerName"           : "Electrons_Calib",
                          "m_outContainerName"          : "Electrons_Selected",
                          "m_inputAlgoSystNames"        : "ElectronCalibrator_Syst",
@@ -273,8 +294,8 @@ ElectronSelectorDict = { "m_name"                      : "electronSelect_selecti
                          "m_TrackIsoEff"               : "0.05*x",
                          "m_CaloBasedIsoType"          : "topoetcone20",
                          "m_TrackBasedIsoType"         : "ptvarcone20",
-                         "m_singleElTrigChains"        : "HLT_e24_lhmedium_L1EM20VH,HLT_e24_lhmedium_L1EM18VH,HLT_e60_lhmedium,HLT_e120_lhloose",
-                         "m_diElTrigChains"            : "HLT_2e12_lhloose_L12EM10VH,HLT_2e15_lhvloose_nod0_L12EM13VH,HLT_2e17_lhloose",
+                         "m_singleElTrigChains"        : "HLT_e24_lhmedium_L1EM20VH,HLT_e24_lhmedium_L1EM18VH,HLT_e60_lhmedium,HLT_e120_lhloose,HLT_e26_lhtight_nod0_ivarloose,HLT_e60_lhmedium_nod0 ,HLT_e140_lhloose_nod0",
+                         "m_diElTrigChains"            : "HLT_2e12_lhloose_L12EM10VH,HLT_2e15_lhvloose_nod0_L12EM13VH,HLT_2e17_lhloose,HLT_2e17_lhvloose_nod0,HLT_e17_lhloose_nod0_mu14,HLT_e26_lhmedium_nod0_L1EM22VHI_mu8noL1,HLT_e7_lhmedium_nod0_mu24",
                          }                               
                                                           
                                                           
