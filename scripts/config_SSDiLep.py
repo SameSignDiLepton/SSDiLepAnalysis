@@ -27,6 +27,10 @@ trig_el.append('HLT_e26_lhtight_nod0_ivarloos')
 trig_el.append('HLT_e60_lhmedium_nod0')
 trig_el.append('HLT_e140_lhloose_nod0')
 trig_el.append('HLT_2e17_lhvloose_nod0')
+#Trigger for fake rate measurement
+trig_el.append('HLT_e24_lhvloose_L1EM20VH')
+trig_el.append('HLT_e40_lhvloose')
+trig_el.append('HLT_e60_lhvloose')
 trigellist = ",".join(trig_el)
 
 # muon triggers
@@ -294,10 +298,10 @@ ElectronSelectorDict = { "m_name"                      : "electronSelect_selecti
                          "m_TrackIsoEff"               : "0.05*x",
                          "m_CaloBasedIsoType"          : "topoetcone20",
                          "m_TrackBasedIsoType"         : "ptvarcone20",
-                         "m_singleElTrigChains"        : "HLT_e24_lhmedium_L1EM20VH,HLT_e24_lhmedium_L1EM18VH,HLT_e60_lhmedium,HLT_e120_lhloose,HLT_e26_lhtight_nod0_ivarloose,HLT_e60_lhmedium_nod0 ,HLT_e140_lhloose_nod0",
+                         "m_singleElTrigChains"        : "HLT_e24_lhmedium_L1EM20VH,HLT_e24_lhmedium_L1EM18VH,HLT_e60_lhmedium,HLT_e120_lhloose,HLT_e26_lhtight_nod0_ivarloose,HLT_e60_lhmedium_nod0 ,HLT_e140_lhloose_nod0,HLT_e24_lhvloose_L1EM20VH,HLT_e40_lhvloose,HLT_e60_lhvloose",
                          "m_diElTrigChains"            : "HLT_2e12_lhloose_L12EM10VH,HLT_2e15_lhvloose_nod0_L12EM13VH,HLT_2e17_lhloose,HLT_2e17_lhvloose_nod0,HLT_e17_lhloose_nod0_mu14,HLT_e26_lhmedium_nod0_L1EM22VHI_mu8noL1,HLT_e7_lhmedium_nod0_mu24",
-                         }                               
-                                                          
+                         
+                         }                                                                                   
                                                           
                                                           
 METConstructorDict =     { "m_name"                       : "met",
