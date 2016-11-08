@@ -17,6 +17,7 @@
 #sample="DAOD_EXOT12.test_size_data_EXOT12_slimmingSimilarToEXOT0.pool.root"
 #sample="DAOD_EXOT12.08647446._000007.pool.root.1"
 #sample="DAOD_EXOT12.08767284._000001.pool.root.1"
+#sample="Sherpa_NNPDF30NNLO_Zmumu_Pt0_70_CVetoBVeto.root"
 
 #inDS="EXOT0test"
 #sample="DAOD_EXOT0.08613494._000007.pool.root.1"
@@ -27,11 +28,17 @@
 ##inDS="TOPQ1unsktest"
 ##sample="DAOD_TOPQ1.08614728._000021.pool.root.1"
 
-inDS="EXOT12newtest"
-sample="DAOD_EXOT12.test_size_MC_DCH800_nightlyRel0_bkgElExtraVariables_20160921.pool.root"
+#inDS="EXOT12newtest"
+#sample="DAOD_EXOT12.test_size_MC_DCH800_nightlyRel0_bkgElExtraVariables_20160921.pool.root"
+#sample="DAOD_EXOT12.test_size_MC_ttbar_moreTruthInfo.pool.root"
 
 #inDS="DxAODtest"
 #sample="AOD.08536744._000001.pool.root.1" #p2666
+
+inDS="mc15_13TeV"
+#sample="DAOD_EXOT12.09529848._000001.pool.root.1"
+##sample="DAOD_EXOT12.09520445._000013.pool.root.1"
+sample="Zmumu.root"
 
 infilepath="/data/fscutti/${inDS}/${sample}"
 
@@ -44,7 +51,7 @@ tokens=(${inDS//./ })
 configpath="$ROOTCOREBIN/user_scripts/SSDiLepAnalysis/jobOptions_SSDiMu.py"
 current_time="$(date +'%d-%m-%Y-%T')"
 outdir=output_local_DxAOD-2016-13TeV_${tokens[2]}_${current_time}
-nevents=100
+nevents=1000
 
 echo ""
 echo "Input file path :"
