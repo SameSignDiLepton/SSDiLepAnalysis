@@ -16,38 +16,69 @@ trig_el = []
 #trig_el.append('HLT_2e12_lhloose_L12EM10VH')   #
 
 # muon triggers
-trig_mu = []
-#trig_mu.append('HLT_mu20_L1MU15')
-#trig_mu.append('HLT_mu24')
-trig_mu.append('HLT_mu26_imedium')
-trig_mu.append('HLT_mu50')
-trigmulist = ",".join(trig_mu)
+trig_single_mu = []
+trig_single_mu.append('HLT_mu26_imedium')
+#trig_single_mu.append('HLT_mu26_ivarmedium')
+trig_single_mu.append('HLT_mu50')
+
+trig_di_mu = []
+trig_di_mu.append('HLT_2mu14')
+trig_di_mu.append('HLT_mu22_mu8noL1')
+
+single_mu_triglist = ",".join(trig_single_mu)
+di_mu_triglist = ",".join(trig_di_mu)
 
 # all triggers
-all_triggers = trig_el + trig_mu
+all_triggers = trig_el + trig_single_mu + trig_di_mu
 triglist = ",".join(all_triggers)
+
+
+# muon corrections
+mu_trig_corr = []
+mu_trig_corr.append("HLT_mu14")
+mu_trig_corr.append("HLT_mu22")
+mu_trig_corr.append("HLT_mu8noL1")
+mu_trig_corr.append("HLT_mu50")
+mu_trig_corr.append("HLT_mu26_imedium")
+#mu_trig_corr.append("HLT_mu26_ivarmedium")
+mu_trig_corr.append("HLT_mu26_imedium_OR_HLT_mu50")
+#mu_trig_corr.append("HLT_mu26_ivarmedium_OR_HLT_mu50")
+
+mu_reco_corr = []
+mu_reco_corr.append("Loose")
+mu_reco_corr.append("Medium")
+
+mu_iso_corr = []
+mu_iso_corr.append("Loose")
+mu_iso_corr.append("Gradient")
+mu_iso_corr.append("GradientLoose")
+mu_iso_corr.append("FixedCutTightTrackOnly")
+
+# build list
+trig_branches = []
+for t in mu_trig_corr:
+  for r in mu_reco_corr:
+    for i in mu_iso_corr:
+      trig_branches.append("_".join([t,"Reco%s"%r,"Iso%s"%i]))
+
 
 
 # list of years for configuring 
 # the trigger scale factor tool
 
 mutrigeffYears = "2015,2016"
-#mutrigeffYears = "2015"
 
 # This is just a RootCore path!!!
-path_ext = "$ROOTCOREBIN/data/SSDiLepAnalysis/ExternalMerged"
+path_ext = "$ROOTCOREBIN/data/SSDiLepAnalysis/External"
 
 # merged
-GRL_file = os.path.join(path_ext,
-    "merged_GRL_2015_2016.xml")
-
+GRL_list = []
+#GRL_list.append(os.path.join(path_ext,"merged_GRL_2015_2016.xml"))
 # 2015
-#GRL_file = os.path.join(path_ext,
-#   "data15_13TeV.periodAllYear_DetStatus-v79-repro20-02_DQDefects-00-02-02_PHYS_StandardGRL_All_Good_25ns.xml")
-
+GRL_list.append(os.path.join(path_ext,"data15_13TeV.periodAllYear_DetStatus-v79-repro20-02_DQDefects-00-02-02_PHYS_StandardGRL_All_Good_25ns.xml"))
 # 2016
-#GRL_file = os.path.join(path_ext,
-#    "data16_13TeV.periodAllYear_DetStatus-v81-pro20-10_DQDefects-00-02-02_PHYS_StandardGRL_All_Good_25ns.xml")
+GRL_list.append(os.path.join(path_ext,"data16_13TeV.periodAllYear_DetStatus-v83-pro20-14_DQDefects-00-02-04_PHYS_StandardGRL_All_Good_25ns.xml"))
+GRL_config = ",".join(GRL_list)
 
 
 #-------------------
@@ -61,43 +92,7 @@ LUMICALC_files = []
 # ------
 # merged
 # ------
-LUMICALC_files.append("ilumicalc_histograms_None_276262-304494_OflLumi-13TeV-005.root")
-
-# prescaled
-#LUMICALC_files.append("ilumicalc_histograms_HLT_mu20_L1MU15_276262-304494_OflLumi-13TeV-005.root:HLT_mu20_L1MU15")
-#LUMICALC_files.append("ilumicalc_histograms_HLT_mu24_276262-304494_OflLumi-13TeV-005.root:HLT_mu24")
-
-# unprescaled
-LUMICALC_files.append("ilumicalc_histograms_HLT_mu26_imedium_276262-304494_OflLumi-13TeV-005.root:HLT_mu26_imedium")
-LUMICALC_files.append("ilumicalc_histograms_HLT_mu50_276262-304494_OflLumi-13TeV-005.root:HLT_mu50")
-
-
-# ------
-# 2015
-# ------
-#LUMICALC_files.append("ilumicalc_histograms_None_276262-284484_OflLumi-13TeV-005.root")
-
-# prescaled
-#LUMICALC_files.append("ilumicalc_histograms_HLT_mu20_L1MU15_276262-284484_OflLumi-13TeV-005.root:HLT_mu20_L1MU15")
-#LUMICALC_files.append("ilumicalc_histograms_HLT_mu24_276262-284484_OflLumi-13TeV-005.root:HLT_mu24")
-
-# unprescaled
-#LUMICALC_files.append("ilumicalc_histograms_HLT_mu26_imedium_276262-284484_OflLumi-13TeV-005.root:HLT_mu26_imedium")
-#LUMICALC_files.append("ilumicalc_histograms_HLT_mu50_276262-284484_OflLumi-13TeV-005.root:HLT_mu50")
-
-
-# ------
-# 2016
-# ------
-#LUMICALC_files.append("ilumicalc_histograms_None_297730-304494_OflLumi-13TeV-005.root")
-
-# prescaled
-#LUMICALC_files.append("ilumicalc_histograms_HLT_mu20_L1MU15_297730-304494_OflLumi-13TeV-005.root:HLT_mu20_L1MU15")
-#LUMICALC_files.append("ilumicalc_histograms_HLT_mu24_297730-304494_OflLumi-13TeV-005.root:HLT_mu24")
-
-# unprescaled
-#LUMICALC_files.append("ilumicalc_histograms_HLT_mu50_297730-304494_OflLumi-13TeV-005.root:HLT_mu26_imedium")
-#LUMICALC_files.append("ilumicalc_histograms_HLT_mu26_imedium_297730-304494_OflLumi-13TeV-005.root:HLT_mu50")
+LUMICALC_files.append("ilumicalc_histograms_None_276262-309759_OflLumi-13TeV-005.root")
 
 
 for idx,file in enumerate(LUMICALC_files):
@@ -115,22 +110,17 @@ PRW_config = ','.join(PRW_files)
 
 ##path_el_eff = "ElectronEfficiencyCorrection/2015_2016/rel20.7/ICHEP_June2016_v3/"
 
-BasicEventSelectionDict = {"m_name"                       : "SSDiMu", 
+BasicEventSelectionDict = {"m_name"                       : "SSDiLep", 
                            "m_debug"                      : False,
                            "m_applyGRLCut"                : True,
-                           "m_GRLxml"                     : GRL_file,
+                           "m_GRLxml"                     : GRL_config,
                            "m_doPUreweighting"            : True,
-                           #"m_triggersForDataUnPrescale"  : "HLT_mu20_L1MU15,HLT_mu24,HLT_mu50",
-                           ##"m_triggersForDataUnPrescale"  : "HLT_mu50",
+                           "m_reweightSherpa22"           : True,
                            "m_PU_default_channel"         : 410000,
                            "m_lumiCalcFileNames"          : LUMICALC_config,
                            "m_PRWFileNames"               : PRW_config,
                            "m_useMetaData"                : True, 
-                           #"m_derivationName"             : "",
-                           #"m_derivationName"             : "HIGG3D3Kernel",
                            "m_derivationName"             : "EXOT12Kernel",
-                           #"m_derivationName"             : "EXOT0Kernel",
-                           #"m_derivationName"             : "TOPQ1Kernel",
                            "m_applyPrimaryVertexCut"      : True,
                            "m_vertexContainerName"        : "PrimaryVertices", 
                            "m_PVNTrack"                   : 3,
@@ -139,7 +129,6 @@ BasicEventSelectionDict = {"m_name"                       : "SSDiMu",
                            "m_applyCoreFlagsCut"          : True,
                            "m_checkDuplicatesData"        : True,
                            "m_checkDuplicatesMC"          : True,
-                           #"m_applyTriggerCut"            : True,
                            "m_applyTriggerCut"            : False,
                            "m_triggerSelection"           : triglist,
                            "m_storeTrigDecisions"         : True,
@@ -238,13 +227,13 @@ MuonSelectorDict =       { "m_name"                       : "muonSelect_selectio
                            "m_z0sintheta_max"             : 20.0,
                            #"m_MinIsoWPCut"                : "Loose",
                            "m_MinIsoWPCut"                : "",
-                           "m_IsoWPList"                  : "Loose,GradientLoose,Gradient,FixedCutTightTrackOnly,UserDefinedCut",
+                           "m_IsoWPList"                  : ",".join(mu_iso_corr),
                            "m_CaloIsoEff"                 : "0.1*x",
                            "m_TrackIsoEff"                : "0.1*x",
                            "m_CaloBasedIsoType"           : "topoetcone20",
                            "m_TrackBasedIsoType"          : "ptvarcone30",
-                           "m_singleMuTrigChains"         : trigmulist,
-                           "m_diMuTrigChains"             : "",
+                           "m_singleMuTrigChains"         : single_mu_triglist,
+                           "m_diMuTrigChains"             : di_mu_triglist,
                          }                                
                                                           
                                                           
@@ -268,12 +257,12 @@ ElectronSelectorDict =   { "m_name"                       : "electronSelect_sele
                            "m_doBLTrackQualityCut"        : True, # set this to True if reading ID flags from DAOD
                            "m_readIDFlagsFromDerivation"  : True,
                            #"m_confDirPID"                 : "mc15_20150712",
-                           "m_confDirPID"                 : "mc15_20160512",
+                           #"m_confDirPID"                 : "mc15_20160512",
                            "m_doLHPIDcut"                 : True, # Saves the failed electrons
                            "m_LHOperatingPoint"           : "Loose", # for loose ID, use "LooseAndBLayer" if NOT reading ID flags from DAOD
                            "m_doCutBasedPIDcut"           : False,
-                           "m_CutBasedOperatingPoint"     : "IsEMLoose",
-                           "m_CutBasedConfigYear"         : "",
+                           "m_CutBasedOperatingPoint"     : "Loose",
+                           #"m_CutBasedConfigYear"         : "",
                            #"m_MinIsoWPCut"                : "Loose",
                            "m_MinIsoWPCut"                : "", # Saves the failed electrons
                            "m_IsoWPList"                  : "Loose,GradientLoose,Gradient,FixedCutLoose,FixedCutTight,FixedCutTightTrackOnly,UserDefinedCut",
@@ -305,12 +294,12 @@ METConstructorDict =     { "m_name"                       : "met",
                            "m_referenceMETContainer"      : "MET_Reference_AntiKt4EMTopo",
                            "m_mapName"                    : "METAssoc_AntiKt4EMTopo",
                            "m_coreName"                   : "MET_Core_AntiKt4EMTopo",
-                           "m_outputContainer"            : "RefFinal_SSDiMu",
+                           "m_outputContainer"            : "RefFinal_SSDiLep",
                            "m_doPhotonCuts"               : True,
                            "m_useCaloJetTerm"             : True,
                            "m_useTrackJetTerm"            : False,                     
                            "m_inputElectrons"             : "Electrons_Selected",     
-                           "m_inputPhotons"               : "Photons",                 
+                           #"m_inputPhotons"               : "Photons",                 
                            ###"m_inputTaus"                  : "TauJets",          
                            "m_inputMuons"                 : "Muons_Selected",
                            #"m_inputJets"                  : "AntiKt4EMTopoJets_Calib", 
@@ -319,7 +308,7 @@ METConstructorDict =     { "m_name"                       : "met",
                          }
 
 
-OverlapRemoverDict =     { "m_name"                       : "overlap_removal_SSDiMu",
+OverlapRemoverDict =     { "m_name"                       : "overlap_removal_SSDiLep",
                            "m_debug"                      : False,
                            "m_useCutFlow"                 : True,
                            "m_createSelectedContainers"   : True,
@@ -365,10 +354,8 @@ MuonEfficiencyCorrectorLooseLooseDict = {  "m_name"                  : "muonEffi
                                       "m_WorkingPointRecoTrig"  : "Loose",
                                       "m_WorkingPointIsoTrig"   : "Loose",
                                       "m_WorkingPointTTVA"      : "TTVA",
-                                      "m_SingleMuTrig"          : "HLT_mu26_imedium_OR_HLT_mu50",
-                                      "m_DiMuTrig"              : "",
+                                      "m_MuTrigLegs"            : ",".join(mu_trig_corr),
                                     }
-
 
 MuonEfficiencyCorrectorLooseGradientDict = {  "m_name"                  : "muonEfficiencyCorrectorLooseGradient",
                                       "m_debug"                 : False,
@@ -390,8 +377,7 @@ MuonEfficiencyCorrectorLooseGradientDict = {  "m_name"                  : "muonE
                                       "m_WorkingPointRecoTrig"  : "Loose",
                                       "m_WorkingPointIsoTrig"   : "Gradient",
                                       "m_WorkingPointTTVA"      : "TTVA",
-                                      "m_SingleMuTrig"          : "HLT_mu26_imedium_OR_HLT_mu50",
-                                      "m_DiMuTrig"              : "",
+                                      "m_MuTrigLegs"            : ",".join(mu_trig_corr),
                                     }
 
 
@@ -415,8 +401,7 @@ MuonEfficiencyCorrectorMediumGradientDict = {  "m_name"                  : "muon
                                       "m_WorkingPointRecoTrig"  : "Medium",
                                       "m_WorkingPointIsoTrig"   : "Gradient",
                                       "m_WorkingPointTTVA"      : "TTVA",
-                                      "m_SingleMuTrig"          : "HLT_mu26_imedium_OR_HLT_mu50",
-                                      "m_DiMuTrig"              : "",
+                                      "m_MuTrigLegs"            : ",".join(mu_trig_corr),
                                     }
 
 
@@ -440,8 +425,7 @@ MuonEfficiencyCorrectorLooseFixedCutTightTrackOnlyDict = {  "m_name"            
                                       "m_WorkingPointRecoTrig"  : "Loose",
                                       "m_WorkingPointIsoTrig"   : "FixedCutTightTrackOnly",
                                       "m_WorkingPointTTVA"      : "TTVA",
-                                      "m_SingleMuTrig"          : "HLT_mu26_imedium_OR_HLT_mu50",
-                                      "m_DiMuTrig"              : "",
+                                      "m_MuTrigLegs"            : ",".join(mu_trig_corr),
                                     }
 
 
@@ -465,8 +449,7 @@ MuonEfficiencyCorrectorMediumFixedCutTightTrackOnlyDict = {  "m_name"           
                                       "m_WorkingPointRecoTrig"  : "Medium",
                                       "m_WorkingPointIsoTrig"   : "FixedCutTightTrackOnly",
                                       "m_WorkingPointTTVA"      : "TTVA",
-                                      "m_SingleMuTrig"          : "HLT_mu26_imedium_OR_HLT_mu50",
-                                      "m_DiMuTrig"              : "",
+                                      "m_MuTrigLegs"            : ",".join(mu_trig_corr),
                                     }
 
 
@@ -490,8 +473,7 @@ MuonEfficiencyCorrectorLooseGradientLooseDict = {  "m_name"                  : "
                                       "m_WorkingPointRecoTrig"  : "Loose",
                                       "m_WorkingPointIsoTrig"   : "GradientLoose",
                                       "m_WorkingPointTTVA"      : "TTVA",
-                                      "m_SingleMuTrig"          : "HLT_mu26_imedium_OR_HLT_mu50",
-                                      "m_DiMuTrig"              : "",
+                                      "m_MuTrigLegs"            : ",".join(mu_trig_corr),
                                     }
 
 
@@ -515,10 +497,8 @@ MuonEfficiencyCorrectorMediumGradientLooseDict = {  "m_name"                  : 
                                       "m_WorkingPointRecoTrig"  : "Medium",
                                       "m_WorkingPointIsoTrig"   : "GradientLoose",
                                       "m_WorkingPointTTVA"      : "TTVA",
-                                      "m_SingleMuTrig"          : "HLT_mu26_imedium_OR_HLT_mu50",
-                                      "m_DiMuTrig"              : "",
+                                      "m_MuTrigLegs"            : ",".join(mu_trig_corr),
                                     }
-
 
 # --------------------
 # electron corrections
@@ -609,45 +589,26 @@ ElectronEfficiencyCorrectorTightDict = { "m_name"                     : "electro
                                        }
 """
 
-"""
-TreeAlgoDict             = { "m_name"                  : "physics",
-                             "m_debug"                 : False,
-                             "m_muContainerName"       : "Muons_OR",
-                             "m_elContainerName"       : "Electrons_OR",
-                             "m_jetContainerName"      : "AntiKt4EMTopoJets_OR",
-                             "m_METContainerName"      : "RefFinal_SSDiMu",
-                             "m_evtDetailStr"          : "pileup truth",
-                             "m_trigDetailStr"         : "basic passTriggers menuKeys passTriggers",
-                             "m_muDetailStr"           : "kinematic trigger isolation quality trackparams effSF",
-                             "m_elDetailStr"           : "kinematic trigger isolation PID trackparams effSF",
-                             #"m_tauDetailStr"          : "kinematic",
-                             "m_jetDetailStr"          : "kinematic energy flavorTag sfFTagFix77 truth",
-                             "m_METDetailStr"          : "RefEle RefGamma Muons RefJet RefJetTrk SoftClus PVSoftTrk",
-                           }
-"""
 # Truth matching info just for muons
-TruthMatchAlgoDict       = { "m_name"                           : "truthMatching",
+TruthMatchAlgoDiLepDict       = { "m_name"                           : "truthMatching",
                              "m_debug"                          : False,
                              "m_inContainerName_Electrons"      : "Electrons_OR",
                              "m_inContainerName_Muons"          : "Muons_OR",
-                             "m_doMuonTrackMatching"            : False,
-                             "m_doMuonTruthPartMatching"        : True,
+                             "m_doMuonTruthContMatching"        : False,
                            }
 
 
-SSDiLepTreeAlgoDict      = { "m_name"                  : "physics",
+SSDiLepTreeAlgoDict      = { "m_name"                   : "physics",
                              "m_debug"                 : False,
                              "m_muContainerName"       : "Muons_OR",
                              "m_elContainerName"       : "Electrons_OR",
                              "m_jetContainerName"      : "AntiKt4EMTopoJets_OR",
-                             "m_METContainerName"      : "RefFinal_SSDiMu",
+                             "m_METContainerName"      : "RefFinal_SSDiLep",
                              "m_outHistDir"            : False,
-                             ######"m_evtDetailStr"          : "pileup truth",
                              "m_evtDetailStr"          : "pileup",
                              "m_trigDetailStr"         : "basic passTriggers menuKeys",
-                             "m_muDetailStr"           : "kinematic trigger isolation quality trackparams effSF",
+                             "m_muDetailStr"           : "kinematic trigger isolation quality trackparams effSF " + " ".join(trig_branches) + " Reco" + " Reco".join(mu_reco_corr) + " Iso" + " Iso".join(mu_iso_corr),
                              "m_elDetailStr"           : "kinematic trigger isolation PID trackparams effSF",
-                             #"m_tauDetailStr"          : "kinematic",
                              "m_jetDetailStr"          : "kinematic energy flavorTag sfFTagFix77 truth",
                              "m_METDetailStr"          : "RefEle RefGamma Muons RefJet RefJetTrk SoftClus PVSoftTrk",
                            }
