@@ -5,8 +5,7 @@ from optparse import OptionParser
 
 from xAH_config import xAH_config
 
-#This config file has been used for v1 ntuple submission ---> For EXOT12 and EXOT19!
-
+#This config file has been used for production of MC EXOT0. Main difference from config_v1.py : added triggers for fake measurement.
 
 # ROOT config files like ilumicalc, PRW and GRLs are kept here:
 # https://www.dropbox.com/sh/19kljimhoo1ntjd/AADjOdx7xDK5YaHQywtuD6x2a?dl=0
@@ -30,6 +29,10 @@ trig_el.append('HLT_e26_lhtight_nod0_ivarloos')
 trig_el.append('HLT_e60_lhmedium_nod0')
 trig_el.append('HLT_e140_lhloose_nod0')
 trig_el.append('HLT_2e17_lhvloose_nod0')
+#Trigger for fake rate measurement
+trig_el.append('HLT_e24_lhvloose_L1EM20VH')
+trig_el.append('HLT_e40_lhvloose')
+trig_el.append('HLT_e60_lhvloose')
 trigellist = ",".join(trig_el)
 
 # muon triggers
@@ -154,7 +157,7 @@ BasicEventSelectionDict = {"m_name"                       : "SSDiLep",
                            "m_lumiCalcFileNames"          : LUMICALC_config,
                            "m_PRWFileNames"               : PRW_config,
                            "m_useMetaData"                : True, 
-                           "m_derivationName"             : "EXOT12Kernel",
+                           "m_derivationName"             : "EXOT0Kernel",
                            "m_vertexContainerName"        : "PrimaryVertices", 
                            "m_PVNTrack"                   : 3,
                            "m_applyPrimaryVertexCut"      : True,
@@ -242,7 +245,7 @@ JetSelectorDict =        { "m_name"                       :  "jetSelect_selectio
                                                           
                                                           
 MuonSelectorDict =       { "m_name"                       : "muonSelect_selection",
-                           "m_debug"                      : True,
+                           "m_debug"                      : False,
                            "m_inContainerName"            : "Muons_Calib",
                            "m_outContainerName"           : "Muons_Selected",
                            "m_inputAlgoSystNames"         : "MuonCalibrator_Syst",
@@ -269,7 +272,7 @@ MuonSelectorDict =       { "m_name"                       : "muonSelect_selectio
                                                           
                                                           
 ElectronSelectorDict = { "m_name"                      : "electronSelect_selection",
-                         "m_debug"                     :  True,
+                         "m_debug"                     :  False,
                          "m_inContainerName"           : "Electrons_Calib",
                          "m_outContainerName"          : "Electrons_Selected",
                          "m_inputAlgoSystNames"        : "ElectronCalibrator_Syst",
@@ -297,10 +300,10 @@ ElectronSelectorDict = { "m_name"                      : "electronSelect_selecti
                          "m_TrackIsoEff"               : "0.05*x",
                          "m_CaloBasedIsoType"          : "topoetcone20",
                          "m_TrackBasedIsoType"         : "ptvarcone20",
-                         "m_singleElTrigChains"        : "HLT_e24_lhmedium_L1EM20VH,HLT_e24_lhmedium_L1EM18VH,HLT_e60_lhmedium,HLT_e120_lhloose,HLT_e26_lhtight_nod0_ivarloose,HLT_e60_lhmedium_nod0 ,HLT_e140_lhloose_nod0",
+                         "m_singleElTrigChains"        : "HLT_e24_lhmedium_L1EM20VH,HLT_e24_lhmedium_L1EM18VH,HLT_e60_lhmedium,HLT_e120_lhloose,HLT_e26_lhtight_nod0_ivarloose,HLT_e60_lhmedium_nod0 ,HLT_e140_lhloose_nod0,HLT_e24_lhvloose_L1EM20VH,HLT_e40_lhvloose,HLT_e60_lhvloose",
                          "m_diElTrigChains"            : "HLT_2e12_lhloose_L12EM10VH,HLT_2e15_lhvloose_nod0_L12EM13VH,HLT_2e17_lhloose,HLT_2e17_lhvloose_nod0,HLT_e17_lhloose_nod0_mu14,HLT_e26_lhmedium_nod0_L1EM22VHI_mu8noL1,HLT_e7_lhmedium_nod0_mu24",
-                         }                               
-                                                          
+                         
+                         }                                                                                   
                                                           
                                                           
 METConstructorDict =     { "m_name"                       : "met",
@@ -802,13 +805,15 @@ ElectronEfficiencyCorrectorTightTightDict = { "m_name"                    : "ele
 
 # Truth matching info just for muons
 TruthMatchAlgoDict       = { "m_name"                           : "truthMatching",
-                             "m_debug"                          : False,
+                             "m_debug"                          : True,
                              "m_inContainerName_Electrons"      : "Electrons_OR",
-                             "m_inContainerName_Muons"          : "Muons_OR",
+                             "m_inContainerName_Muons"          : "",
                              "m_doMuonTruthContMatching"        : False,
                            }
 
 
+electronPIDWorkingPoints     = "LooseAndBLayerLLH MediumLLH TightLLH " # space at the end
+electronIsolWorkingPoints    = "isolNoRequirement isolFixedCutLoose isolLooseTrackOnly isolGradient isolLoose isolTight " # space at the end
 SSDiLepTreeAlgoDict      = { "m_name"                  : "physics",
                              "m_debug"                 : False,
                              "m_muContainerName"       : "Muons_OR",
@@ -820,7 +825,7 @@ SSDiLepTreeAlgoDict      = { "m_name"                  : "physics",
                              "m_evtDetailStr"          : "pileup",
                              "m_trigDetailStr"         : "basic passTriggers menuKeys",
                              "m_muDetailStr"           : "kinematic trigger isolation quality trackparams effSF",
-                             "m_elDetailStr"           : "kinematic trigger isolation PID trackparams effSF",
+                             "m_elDetailStr"           : electronPIDWorkingPoints + electronIsolWorkingPoints + "kinematic trigger isolation PID trackparams effSF",
                              #"m_tauDetailStr"          : "kinematic",
                              "m_jetDetailStr"          : "kinematic energy flavorTag sfFTagFix77 truth",
                              "m_METDetailStr"          : "RefEle RefGamma Muons RefJet RefJetTrk SoftClus PVSoftTrk",
