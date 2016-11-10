@@ -15,14 +15,18 @@ void SSDiLepTree::AddEventUser(const std::string detailStrUser)
   if ( m_debug ) { Info("AddEventUser()", "Adding branches w/ detail: %s", detailStrUser.c_str()); }
 
   // event variables
-  m_tree->Branch("isMC",              &m_is_mc, "isMC/I");
-  m_tree->Branch("LPXKfactor",        &m_LPXKfactor, "isMC/D");
+  m_tree->Branch("isMC",             &m_is_mc, "isMC/I");
 
   if ( m_isMC ) {
     m_tree->Branch("HLpp_Daughters", &m_HLpp_Daughters);
     m_tree->Branch("HLmm_Daughters", &m_HLmm_Daughters);
     m_tree->Branch("HRpp_Daughters", &m_HRpp_Daughters);
     m_tree->Branch("HRmm_Daughters", &m_HRmm_Daughters);
+    
+    m_tree->Branch("LPXKfactor",     &m_KfactorWeight , "LPXKfactor/D");
+    m_tree->Branch("XS",             &m_XS, "XS/D");
+    m_tree->Branch("FiltEff",        &m_FiltEff, "FiltEff/D");
+
   }
 }
 
@@ -81,6 +85,7 @@ void SSDiLepTree::ClearEventUser()
     m_HLmm_Daughters.clear();
     m_HRpp_Daughters.clear();
     m_HRmm_Daughters.clear();
+
   }
 }
 
@@ -132,6 +137,10 @@ void SSDiLepTree::FillEventUser( const xAOD::EventInfo* eventInfo )
   static SG::AuxElement::Accessor< std::vector<int> > HRpp_DaughtersAcc("HRpp_Daughters");
   static SG::AuxElement::Accessor< std::vector<int> > HRmm_DaughtersAcc("HRmm_Daughters");
   
+  static SG::AuxElement::Accessor< double > xsAcc("xsection");
+  static SG::AuxElement::Accessor< double > FiltEffAcc("FiltEff");
+  static SG::AuxElement::Accessor< double > KfactorWeightAcc("KfactorWeight");
+  
   std::vector<int> dummyCODE(1,-999); 
   
   if ( HLpp_DaughtersAcc.isAvailable( *eventInfo ) )   { m_HLpp_Daughters = HLpp_DaughtersAcc( *eventInfo ) ; }
@@ -143,12 +152,12 @@ void SSDiLepTree::FillEventUser( const xAOD::EventInfo* eventInfo )
   if ( HRmm_DaughtersAcc.isAvailable( *eventInfo ) )   { m_HRmm_Daughters = HRmm_DaughtersAcc( *eventInfo ) ; }
   else   { m_HRmm_Daughters = dummyCODE; }
   
-  m_is_mc                =  ( eventInfo->eventType( xAOD::EventInfo::IS_SIMULATION ) );
-
-  //Apply the tool only if we are running on MC..
-  if(m_is_mc) m_LPXKfactor           =  eventInfo->auxdata< double >( "KfactorWeight" );
-  //..Otherwise put the variable to 1.
-  else m_LPXKfactor=1;
+  if ( xsAcc.isAvailable( *eventInfo ) )   { m_XS = xsAcc( *eventInfo ) ; }
+  else   { m_XS = -999.; }
+  if ( FiltEffAcc.isAvailable( *eventInfo ) )   { m_FiltEff = FiltEffAcc( *eventInfo ) ; }
+  else   { m_FiltEff = -999.; }
+  if ( KfactorWeightAcc.isAvailable( *eventInfo ) )   { m_KfactorWeight = KfactorWeightAcc( *eventInfo ) ; }
+  else   { m_KfactorWeight = -999.; }
   
 }
 

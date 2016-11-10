@@ -8,8 +8,6 @@
 #include <xAODAnaHelpers/TreeAlgo.h>
 #include <SSDiLepAnalysis/SSDiLepTree.h>
 
-#include "LPXKfactorTool/LPXKfactorTool.h"
-
 class SSDiLepTreeAlgo : public TreeAlgo
 {
   // put your configuration variables here as public variables.
@@ -18,8 +16,6 @@ class SSDiLepTreeAlgo : public TreeAlgo
 public:
 
   // additional data members which are not already in xAH::TreeAlgo.h
-  //std::string m_lepContainerName;
-  LPXKfactorTool *m_p_kfactorTool;  //!
 
   // this is a standard constructor
   SSDiLepTreeAlgo () :

@@ -584,6 +584,10 @@ TruthMatchAlgoDict       = { "m_name"                           : "truthMatching
                              "m_doMuonTruthContMatching"        : False,
                            }
 
+XSAlgoDict               = { "m_name"                           : "xsalgo",
+                             "m_debug"                          : False,
+                           }
+
 
 SSDiLepTreeAlgoDict      = { "m_name"                   : "physics",
                              "m_debug"                 : False,
