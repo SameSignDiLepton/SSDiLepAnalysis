@@ -52,5 +52,6 @@ c.setalg("ElectronEfficiencyCorrector", ElectronEfficiencyCorrectorTightTightDic
 
 
 c.setalg("TruthMatchAlgo", TruthMatchAlgoDict)
+c.setalg("XSAlgo", XSAlgoDict)
 c.setalg("SSDiLepTreeAlgo", SSDiLepTreeAlgoDict)
 
