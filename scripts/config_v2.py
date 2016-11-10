@@ -5,11 +5,11 @@ from optparse import OptionParser
 
 from xAH_config import xAH_config
 
-#This config file has been used for v1 ntuple submission ---> For EXOT12 and EXOT19!
+#This config file has been used for v2 ntuple submission ---> For EXOT12 and EXOT19!
 
 
 # ROOT config files like ilumicalc, PRW and GRLs are kept here:
-# https://www.dropbox.com/sh/19kljimhoo1ntjd/AADjOdx7xDK5YaHQywtuD6x2a?dl=0
+# https://www.dropbox.com/sh/xlihnydoej7apo1/AACaIFufV_4Ie5_3FK1cA2Uya?dl=0
 
 
 # Hack to force just-in-time libraries to load,
@@ -185,6 +185,8 @@ JetCalibratorDict =      { "m_name"                       : "jetCalib_AntiKt4EMT
                            "m_saveAllCleanDecisions"      : True,
                            "m_redoJVT"                    : True
                          }                                
+                                                          
+                                                          
                                                           
 MuonCalibratorDict =     { "m_name"                       : "muonCalib",
                            "m_debug"                      : False,
