@@ -13,7 +13,6 @@ del alg
 
 # electron triggers
 trig_el = []
-#trig_el.append('HLT_2e12_lhloose_L12EM10VH')   #
 
 # muon triggers
 trig_single_mu = []
@@ -71,41 +70,29 @@ mutrigeffYears = "2015,2016"
 # This is just a RootCore path!!!
 path_ext = "$ROOTCOREBIN/data/SSDiLepAnalysis/External"
 
-# merged
+# ------------------------------------------------------------------------------------
+# GRLs:
+#      https://twiki.cern.ch/twiki/bin/view/AtlasProtected/GoodRunListsForAnalysisRun2
+# ------------------------------------------------------------------------------------
 GRL_list = []
-#GRL_list.append(os.path.join(path_ext,"merged_GRL_2015_2016.xml"))
-# 2015
 GRL_list.append(os.path.join(path_ext,"data15_13TeV.periodAllYear_DetStatus-v79-repro20-02_DQDefects-00-02-02_PHYS_StandardGRL_All_Good_25ns.xml"))
-# 2016
-GRL_list.append(os.path.join(path_ext,"data16_13TeV.periodAllYear_DetStatus-v83-pro20-14_DQDefects-00-02-04_PHYS_StandardGRL_All_Good_25ns.xml"))
+GRL_list.append(os.path.join(path_ext,"data16_13TeV.periodAllYear_DetStatus-v83-pro20-15_DQDefects-00-02-04_PHYS_StandardGRL_All_Good_25ns.xml"))
 GRL_config = ",".join(GRL_list)
 
 
-#-------------------
-# PileUp reweighting
-#-------------------
-# One should not pass these files 
-# as an external reading of directories
-
+# ------------------
+# Lumi config
+# ------------------
 LUMICALC_files = []
-
-# ------
-# merged
-# ------
-LUMICALC_files.append("ilumicalc_histograms_None_276262-309759_OflLumi-13TeV-005.root")
-
-
-for idx,file in enumerate(LUMICALC_files):
-  LUMICALC_files[idx] = os.path.join(path_ext,file)
+LUMICALC_files.append(os.path.join(path_ext,"ilumicalc_histograms_None_276262-284484_OflLumi-13TeV-005.root"))
+LUMICALC_files.append(os.path.join(path_ext,"ilumicalc_histograms_None_297730-311481_OflLumi-13TeV-005.root"))
 LUMICALC_config = ','.join(LUMICALC_files)
 
-
+# ------------------
+# PileUp profile
+# ------------------
 PRW_files = []
-PRW_files.append("PRW_mc15c_410000_ttbar_nonallhad.root") 
-
-
-for idx,file in enumerate(PRW_files):
-    PRW_files[idx] = os.path.join(path_ext,file)
+PRW_files.append(os.path.join(path_ext,"PRW_mc15c_410000_ttbar_nonallhad.root")) 
 PRW_config = ','.join(PRW_files)
 
 ##path_el_eff = "ElectronEfficiencyCorrection/2015_2016/rel20.7/ICHEP_June2016_v3/"
@@ -590,11 +577,15 @@ ElectronEfficiencyCorrectorTightDict = { "m_name"                     : "electro
 """
 
 # Truth matching info just for muons
-TruthMatchAlgoDiLepDict       = { "m_name"                           : "truthMatching",
+TruthMatchAlgoDict       = { "m_name"                           : "truthMatching",
                              "m_debug"                          : False,
                              "m_inContainerName_Electrons"      : "Electrons_OR",
                              "m_inContainerName_Muons"          : "Muons_OR",
                              "m_doMuonTruthContMatching"        : False,
+                           }
+
+XSAlgoDict               = { "m_name"                           : "xsalgo",
+                             "m_debug"                          : False,
                            }
 
 

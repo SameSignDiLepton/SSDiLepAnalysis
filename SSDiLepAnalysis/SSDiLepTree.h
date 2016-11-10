@@ -11,7 +11,7 @@
 #include "xAODEgamma/Electron.h"
 #include "xAODJet/Jet.h"
 #include "xAODTau/TauJet.h"
-#include  "xAODCaloEvent/CaloCluster.h"
+#include "xAODCaloEvent/CaloCluster.h"
 
 // Infrastructure include(s):
 #include "xAODRootAccess/TEvent.h"
@@ -26,8 +26,10 @@ class SSDiLepTree : public HelpTreeBase
   private:
 
     /* event variables*/
-    int             m_is_mc;
-    double          m_LPXKfactor;
+    int               m_is_mc;
+    double            m_KfactorWeight;
+    double            m_XS;
+    double            m_FiltEff;
     std::vector<int>  m_HLpp_Daughters;
     std::vector<int>  m_HLmm_Daughters;
     std::vector<int>  m_HRpp_Daughters;

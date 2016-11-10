@@ -36,6 +36,7 @@ c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorMediumGradientLooseDi
 ##c.setalg("ElectronEfficiencyCorrector", ElectronEfficiencyCorrectorMediumDict)
 ###c.setalg("ElectronEfficiencyCorrector", ElectronEfficiencyCorrectorTightDict)
 
-c.setalg("TruthMatchAlgoDiLep", TruthMatchAlgoDiLepDict)
+c.setalg("TruthMatchAlgo", TruthMatchAlgoDict)
+c.setalg("XSAlgo", XSAlgoDict)
 c.setalg("SSDiLepTreeAlgo", SSDiLepTreeAlgoDict)
 
