@@ -16,8 +16,10 @@ trig_el = []
 
 # muon triggers
 trig_single_mu = []
+trig_single_mu.append('HLT_mu20_L1MU15')
+trig_single_mu.append('HLT_mu24_L1MU15')
 trig_single_mu.append('HLT_mu26_imedium')
-#trig_single_mu.append('HLT_mu26_ivarmedium')
+trig_single_mu.append('HLT_mu26_ivarmedium')
 trig_single_mu.append('HLT_mu50')
 
 trig_di_mu = []
@@ -36,11 +38,12 @@ triglist = ",".join(all_triggers)
 mu_trig_corr = []
 mu_trig_corr.append("HLT_mu14")
 mu_trig_corr.append("HLT_mu22")
+mu_trig_corr.append("HLT_mu24")
 mu_trig_corr.append("HLT_mu8noL1")
 mu_trig_corr.append("HLT_mu50")
 mu_trig_corr.append("HLT_mu26_imedium")
-#mu_trig_corr.append("HLT_mu26_ivarmedium")
 mu_trig_corr.append("HLT_mu26_imedium_OR_HLT_mu50")
+#mu_trig_corr.append("HLT_mu26_ivarmedium")
 #mu_trig_corr.append("HLT_mu26_ivarmedium_OR_HLT_mu50")
 
 mu_reco_corr = []

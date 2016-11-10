@@ -204,7 +204,8 @@ EL::StatusCode XSAlgo :: execute ()
     
     // KFactor decoration is performed here 
     m_p_kfactorTool->execute();
-    (*m_xsDecor)( *eventInfo ) = m_p_kfactorTool->getMCCrossSection();
+    // convert the xs from the tool in pb
+    (*m_xsDecor)( *eventInfo ) = m_p_kfactorTool->getMCCrossSection() * 1000.;
     (*m_FiltEffDecor)( *eventInfo ) = m_p_kfactorTool->getMCFilterEfficiency();
 
   }
