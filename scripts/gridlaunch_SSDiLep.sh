@@ -1,6 +1,6 @@
 #!/bin/bash
 
-username=fscutti
+username=mmuskinj
 
 #prodtag=EE_MUMU_failed3
 #prodtag=HLT_2mu10
@@ -9,7 +9,7 @@ username=fscutti
 #prodtag=eemumu_res_p2528
 #prodtag=presc
 #prodtag=allsingle
-prodtag=v2ntuples
+prodtag=v2ntuples_18232ifb
 
 ##infilepath="/home/fscutti/Analysis/SSDiLepAnalysis/doc/grid_input.txt"
 ##infilepath="/home/fscutti/Analysis/SSDiLepAnalysis/doc/single_grid_input.txt"
@@ -27,10 +27,10 @@ prodtag=v2ntuples
 ## infilepath="/home/fscutti/Analysis/SSDiLepAnalysis/doc/data15_13TeV_physics_Main_DAOD_EXOT12_p2528.txt"
 
 #infilepath="/home/fscutti/Analysis/SSDiLepAnalysis/doc/data_bkg_sig.txt"
-infilepath="/home/fscutti/Analysis/SSDiLepAnalysis/doc/failed_jobs.txt"
+infilepath="/afs/cern.ch/work/g/gorisek/miha/submitV2NtuplesMiha/SSDiLepAnalysis/doc/EXOT0_temp.txt"
 
 
-configpath="$ROOTCOREBIN/user_scripts/SSDiLepAnalysis/jobOptions_SSDiLep.py"
+configpath="$ROOTCOREBIN/user_scripts/SSDiLepAnalysis/jobOptions_SSDiLep_v2.py"
 
 current_time="$(date +'%d-%m-%Y-%T')"
 outdir=output_grid_DxAOD-2015-13TeV_${current_time}
@@ -44,13 +44,16 @@ destSE=AUSTRALIA-ATLAS_LOCALGROUPDISK
 
 ##exclSE=ANALY_INFN-T1,ANALY_MWT2_SL6,ANALY_OU_OCHEP_SWT2,ANALY_SWT2_CPB,ANALY_BU_ATLAS_Tier2_SL6,ANALY_HU_ATLAS_Tier2,ANALY_PIC_SL6,ANALY_MANC_SL6,ANALY_OX_SL6,ANALY_DCSC,ANALY_LUNARC,ANALY_SCINET,ANALY_SLAC,RU-Protvino-IHEP
 
-exclSE=RU-Protvino-IHEP
+
+exclSE=OUHEP_OSG,INFN-ROMA2,ru-Moscow-FIAN-LCG2,UNI-DORTMUND,RRC-KI-T1,OU_OCHEP_SWT2,SFU-LCG2,PSNC,UKI-SCOTGRID-GLASGOW,UNI-FREIBURG,UNIBE-LHEP
+
+##exclSE=RU-Protvino-IHEP
 
 gridDSname="user.${username}.SSDiLep.${prodtag}.%in:name[2]%.%in:name[3]%"
 
 #xAH_run.py -vv --files ${infilepath} --config ${configpath} --inputList --inputDQ2 --submitDir ${outdir} prun --optGridMergeOutput=1 --optGridNFilesPerJob=1.0 --optGridDestSE=${destSE} --optGridOutputSampleName=${gridDSname} --optGridExcludedSite=${exclSE} #--optGridSite=${inSE} 
 
-xAH_run.py -vv --files ${infilepath} --config ${configpath} --inputList --inputDQ2 --submitDir ${outdir} prun --optGridMergeOutput=1 --optGridNFilesPerJob=1.0 --optGridOutputSampleName=${gridDSname} ##--optGridExcludedSite=${exclSE} 
+xAH_run.py -vv --files ${infilepath} --config ${configpath} --inputList --inputDQ2 --submitDir ${outdir} prun --optGridMergeOutput=1 --optGridNFilesPerJob=1.0 --optGridOutputSampleName=${gridDSname} --optGridExcludedSite=${exclSE} 
 
 
 
