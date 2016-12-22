@@ -19,23 +19,33 @@ alg = ROOT.xAH.Algorithm()
 del alg
 
 # electron triggers
-trig_el = []
-trig_el.append('HLT_e24_lhmedium_L1EM20VH')   
-trig_el.append('HLT_e24_lhmedium_L1EM18VH')   
-trig_el.append('HLT_e60_lhmedium')   
-trig_el.append('HLT_e120_lhloose')   
-trig_el.append('HLT_2e17_lhloose')   
-#Trigger added for other studies
-trig_el.append('HLT_e17_lhloose')
-trig_el.append('HLT_e24_lhvloose_L1EM20VH')
-trig_el.append('HLT_e40_lhvloose')
-trig_el.append('HLT_e60_lhvloose')
-trig_el.append('HLT_e26_lhtight_nod0_ivarloose')
-trig_el.append('HLT_e60_lhmedium_nod0')
-trig_el.append('HLT_e140_lhloose_nod0')
-trig_el.append('HLT_2e17_lhvloose_nod0')
-trigellist = ",".join(trig_el)
+trig_el_single = []
+trig_el_single.append('HLT_e24_lhmedium_L1EM20VH')
+trig_el_single.append('HLT_e60_lhmedium')
+trig_el_single.append('HLT_e60_lhmedium_nod0')
 
+trig_el_single.append('HLT_e17_lhloose')
+trig_el_single.append('HLT_e24_lhvloose_L1EM20VH')
+trig_el_single.append('HLT_e24_lhvloose_nod0_L1EM20VH')
+trig_el_single.append('HLT_e26_lhvloose_L1EM20VH')
+trig_el_single.append('HLT_e26_lhvloose_nod0_L1EM20VH')
+trig_el_single.append('HLT_e60_lhvloose')
+trig_el_single.append('HLT_e60_lhvloose_nod0')
+trig_el_single.append('HLT_e120_lhloose')
+trig_el_single.append('HLT_e120_lhloose_nod0')
+trig_el_single.append('HLT_e140_lhloose')
+trig_el_single.append('HLT_e140_lhloose_nod0')
+
+trig_el_single.append('HLT_e24_lhtight_nod0_ivarloose')
+trig_el_single.append('HLT_e26_lhtight_nod0_ivarloose')
+
+trig_el_single = []
+trig_el_double.append('HLT_2e12_lhloose_L1EM10VH')
+trig_el_double.append('HLT_2e17_lhloose')
+trig_el_double.append('HLT_2e17_lhvloose_nod0')
+
+trig_el_single_string = ",".join(trig_el_single)
+trig_el_double_string = ",".join(trig_el_double)
 
 
 # muon triggers
@@ -57,7 +67,7 @@ di_mu_triglist = ",".join(trig_di_mu)
 
 
 #dilepton emu triggers
-trig_emu = [] 
+trig_emu = []
 trig_emu.append('HLT_e17_lhloose_nod0_mu14')
 trig_emu.append('HLT_e26_lhmedium_nod0_L1EM22VHI_mu8noL1')
 trig_emu.append('HLT_e7_lhmedium_nod0_mu24')
@@ -66,7 +76,7 @@ trigemulist=",".join(trig_emu)
 trigMuMuEMulist=",".join(trig_emu+trig_di_mu)
 
 # all triggers
-all_triggers = trig_el + trig_single_mu + trig_emu + trig_di_mu
+all_triggers = trig_el_single + trig_el_double + trig_single_mu + trig_emu + trig_di_mu
 triglist = ",".join(all_triggers)
 
 
@@ -105,7 +115,7 @@ for t in mu_trig_corr:
 
 
 
-# list of years for configuring 
+# list of years for configuring
 # the trigger scale factor tool
 
 mutrigeffYears = "2015,2016"
@@ -138,11 +148,11 @@ LUMICALC_config = ','.join(LUMICALC_files)
 # PileUp profile
 # ------------------
 PRW_files = []
-PRW_files.append(os.path.join(path_ext,"PRW_mc15c_410000_ttbar_nonallhad.root")) 
+PRW_files.append(os.path.join(path_ext,"PRW_mc15c_410000_ttbar_nonallhad.root"))
 PRW_config = ','.join(PRW_files)
 
 
-BasicEventSelectionDict = {"m_name"                       : "SSDiLep", 
+BasicEventSelectionDict = {"m_name"                       : "SSDiLep",
                            "m_debug"                      : False,
                            "m_applyGRLCut"                : True,
                            "m_GRLxml"                     : GRL_config,
@@ -151,10 +161,10 @@ BasicEventSelectionDict = {"m_name"                       : "SSDiLep",
                            "m_PU_default_channel"         : 410000,
                            "m_lumiCalcFileNames"          : LUMICALC_config,
                            "m_PRWFileNames"               : PRW_config,
-                           "m_useMetaData"                : True, 
+                           "m_useMetaData"                : True,
                            "m_derivationName"             : "EXOT12Kernel",
                            "m_applyPrimaryVertexCut"      : True,
-                           "m_vertexContainerName"        : "PrimaryVertices", 
+                           "m_vertexContainerName"        : "PrimaryVertices",
                            "m_PVNTrack"                   : 3,
                            "m_applyEventCleaningCut"      : True,
                            "m_truthLevelOnly"             : False,
@@ -165,10 +175,10 @@ BasicEventSelectionDict = {"m_name"                       : "SSDiLep",
                            "m_triggerSelection"           : triglist,
                            "m_storeTrigDecisions"         : True,
                            "m_storePassHLT"               : True,
-                           }                              
+                           }
 
-                                                          
-                                                          
+
+
 JetCalibratorDict =      { "m_name"                       : "jetCalib_AntiKt4EMTopo",
                            "m_debug"                      : False,
                            "m_inContainerName"            : "AntiKt4EMTopoJets",
@@ -190,10 +200,10 @@ JetCalibratorDict =      { "m_name"                       : "jetCalib_AntiKt4EMT
                            "m_cleanParent"                : False,
                            "m_saveAllCleanDecisions"      : True,
                            "m_redoJVT"                    : True
-                         }                                
-                                                          
-                                                          
-                                                          
+                         }
+
+
+
 MuonCalibratorDict =     { "m_name"                       : "muonCalib",
                            "m_debug"                      : False,
                            "m_forceDataCalib"             : True,
@@ -205,22 +215,22 @@ MuonCalibratorDict =     { "m_name"                       : "muonCalib",
                            #"m_release"                    : "PreRecs2016_05_23",
                            "m_systName"                   : "",
                            "m_systVal"                    : 0.0,
-                         }                                
-                                                          
-                                                          
+                         }
+
+
 ElectronCalibratorDict = { "m_name"                       : "electronCalib",
                            "m_debug"                      : False,
                            "m_inContainerName"            : "Electrons",
                            "m_outContainerName"           : "Electrons_Calib",
                            "m_inputAlgoSystNames"         : "",
                            "m_outputAlgoSystNames"        : "ElectronCalibrator_Syst",
-                           "m_esModel"                    : "es2016PRE",               
+                           "m_esModel"                    : "es2016PRE",
                            "m_decorrelationModel"         : "FULL_v1",
                            "m_systName"                   : "",
                            "m_systVal"                    : 0.0,
-                         }                                
-                                                          
-                                                          
+                         }
+
+
 JetSelectorDict =        { "m_name"                       :  "jetSelect_selection",
                            "m_debug"                      :  False,
                            "m_inContainerName"            :  "AntiKt4EMTopoJets_Calib",
@@ -239,8 +249,8 @@ JetSelectorDict =        { "m_name"                       :  "jetSelect_selectio
                            "m_JVTCut"                     :  0.64,
                            "m_doBTagCut"                  :  False,
                            "m_operatingPt"                :  "FixedCutBEff_77",
-                         }                                
-                                                          
+                         }
+
 
 MuonSelectorDict =       { "m_name"                       : "muonSelect_selection",
                            "m_debug"                      : False,
@@ -268,7 +278,7 @@ MuonSelectorDict =       { "m_name"                       : "muonSelect_selectio
                            "m_TrackBasedIsoType"          : "ptvarcone30",
                            "m_singleMuTrigChains"         : single_mu_triglist,
                            "m_diMuTrigChains"             : trigMuMuEMulist,
-                         }                                
+                         }
 
 
 
@@ -302,11 +312,11 @@ ElectronSelectorDict = { "m_name"                      : "electronSelect_selecti
                          "m_TrackIsoEff"               : "0.05*x",
                          "m_CaloBasedIsoType"          : "topoetcone20",
                          "m_TrackBasedIsoType"         : "ptvarcone20",
-                         "m_singleElTrigChains"        : "HLT_e17_lhloose,HLT_e24_lhmedium_L1EM20VH,HLT_e24_lhmedium_L1EM18VH,HLT_e60_lhmedium,HLT_e120_lhloose,HLT_e26_lhtight_nod0_ivarloose,HLT_e60_lhmedium_nod0,HLT_e140_lhloose_nod0,HLT_e24_lhvloose_L1EM20VH,HLT_e40_lhvloose,HLT_e60_lhvloose",
-                         "m_diElTrigChains"            : "HLT_2e12_lhloose_L12EM10VH,HLT_2e15_lhvloose_nod0_L12EM13VH,HLT_2e17_lhloose,HLT_2e17_lhvloose_nod0,HLT_e17_lhloose_nod0_mu14,HLT_e26_lhmedium_nod0_L1EM22VHI_mu8noL1,HLT_e7_lhmedium_nod0_mu24",
+                         "m_singleElTrigChains"        : trig_el_single_string,
+                         "m_diElTrigChains"            : trig_el_double_string,
                          }
 
-                                                          
+
 METConstructorDict =     { "m_name"                       : "met",
                            "m_debug"                      : False,
                            "m_referenceMETContainer"      : "MET_Reference_AntiKt4EMTopo",
@@ -315,12 +325,12 @@ METConstructorDict =     { "m_name"                       : "met",
                            "m_outputContainer"            : "RefFinal_SSDiLep",
                            "m_doPhotonCuts"               : True,
                            "m_useCaloJetTerm"             : True,
-                           "m_useTrackJetTerm"            : False,                     
-                           "m_inputElectrons"             : "Electrons_Selected",     
-                           "m_inputPhotons"               : "Photons",                 
+                           "m_useTrackJetTerm"            : False,
+                           "m_inputElectrons"             : "Electrons_Selected",
+                           "m_inputPhotons"               : "Photons",
                            "m_inputMuons"                 : "Muons_Selected",
-                           #"m_inputJets"                  : "AntiKt4EMTopoJets_Calib", 
-                           "m_inputJets"                  : "AntiKt4EMTopoJets_Selected", 
+                           #"m_inputJets"                  : "AntiKt4EMTopoJets_Calib",
+                           "m_inputJets"                  : "AntiKt4EMTopoJets_Selected",
                            "m_doJVTCut"                   : True,
                          }
 
@@ -524,7 +534,7 @@ MuonEfficiencyCorrectorMediumGradientLooseDict = {  "m_name"                  : 
 path_el_eff = "ElectronEfficiencyCorrection/2015_2016/rel20.7/ICHEP_June2016_v3/"
 trigger_el_eff = "DI_E_2015_e17_lhloose_2016_e17_lhloose"
 
-# LooseAndBLayerLLH PID 
+# LooseAndBLayerLLH PID
 # ---------------------
 
 ### no isolation
@@ -593,7 +603,7 @@ ElectronEfficiencyCorrectorLooseLTODict = { "m_name"                    : "EleEf
                                     "m_corrFileNameTrigMCEff" : path_el_eff + "trigger/efficiency." + trigger_el_eff + ".LooseAndBLayerLLH_d0z0_v11_isolLooseTrackOnly.root",
                                   }
 
-# MediumLLH PID 
+# MediumLLH PID
 # -------------
 
 ### no isolation
@@ -684,7 +694,7 @@ ElectronEfficiencyCorrectorMediumLTODict = { "m_name"                    : "EleE
                                     "m_corrFileNameTrigMCEff" : path_el_eff + "trigger/efficiency." + trigger_el_eff + ".MediumLLH_d0z0_v11_isolLooseTrackOnly.root",
                                   }
 
-# TightLLD PID 
+# TightLLD PID
 # ------------
 
 ### no isolation
@@ -829,4 +839,3 @@ SSDiLepTreeAlgoDict      = { "m_name"                   : "physics",
                              "m_jetDetailStr"          : "kinematic energy flavorTag sfFTagFix77 truth",
                              "m_METDetailStr"          : "RefEle RefGamma Muons RefJet RefJetTrk SoftClus PVSoftTrk",
                            }
-
