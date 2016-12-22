@@ -9,7 +9,8 @@
 #inDS="data15_13TeV.00284484.physics_Main.merge.DAOD_EXOT19.r7562_p2521_p2840"
 #inDS="testRTT"
 #inDS="mc15_13TeV"
-inDS="mc15_13TeV.301012.PowhegPythia8EvtGen_AZNLOCTEQ6L1_DYee_2500M2750.merge.DAOD_EXOT0.e3649_s2576_s2132_r7772_r7676_p2669"
+#inDS="mc15_13TeV.301012.PowhegPythia8EvtGen_AZNLOCTEQ6L1_DYee_2500M2750.merge.DAOD_EXOT0.e3649_s2576_s2132_r7772_r7676_p2669"
+inDS="mc15_13TeV.361106.PowhegPythia8EvtGen_AZNLOCTEQ6L1_Zee.merge.DAOD_EXOT12.e3601_s2576_s2132_r7725_r7676_p2823"
 
 #sample="DAOD_EXOT12.09582252._000005.pool.root.1"
 #sample="DAOD_EXOT19.09582252._000010.pool.root.1"
@@ -20,12 +21,13 @@ inDS="mc15_13TeV.301012.PowhegPythia8EvtGen_AZNLOCTEQ6L1_DYee_2500M2750.merge.DA
 #sample="DAOD_EXOT12.MC15.pool.root"
 #sample="DAOD_EXOT12.Data16.pool.root"
 #sample="DAOD_EXOT12.09777905._000001.pool.root.1"
-sample="DAOD_EXOT0.08617028._000001.pool.root.1"
+#sample="DAOD_EXOT0.08617028._000001.pool.root.1"
+sample="DAOD_EXOT12.09520232._000002.pool.root.1"
 
 #infilepath="/afs/cern.ch/work/g/gkramber/miha/testDxAOD/${inDS}/${sample}"
-#infilepath="/afs/cern.ch/work/g/gorisek/miha/${inDS}/${sample}"
+infilepath="/afs/cern.ch/work/g/gorisek/miha/${inDS}/${sample}"
 #infilepath="/afs/cern.ch/work/g/gkramber/miha/testDxAOD/${inDS}/${sample}"
-infilepath="/afs/cern.ch/work/g/gorisek/miha/CutflowChallenge/${inDS}/${sample}"
+#infilepath="/afs/cern.ch/work/g/gorisek/miha/CutflowChallenge/${inDS}/${sample}"
 
 # ------------------------------------------------------------------------------------
 
