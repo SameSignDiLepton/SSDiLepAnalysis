@@ -20,6 +20,9 @@
 #include "TTree.h"
 #include "TFile.h"
 
+typedef std::pair< std::pair<unsigned int,unsigned int>, char>     dielectron_trigmatch_pair;
+typedef std::multimap< std::string, dielectron_trigmatch_pair >    dielectron_trigmatch_pair_map; 
+
 class SSDiLepTree : public HelpTreeBase
 {
 
@@ -58,6 +61,8 @@ class SSDiLepTree : public HelpTreeBase
     std::vector<int>   m_electron_firstEgMotherTruthType;
     std::vector<int>   m_electron_firstEgMotherTruthOrigin;
     std::vector<int>   m_electron_firstEgMotherPdgId;
+
+    dielectron_trigmatch_pair_map  m_diElectronTrigMatchPairMap;
 
 
   public:

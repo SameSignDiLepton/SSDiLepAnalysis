@@ -15,7 +15,10 @@ void SSDiLepTree::AddEventUser(const std::string detailStrUser)
   if ( m_debug ) { Info("AddEventUser()", "Adding branches w/ detail: %s", detailStrUser.c_str()); }
 
   // event variables
-  m_tree->Branch("isMC",             &m_is_mc, "isMC/I");
+  m_tree->Branch("isMC",             &m_isMC, "isMC/B");
+
+  // di-elec trigger match
+  m_tree->Branch("diElectronTrigMatchPairMap", &m_diElectronTrigMatchPairMap);
 
   if ( m_isMC ) {
     m_tree->Branch("HLpp_Daughters", &m_HLpp_Daughters);
@@ -80,6 +83,7 @@ void SSDiLepTree::AddElectronsUser(const std::string detailStrUser)
 
 void SSDiLepTree::ClearEventUser()
 {
+  m_diElectronTrigMatchPairMap.clear();
   if ( m_isMC ) {
     m_HLpp_Daughters.clear();
     m_HLmm_Daughters.clear();
@@ -140,6 +144,8 @@ void SSDiLepTree::FillEventUser( const xAOD::EventInfo* eventInfo )
   static SG::AuxElement::Accessor< double > xsAcc("xsection");
   static SG::AuxElement::Accessor< double > FiltEffAcc("FiltEff");
   static SG::AuxElement::Accessor< double > KfactorWeightAcc("KfactorWeight");
+
+  static SG::AuxElement::Accessor< dielectron_trigmatch_pair_map > diElectronTrigMatchPairMapAcc( "diElectronTrigMatchPairMap" );
   
   std::vector<int> dummyCODE(1,-999); 
   
@@ -158,6 +164,9 @@ void SSDiLepTree::FillEventUser( const xAOD::EventInfo* eventInfo )
   else   { m_FiltEff = -999.; }
   if ( KfactorWeightAcc.isAvailable( *eventInfo ) )   { m_KfactorWeight = KfactorWeightAcc( *eventInfo ) ; }
   else   { m_KfactorWeight = -999.; }
+
+  if ( diElectronTrigMatchPairMapAcc.isAvailable( *eventInfo ) )   { m_diElectronTrigMatchPairMap = diElectronTrigMatchPairMapAcc( *eventInfo ) ; }
+  else   { m_diElectronTrigMatchPairMap = dielectron_trigmatch_pair_map() ; }
   
 }
 
