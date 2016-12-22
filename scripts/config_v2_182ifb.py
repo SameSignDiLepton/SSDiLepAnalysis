@@ -39,7 +39,7 @@ trig_el_single.append('HLT_e140_lhloose_nod0')
 trig_el_single.append('HLT_e24_lhtight_nod0_ivarloose')
 trig_el_single.append('HLT_e26_lhtight_nod0_ivarloose')
 
-trig_el_single = []
+trig_el_double = []
 trig_el_double.append('HLT_2e12_lhloose_L1EM10VH')
 trig_el_double.append('HLT_2e17_lhloose')
 trig_el_double.append('HLT_2e17_lhvloose_nod0')
@@ -161,8 +161,8 @@ BasicEventSelectionDict = {"m_name"                       : "SSDiLep",
                            "m_PU_default_channel"         : 410000,
                            "m_lumiCalcFileNames"          : LUMICALC_config,
                            "m_PRWFileNames"               : PRW_config,
-                           "m_useMetaData"                : True,
-                           "m_derivationName"             : "EXOT12Kernel",
+                           "m_useMetaData"                : True, 
+                           "m_derivationName"             : "EXOT0Kernel",
                            "m_applyPrimaryVertexCut"      : True,
                            "m_vertexContainerName"        : "PrimaryVertices",
                            "m_PVNTrack"                   : 3,
