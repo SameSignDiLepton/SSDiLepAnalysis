@@ -33,6 +33,7 @@ class SSDiLepTree : public HelpTreeBase
     double            m_KfactorWeight;
     double            m_XS;
     double            m_FiltEff;
+    double            m_BornMass;
     std::vector<int>  m_HLpp_Daughters;
     std::vector<int>  m_HLmm_Daughters;
     std::vector<int>  m_HRpp_Daughters;

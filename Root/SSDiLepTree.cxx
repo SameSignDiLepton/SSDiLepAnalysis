@@ -27,6 +27,7 @@ void SSDiLepTree::AddEventUser(const std::string detailStrUser)
     m_tree->Branch("HRmm_Daughters", &m_HRmm_Daughters);
     
     m_tree->Branch("LPXKfactor",     &m_KfactorWeight , "LPXKfactor/D");
+    m_tree->Branch("BornMass",       &m_BornMass , "BornMass/D");
     m_tree->Branch("XS",             &m_XS, "XS/D");
     m_tree->Branch("FiltEff",        &m_FiltEff, "FiltEff/D");
 
@@ -144,6 +145,7 @@ void SSDiLepTree::FillEventUser( const xAOD::EventInfo* eventInfo )
   static SG::AuxElement::Accessor< double > xsAcc("xsection");
   static SG::AuxElement::Accessor< double > FiltEffAcc("FiltEff");
   static SG::AuxElement::Accessor< double > KfactorWeightAcc("KfactorWeight");
+  static SG::AuxElement::Accessor< double > BornMassAcc("BornMass");
 
   static SG::AuxElement::Accessor< dielectron_trigmatch_pair_map > diElectronTrigMatchPairMapAcc( "diElectronTrigMatchPairMap" );
   
@@ -164,6 +166,8 @@ void SSDiLepTree::FillEventUser( const xAOD::EventInfo* eventInfo )
   else   { m_FiltEff = -999.; }
   if ( KfactorWeightAcc.isAvailable( *eventInfo ) )   { m_KfactorWeight = KfactorWeightAcc( *eventInfo ) ; }
   else   { m_KfactorWeight = -999.; }
+  if ( BornMassAcc.isAvailable( *eventInfo ) )   { m_BornMass = BornMassAcc( *eventInfo ) ; }
+  else   { m_BornMass = -999.; }
 
   if ( diElectronTrigMatchPairMapAcc.isAvailable( *eventInfo ) )   { m_diElectronTrigMatchPairMap = diElectronTrigMatchPairMapAcc( *eventInfo ) ; }
   else   { m_diElectronTrigMatchPairMap = dielectron_trigmatch_pair_map() ; }
