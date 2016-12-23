@@ -132,7 +132,7 @@ path_ext2016 = "$ROOTCOREBIN/data/SSDiLepAnalysis/External2016"
 # ------------------------------------------------------------------------------------
 GRL_list = []
 GRL_list.append(os.path.join(path_ext2015,"data15_13TeV.periodAllYear_DetStatus-v79-repro20-02_DQDefects-00-02-02_PHYS_StandardGRL_All_Good_25ns.xml"))
-GRL_list.append(os.path.join(path_ext2016,"data16_13TeV.periodAllYear_DetStatus-v81-pro20-10_DQDefects-00-02-02_PHYS_StandardGRL_All_Good_25ns.xml"))
+GRL_list.append(os.path.join(path_ext2016,"data16_13TeV.periodAllYear_DetStatus-v83-pro20-15_DQDefects-00-02-04_PHYS_StandardGRL_All_Good_25ns.xml"))
 GRL_config = ",".join(GRL_list)
 
 
@@ -141,7 +141,7 @@ GRL_config = ",".join(GRL_list)
 # ------------------
 LUMICALC_files = []
 LUMICALC_files.append(os.path.join(path_ext2015,"ilumicalc_histograms_None_276262-284484_OflLumi-13TeV-005.root"))
-LUMICALC_files.append(os.path.join(path_ext2016,"ilumicalc_histograms_None_297730-304494_OflLumi-13TeV-005.root"))
+LUMICALC_files.append(os.path.join(path_ext2016,"ilumicalc_histograms_None_297730-311481_OflLumi-13TeV-005.root"))
 LUMICALC_config = ','.join(LUMICALC_files)
 
 # ------------------
@@ -165,7 +165,7 @@ BasicEventSelectionDict = {"m_name"                       : "SSDiLep",
                            "m_derivationName"             : "EXOT12Kernel",
                            "m_applyPrimaryVertexCut"      : True,
                            "m_vertexContainerName"        : "PrimaryVertices",
-                           "m_PVNTrack"                   : 3,
+                           "m_PVNTrack"                   : 0,  #### remove the legacy run-1 cut
                            "m_applyEventCleaningCut"      : True,
                            "m_truthLevelOnly"             : False,
                            "m_applyCoreFlagsCut"          : True,

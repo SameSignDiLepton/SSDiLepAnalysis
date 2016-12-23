@@ -9,7 +9,8 @@ username=mmuskinj
 #prodtag=eemumu_res_p2528
 #prodtag=presc
 #prodtag=allsingle
-prodtag=v2ntuples_18232ifb
+
+prodtag=v2_EXOT12_data
 
 ##infilepath="/home/fscutti/Analysis/SSDiLepAnalysis/doc/grid_input.txt"
 ##infilepath="/home/fscutti/Analysis/SSDiLepAnalysis/doc/single_grid_input.txt"
@@ -27,7 +28,7 @@ prodtag=v2ntuples_18232ifb
 ## infilepath="/home/fscutti/Analysis/SSDiLepAnalysis/doc/data15_13TeV_physics_Main_DAOD_EXOT12_p2528.txt"
 
 #infilepath="/home/fscutti/Analysis/SSDiLepAnalysis/doc/data_bkg_sig.txt"
-infilepath="/afs/cern.ch/work/g/gorisek/miha/submitV2NtuplesMiha/SSDiLepAnalysis/doc/EXOT0_temp.txt"
+infilepath="/afs/cern.ch/work/g/gorisek/miha/submitV2NtuplesMiha/SSDiLepAnalysis/doc/EXOT12Data.txt"
 
 
 configpath="$ROOTCOREBIN/user_scripts/SSDiLepAnalysis/jobOptions_SSDiLep_v2.py"
@@ -45,7 +46,7 @@ destSE=AUSTRALIA-ATLAS_LOCALGROUPDISK
 ##exclSE=ANALY_INFN-T1,ANALY_MWT2_SL6,ANALY_OU_OCHEP_SWT2,ANALY_SWT2_CPB,ANALY_BU_ATLAS_Tier2_SL6,ANALY_HU_ATLAS_Tier2,ANALY_PIC_SL6,ANALY_MANC_SL6,ANALY_OX_SL6,ANALY_DCSC,ANALY_LUNARC,ANALY_SCINET,ANALY_SLAC,RU-Protvino-IHEP
 
 
-exclSE=OUHEP_OSG,INFN-ROMA2,ru-Moscow-FIAN-LCG2,UNI-DORTMUND,RRC-KI-T1,OU_OCHEP_SWT2,SFU-LCG2,PSNC,UKI-SCOTGRID-GLASGOW,UNI-FREIBURG,UNIBE-LHEP
+exclSE=OUHEP_OSG,INFN-ROMA2,ru-Moscow-FIAN-LCG2,UNI-DORTMUND,RRC-KI-T1,OU_OCHEP_SWT2,SFU-LCG2,PSNC,UKI-SCOTGRID-GLASGOW,UNI-FREIBURG,UNIBE-LHEP,HEPHY-UIBK,INFN-FRASCATI,EELA-UTFSM,BEIJING-LCG2,SMU_HPC,TUDresden-ZIH,SARA-MATRIX,UKI-LT2-RHUL
 
 ##exclSE=RU-Protvino-IHEP
 
