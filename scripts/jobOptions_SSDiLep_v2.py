@@ -46,15 +46,20 @@ c.setalg("ElectronSelector",    ElectronSelectorDict)
 c.setalg("METConstructor",      METConstructorDict)
 c.setalg("OverlapRemover",      OverlapRemoverDict)
 
+# --------------------
+# jet corrections
+# --------------------
+c.setalg("BJetEfficiencyCorrector", BJetEfficiencyCorrectorDict)
+
 # ----------------
 # muon corrections
 # ----------------
-c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorLooseLooseDict)      
-c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorLooseGradientLooseDict)      
-c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorLooseGradientDict)      
-c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorLooseFixedCutTightTrackOnlyDict)      
-c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorMediumGradientDict)      
-c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorMediumFixedCutTightTrackOnlyDict)      
+c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorLooseLooseDict)
+c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorLooseGradientLooseDict)
+c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorLooseGradientDict)
+c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorLooseFixedCutTightTrackOnlyDict)
+c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorMediumGradientDict)
+c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorMediumFixedCutTightTrackOnlyDict)
 c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorMediumGradientLooseDict)
 
 # --------------------
