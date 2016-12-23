@@ -41,6 +41,8 @@ class SSDiLepTree : public HelpTreeBase
     
     /* jet variables */
     std::vector<float> m_jet_m;
+    std::vector<float> m_jet_isClean;
+    std::vector< std::vector < float > > m_jet_jvtSF;
 
     /* muon variables */
     std::vector<int> m_muon_isTruthMatched;

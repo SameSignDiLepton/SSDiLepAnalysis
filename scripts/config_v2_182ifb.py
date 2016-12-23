@@ -249,6 +249,8 @@ JetSelectorDict =        { "m_name"                       :  "jetSelect_selectio
                            "m_JVTCut"                     :  0.64,
                            "m_doBTagCut"                  :  False,
                            "m_operatingPt"                :  "FixedCutBEff_77",
+                           "m_cleanJets"                  :  False, ####  we have to perform event cleaning after OR (in ntuples)
+                                                                    ####  https://twiki.cern.ch/twiki/bin/view/AtlasProtected/HowToCleanJets2016
                          }
 
 

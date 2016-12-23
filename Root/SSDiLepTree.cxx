@@ -42,6 +42,8 @@ void SSDiLepTree::AddJetsUser(const std::string detailStrUser, const std::string
 
   // jet variables
   m_tree->Branch("jet_m",     &m_jet_m);
+  m_tree->Branch("jet_isClean",     &m_jet_isClean);
+  m_tree->Branch("jet_jvtSF",     &m_jet_jvtSF);
 }
 
 void SSDiLepTree::AddMuonsUser(const std::string detailStrUser)
@@ -129,6 +131,8 @@ void SSDiLepTree::ClearJetsUser( const std::string jetName )
 
   // jet variables
   m_jet_m.clear();
+  m_jet_isClean.clear();
+  m_jet_jvtSF.clear();
   if ( m_debug ) { Info("ClearJetsUser()", "done with clearing"); }
 
 }
@@ -179,6 +183,17 @@ void SSDiLepTree::FillJetsUser( const xAOD::Jet* jet, const std::string jetName 
   if ( m_debug ) { Info("FillJetsUser()", "Filling jets - Jet name: %s", jetName.c_str()); }
 
   m_jet_m.push_back( jet->m() );
+
+  static SG::AuxElement::Accessor< char > isCleanAcc("cleanJet");
+  static SG::AuxElement::Accessor< std::vector<float> > sfVecJVTAcc( "JetJvtEfficiency_JVTSyst_JVT_Medium" );
+
+  std::vector<float> junkSF(1);
+
+  if ( isCleanAcc.isAvailable( *jet ) )   { m_jet_isClean.push_back( isCleanAcc( *jet ) ) ; }
+  else   { m_jet_isClean.push_back( -1 ); }
+  if ( sfVecJVTAcc.isAvailable( *jet ) )   { m_jet_jvtSF.push_back( sfVecJVTAcc( *jet ) ) ; }
+  else   { m_jet_jvtSF.push_back( junkSF ); }
+
 }
 
 void SSDiLepTree::FillMuonsUser( const xAOD::Muon* muon, const std::string )
