@@ -161,7 +161,7 @@ BasicEventSelectionDict = {"m_name"                       : "SSDiLep",
                            "m_PU_default_channel"         : 410000,
                            "m_lumiCalcFileNames"          : LUMICALC_config,
                            "m_PRWFileNames"               : PRW_config,
-                           "m_useMetaData"                : True, 
+                           "m_useMetaData"                : True,
                            "m_derivationName"             : "EXOT12Kernel",
                            "m_applyPrimaryVertexCut"      : True,
                            "m_vertexContainerName"        : "PrimaryVertices",
@@ -241,12 +241,12 @@ JetSelectorDict =        { "m_name"                       :  "jetSelect_selectio
                            "m_createSelectedContainer"    :  True,
                            "m_decorateSelectedObjects"    :  True,
                            "m_useCutFlow"                 :  True,
-                           "m_pT_min"                     :  25e3,
+                           "m_pT_min"                     :  20e3,
                            "m_eta_max"                    :  2.5,
                            "m_doJVT"                      :  True,
-                           "m_pt_max_JVT"                 :  50e3,
+                           "m_pt_max_JVT"                 :  60e3,
                            "m_eta_max_JVT"                :  2.4,
-                           "m_JVTCut"                     :  0.64,
+                           "m_JVTCut"                     :  0.59,
                            "m_doBTagCut"                  :  False,
                            "m_operatingPt"                :  "FixedCutBEff_77",
                            "m_cleanJets"                  :  False, ####  we have to perform event cleaning after OR (in ntuples)
@@ -354,6 +354,15 @@ OverlapRemoverDict =     { "m_name"                       : "overlap_removal_SSD
                            "m_inputAlgoJets"              : "",
                            "m_inputAlgoTaus"              : "",
                          }
+
+# --------------------
+# jet corrections
+# --------------------
+BJetEfficiencyCorrectorDict = { "m_name"            : "bJetEfficiencyCorrector",
+                                "m_debug"           : False,
+                                "m_inContainerName" : "AntiKt4EMTopoJets_OR",
+                                "m_operatingPt"     : "FixedCutBEff_77",
+                              }
 
 
 # --------------------
