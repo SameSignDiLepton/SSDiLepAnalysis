@@ -20,7 +20,6 @@ c.setalg("ElectronCalibrator", ElectronCalibratorDict)
 c.setalg("JetSelector", JetSelectorDict)
 c.setalg("MuonSelector", MuonSelectorDict)
 c.setalg("ElectronSelector", ElectronSelectorDict)
-###->c.setalg("TauSelector", TauSelectorDict)
 c.setalg("METConstructor", METConstructorDict)
 c.setalg("OverlapRemover", OverlapRemoverDict)
 
@@ -31,10 +30,6 @@ c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorLooseFixedCutTightTra
 c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorMediumGradientDict)      
 c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorMediumFixedCutTightTrackOnlyDict)      
 c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorMediumGradientLooseDict)      
-
-###c.setalg("ElectronEfficiencyCorrector", ElectronEfficiencyCorrectorDict)
-##c.setalg("ElectronEfficiencyCorrector", ElectronEfficiencyCorrectorMediumDict)
-###c.setalg("ElectronEfficiencyCorrector", ElectronEfficiencyCorrectorTightDict)
 
 c.setalg("TruthMatchAlgo", TruthMatchAlgoDict)
 c.setalg("XSAlgo", XSAlgoDict)
