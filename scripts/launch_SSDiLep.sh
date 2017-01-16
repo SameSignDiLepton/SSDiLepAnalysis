@@ -1,7 +1,13 @@
 #!/bin/bash
 
-infilepath = "/afs/cern.ch/work/g/gorisek/miha/mc15_13TeV.410000.PowhegPythiaEvtGen_P2012_ttbar_hdamp172p5_nonallhad.merge.DAOD_EXOT12.e3698_s2608_s2183_r7725_r7676_p2823/DAOD_EXOT12.09520689._000053.pool.root.1"
 
+inDS="mc15_13TeV.410000.PowhegPythiaEvtGen_P2012_ttbar_hdamp172p5_nonallhad.merge.DAOD_EXOT12.e3698_s2608_s2183_r7725_r7676_p2927"
+sample="DAOD_EXOT12.10140311._000073.pool.root.1" 
+
+#inDS="data16_13TeV.00310863.physics_Main.merge.DAOD_EXOT12.f756_m1710_p2933"
+#sample="DAOD_EXOT12.10154245._000237.pool.root.1" 
+
+infilepath="/data/fscutti/EXOT_TEST/${inDS}/${sample}"
 
 # ------------------------------------------------------------------------------------
 
@@ -11,7 +17,11 @@ tokens=(${inDS//./ })
 configpath="$ROOTCOREBIN/user_scripts/SSDiLepAnalysis/jobOptions_SSDiLep_v2.py"
 current_time="$(date +'%d-%m-%Y-%T')"
 outdir=output_local_DxAOD-2015-13TeV_${tokens[2]}_${current_time}
+<<<<<<< HEAD
 nevents=500
+=======
+nevents=2000
+>>>>>>> update v2Ntuples
 
 echo ""
 echo "Input file path :"
