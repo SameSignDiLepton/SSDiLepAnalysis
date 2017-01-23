@@ -5,19 +5,19 @@
 
 username=fscutti
 
-prodtag=HIGG3D3_v7_l2
+prodtag=HIGG3D3_v8
 
-#infilepath="/home/fscutti/SSDiLepAnalysis/doc/all_v7_HIGG3D3.txt"
+infilepath="/home/fscutti/SSDiLepAnalysis/doc/all_v8_HIGG3D3.txt"
 #infilepath="/home/fscutti/SSDiLepAnalysis/doc/jetjet_HIGG3D3.txt"
 
-infilepath="/home/fscutti/SSDiLepAnalysis/doc/failed_jobs.txt"
+#infilepath="/home/fscutti/SSDiLepAnalysis/doc/failed_jobs.txt"
 
 configpath="$ROOTCOREBIN/user_scripts/SSDiLepAnalysis/jobOptions_SSDiMu.py"
 
 current_time="$(date +'%d-%m-%Y-%T')"
 outdir=output_grid_DxAOD-2016-13TeV_${current_time}
 
-##exclSE=OUHEP_OSG,UNI-DORTMUND,OU_OCHEP_SWT2,ru-Moscow-FIAN-LCG2,INFN-T1,SFU-LCG2
+exclSE=OUHEP_OSG,OU_OCHEP_SWT2,ru-Moscow-FIAN-LCG2,INFN-T1,CSCS-LCG2,HEPHY-UIBK
 
 gridDSname="user.${username}.SSDiLep.${prodtag}.%in:name[2]%.%in:name[3]%"
 
