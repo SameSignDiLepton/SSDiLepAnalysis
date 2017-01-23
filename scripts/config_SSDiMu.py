@@ -11,7 +11,7 @@ from xAH_config import xAH_config
 alg = ROOT.xAH.Algorithm()
 del alg
 
-do_HIGG3D3 = False
+do_HIGG3D3 = True
 kernel = "HIGG3D3Kernel"
 use_truth_mu_cont = True
 
@@ -121,7 +121,7 @@ BasicEventSelectionDict = {"m_name"                       : "SSDiLep",
                            "m_derivationName"             : kernel,
                            "m_applyPrimaryVertexCut"      : True,
                            "m_vertexContainerName"        : "PrimaryVertices", 
-                           "m_PVNTrack"                   : 3,
+                           "m_PVNTrack"                   : 0, ## check the validity of this!!!
                            "m_applyEventCleaningCut"      : True,
                            "m_truthLevelOnly"             : False,
                            "m_applyCoreFlagsCut"          : True,
@@ -195,14 +195,15 @@ JetSelectorDict =        { "m_name"                       :  "jetSelect_selectio
                            "m_createSelectedContainer"    :  True,
                            "m_decorateSelectedObjects"    :  True,
                            "m_useCutFlow"                 :  True,
-                           "m_pT_min"                     :  25e3,
+                           "m_pT_min"                     :  20e3,
                            "m_eta_max"                    :  2.5,
                            "m_doJVT"                      :  True,
-                           "m_pt_max_JVT"                 :  50e3,
+                           "m_pt_max_JVT"                 :  60e3,
                            "m_eta_max_JVT"                :  2.4,
-                           "m_JVTCut"                     :  0.64,
+                           "m_JVTCut"                     :  0.59,
                            "m_doBTagCut"                  :  False,
                            "m_operatingPt"                :  "FixedCutBEff_77",
+                           "m_cleanJets"                  :  False,
                          }                                
                                                           
                                                           
@@ -250,19 +251,14 @@ ElectronSelectorDict =   { "m_name"                       : "electronSelect_sele
                            "m_vetoCrack"                  : True,
                            "m_d0sig_max"                  : 10.0,
                            "m_z0sintheta_max"             : 2.0,
-                           "m_doAuthorCut"                : False,
-                           "m_doOQCut"                    : True, # changed from original !!!
+                           "m_doAuthorCut"                : True,
+                           "m_doOQCut"                    : True, 
                            "m_doBLTrackQualityCut"        : True, # set this to True if reading ID flags from DAOD
                            "m_readIDFlagsFromDerivation"  : True,
-                           #"m_confDirPID"                 : "mc15_20150712",
-                           #"m_confDirPID"                 : "mc15_20160512",
-                           "m_doLHPIDcut"                 : True, # Saves the failed electrons
+                           "m_doLHPIDcut"                 : True, 
                            "m_LHOperatingPoint"           : "Loose", # for loose ID, use "LooseAndBLayer" if NOT reading ID flags from DAOD
                            "m_doCutBasedPIDcut"           : False,
                            "m_CutBasedOperatingPoint"     : "Loose",
-                           #"m_CutBasedConfigYear"         : "",
-                           #"m_MinIsoWPCut"                : "Loose",
-                           "m_MinIsoWPCut"                : "", # Saves the failed electrons
                            "m_IsoWPList"                  : "Loose,GradientLoose,Gradient,FixedCutLoose,FixedCutTight,FixedCutTightTrackOnly,UserDefinedCut",
                            "m_CaloIsoEff"                 : "0.05*x",
                            "m_TrackIsoEff"                : "0.05*x",
@@ -283,8 +279,7 @@ METConstructorDict =     { "m_name"                       : "met",
                            "m_useCaloJetTerm"             : True,
                            "m_useTrackJetTerm"            : False,                     
                            "m_inputElectrons"             : "Electrons_Selected",     
-                           #"m_inputPhotons"               : "Photons",                 
-                           ###"m_inputTaus"                  : "TauJets",          
+                           "m_inputPhotons"               : "Photons",                 
                            "m_inputMuons"                 : "Muons_Selected",
                            #"m_inputJets"                  : "AntiKt4EMTopoJets_Calib", 
                            "m_inputJets"                  : "AntiKt4EMTopoJets_Selected", 
@@ -307,8 +302,6 @@ OverlapRemoverDict =     { "m_name"                       : "overlap_removal_SSD
                            "m_inContainerName_Jets"       : "AntiKt4EMTopoJets_Selected",
                            "m_outContainerName_Jets"      : "AntiKt4EMTopoJets_OR",
                            "m_inputAlgoJets"              : "",
-                           #"m_inContainerName_Taus"       : "Taus_Selected",
-                           #"m_outContainerName_Taus"      : "Taus_OR",
                            "m_inputAlgoTaus"              : "",
                          }
 
