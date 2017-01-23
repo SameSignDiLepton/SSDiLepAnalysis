@@ -1,33 +1,7 @@
 #!/bin/bash
 
+infilepath = "/afs/cern.ch/work/g/gorisek/miha/mc15_13TeV.410000.PowhegPythiaEvtGen_P2012_ttbar_hdamp172p5_nonallhad.merge.DAOD_EXOT12.e3698_s2608_s2183_r7725_r7676_p2823/DAOD_EXOT12.09520689._000053.pool.root.1"
 
-#inDS="data16_13TeV.00304494.physics_Main.merge.DAOD_EXOT12.f716_m1620_p2840"
-#inDS="data16_13TeV.00304494.physics_Main.merge.DAOD_EXOT19.f716_m1620_p2840"
-#inDS="mc15_13TeV.301003.PowhegPythia8EvtGen_AZNLOCTEQ6L1_DYee_400M600.merge.DAOD_EXOT0.e3649_s2576_s2132_r7772_r7676_p2669"
-#inDS="mc15_13TeV.301006.PowhegPythia8EvtGen_AZNLOCTEQ6L1_DYee_1000M1250.merge.DAOD_EXOT12.e3649_s2576_s2132_r7772_r7676_p2823"
-
-#inDS="data15_13TeV.00284484.physics_Main.merge.DAOD_EXOT19.r7562_p2521_p2840"
-#inDS="testRTT"
-#inDS="mc15_13TeV"
-#inDS="mc15_13TeV.301012.PowhegPythia8EvtGen_AZNLOCTEQ6L1_DYee_2500M2750.merge.DAOD_EXOT0.e3649_s2576_s2132_r7772_r7676_p2669"
-inDS="mc15_13TeV.361106.PowhegPythia8EvtGen_AZNLOCTEQ6L1_Zee.merge.DAOD_EXOT12.e3601_s2576_s2132_r7725_r7676_p2823"
-
-#sample="DAOD_EXOT12.09582252._000005.pool.root.1"
-#sample="DAOD_EXOT19.09582252._000010.pool.root.1"
-#sample="DAOD_EXOT0.08616868._000001.pool.root.1"
-#sample="DAOD_EXOT12.09520314._000001.pool.root.1"
-
-#sample="DAOD_EXOT19.09581433._000066.pool.root.1"
-#sample="DAOD_EXOT12.MC15.pool.root"
-#sample="DAOD_EXOT12.Data16.pool.root"
-#sample="DAOD_EXOT12.09777905._000001.pool.root.1"
-#sample="DAOD_EXOT0.08617028._000001.pool.root.1"
-sample="DAOD_EXOT12.09520232._000002.pool.root.1"
-
-#infilepath="/afs/cern.ch/work/g/gkramber/miha/testDxAOD/${inDS}/${sample}"
-infilepath="/afs/cern.ch/work/g/gorisek/miha/${inDS}/${sample}"
-#infilepath="/afs/cern.ch/work/g/gkramber/miha/testDxAOD/${inDS}/${sample}"
-#infilepath="/afs/cern.ch/work/g/gorisek/miha/CutflowChallenge/${inDS}/${sample}"
 
 # ------------------------------------------------------------------------------------
 
@@ -37,7 +11,7 @@ tokens=(${inDS//./ })
 configpath="$ROOTCOREBIN/user_scripts/SSDiLepAnalysis/jobOptions_SSDiLep_v2.py"
 current_time="$(date +'%d-%m-%Y-%T')"
 outdir=output_local_DxAOD-2015-13TeV_${tokens[2]}_${current_time}
-nevents=200
+nevents=500
 
 echo ""
 echo "Input file path :"
