@@ -8,11 +8,11 @@
 
 
 
-#inDS="data15_13TeV"
+inDS="data15_13TeV"
 #sample="DAOD_HIGG3D3.08602173._000004.pool.root.1"
 ##sample="DAOD_HIGG3D3.08601488._000009.pool.root.1"
 #sample="DAOD_HIGG3D3.08602705._000023.pool.root.1"
-#sample="DAOD_EXOT12.08607164._000011.pool.root.1"
+sample="DAOD_EXOT12.08607164._000011.pool.root.1"
 
 #inDS="data16_13TeV"
 #sample="DAOD_HIGG3D3.08562588._000003.pool.root.1"
@@ -49,7 +49,7 @@
 #inDS="DxAODtest"
 #sample="AOD.08536744._000001.pool.root.1" #p2666
 
-inDS="mc15_13TeV"
+#inDS="mc15_13TeV"
 #sample="DAOD_EXOT12.09529848._000001.pool.root.1"
 ##sample="DAOD_EXOT12.09520445._000013.pool.root.1"
 ##sample="Zmumu.root"
@@ -57,7 +57,7 @@ inDS="mc15_13TeV"
 #sample="ttbar_EXOT12_410000.root"
 
 #sample="DAOD_HIGG3D3.09583262._000004.pool.root.1"
-sample="Wmunu_HIGG3D3_p2688.root"
+#sample="Wmunu_HIGG3D3_p2688.root"
 
 infilepath="/data/fscutti/${inDS}/${sample}"
 

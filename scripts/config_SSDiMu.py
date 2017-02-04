@@ -11,7 +11,7 @@ from xAH_config import xAH_config
 alg = ROOT.xAH.Algorithm()
 del alg
 
-do_HIGG3D3 = True
+do_HIGG3D3 = False
 kernel = "HIGG3D3Kernel"
 use_truth_mu_cont = True
 
@@ -34,7 +34,7 @@ trig_single_mu.append('HLT_mu50')
 
 trig_di_mu = []
 trig_di_mu.append('HLT_2mu14')
-trig_di_mu.append('HLT_mu22_mu8noL1')
+#trig_di_mu.append('HLT_mu22_mu8noL1')
 
 single_mu_triglist = ",".join(trig_single_mu)
 di_mu_triglist = ",".join(trig_di_mu)
@@ -47,9 +47,9 @@ triglist = ",".join(all_triggers)
 # muon corrections
 mu_trig_corr = []
 mu_trig_corr.append("HLT_mu14")
-mu_trig_corr.append("HLT_mu22")
+#mu_trig_corr.append("HLT_mu22")
 mu_trig_corr.append("HLT_mu24")
-mu_trig_corr.append("HLT_mu8noL1")
+#mu_trig_corr.append("HLT_mu8noL1")
 mu_trig_corr.append("HLT_mu50")
 mu_trig_corr.append("HLT_mu26_imedium")
 mu_trig_corr.append("HLT_mu26_imedium_OR_HLT_mu50")
@@ -121,7 +121,7 @@ BasicEventSelectionDict = {"m_name"                       : "SSDiLep",
                            "m_derivationName"             : kernel,
                            "m_applyPrimaryVertexCut"      : True,
                            "m_vertexContainerName"        : "PrimaryVertices", 
-                           "m_PVNTrack"                   : 0, ## check the validity of this!!!
+                           "m_PVNTrack"                   : 3, ## check the validity of this!!!
                            "m_applyEventCleaningCut"      : True,
                            "m_truthLevelOnly"             : False,
                            "m_applyCoreFlagsCut"          : True,
@@ -195,15 +195,20 @@ JetSelectorDict =        { "m_name"                       :  "jetSelect_selectio
                            "m_createSelectedContainer"    :  True,
                            "m_decorateSelectedObjects"    :  True,
                            "m_useCutFlow"                 :  True,
-                           "m_pT_min"                     :  20e3,
+                           #"m_pT_min"                     :  20e3,
+                           "m_pT_min"                     :  25e3,
                            "m_eta_max"                    :  2.5,
+                           #"m_doJVT"                      :  True,
                            "m_doJVT"                      :  True,
-                           "m_pt_max_JVT"                 :  60e3,
+                           #"m_pt_max_JVT"                 :  60e3,
+                           "m_pt_max_JVT"                 :  50e3,
                            "m_eta_max_JVT"                :  2.4,
-                           "m_JVTCut"                     :  0.59,
+                           #"m_JVTCut"                     :  0.59,
+                           "m_JVTCut"                     :  0.64,
                            "m_doBTagCut"                  :  False,
                            "m_operatingPt"                :  "FixedCutBEff_77",
-                           "m_cleanJets"                  :  False,
+                           #"m_cleanJets"                  :  False,
+                           "m_cleanJets"                  :  True,
                          }                                
                                                           
                                                           
@@ -233,6 +238,7 @@ MuonSelectorDict =       { "m_name"                       : "muonSelect_selectio
                            "m_TrackBasedIsoType"          : "ptvarcone30",
                            "m_singleMuTrigChains"         : single_mu_triglist,
                            "m_diMuTrigChains"             : di_mu_triglist,
+                           "m_removeEventBadMuon"         : True, 
                          }                                
                                                           
                                                           
