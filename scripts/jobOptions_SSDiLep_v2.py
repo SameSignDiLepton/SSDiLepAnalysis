@@ -44,12 +44,18 @@ c.setalg("JetSelector",         JetSelectorDict)
 c.setalg("MuonSelector",        MuonSelectorDict)
 c.setalg("ElectronSelector",    ElectronSelectorDict)
 c.setalg("METConstructor",      METConstructorDict)
-c.setalg("OverlapRemover",      OverlapRemoverDict)
 
 # --------------------
 # jet corrections
 # --------------------
 c.setalg("BJetEfficiencyCorrector", BJetEfficiencyCorrectorDict)
+
+
+# --------------------
+# OR with the b-tag info
+# --------------------
+c.setalg("OverlapRemover",      OverlapRemoverDict)
+
 
 # ----------------
 # muon corrections

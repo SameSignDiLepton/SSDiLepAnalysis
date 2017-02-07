@@ -1,6 +1,16 @@
 #!/bin/bash
 
-infilepath = "/afs/cern.ch/work/g/gorisek/miha/mc15_13TeV.410000.PowhegPythiaEvtGen_P2012_ttbar_hdamp172p5_nonallhad.merge.DAOD_EXOT12.e3698_s2608_s2183_r7725_r7676_p2823/DAOD_EXOT12.09520689._000053.pool.root.1"
+#inDS="mc15_13TeV.361063.Sherpa_CT10_llll.merge.DAOD_EXOT12.e3836_s2608_s2183_r7725_r7676_p2666"
+#inDS="public"
+inDS="mc15_13TeV.306556.Pythia8EvtGen_A14NNPDF23LO_DCH1100.merge.DAOD_EXOT12.e5408_a766_a821_r7676_p2823"
+
+#sample="DAOD_EXOT12.08647446._000005.pool.root.1" #p2666
+#sample="DAOD_EXOT12.test_size_MC_Zee_nightlyRel0_bkgElExtraVariables_20160922.pool.root" #p2666
+sample="DAOD_EXOT12.09777847._000001.pool.root.1" #p2666
+
+#infilepath="/afs/cern.ch/work/g/gorisek/miha/DxAOD_EXOT12/${inDS}/${sample}"
+#infilepath="/afs/cern.ch/work/p/pleskot/${inDS}/${sample}"
+infilepath="/afs/cern.ch/work/g/gorisek/miha/${inDS}/${sample}"
 
 
 # ------------------------------------------------------------------------------------
@@ -11,7 +21,7 @@ tokens=(${inDS//./ })
 configpath="$ROOTCOREBIN/user_scripts/SSDiLepAnalysis/jobOptions_SSDiLep_v2.py"
 current_time="$(date +'%d-%m-%Y-%T')"
 outdir=output_local_DxAOD-2015-13TeV_${tokens[2]}_${current_time}
-nevents=500
+nevents=100
 
 echo ""
 echo "Input file path :"

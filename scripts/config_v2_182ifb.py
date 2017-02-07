@@ -338,6 +338,7 @@ METConstructorDict =     { "m_name"                       : "met",
 
 
 OverlapRemoverDict =     { "m_name"                       : "overlap_removal_SSDiLep",
+                           "m_bTagWP"                     : "BTag_FixedCutBEff_77",
                            "m_debug"                      : False,
                            "m_useCutFlow"                 : True,
                            "m_createSelectedContainers"   : True,
@@ -360,7 +361,7 @@ OverlapRemoverDict =     { "m_name"                       : "overlap_removal_SSD
 # --------------------
 BJetEfficiencyCorrectorDict = { "m_name"            : "bJetEfficiencyCorrector",
                                 "m_debug"           : False,
-                                "m_inContainerName" : "AntiKt4EMTopoJets_OR",
+                                "m_inContainerName" : "AntiKt4EMTopoJets",
                                 "m_operatingPt"     : "FixedCutBEff_77",
                               }
 

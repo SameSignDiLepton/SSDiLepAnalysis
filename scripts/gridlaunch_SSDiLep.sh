@@ -10,7 +10,7 @@ username=mmuskinj
 #prodtag=presc
 #prodtag=allsingle
 
-prodtag=v2_EXOT12_MC
+prodtag=v2_EXOT12_data_bEffAfterOR
 
 ##infilepath="/home/fscutti/Analysis/SSDiLepAnalysis/doc/grid_input.txt"
 ##infilepath="/home/fscutti/Analysis/SSDiLepAnalysis/doc/single_grid_input.txt"
@@ -29,14 +29,14 @@ prodtag=v2_EXOT12_MC
 
 #infilepath="/home/fscutti/Analysis/SSDiLepAnalysis/doc/data_bkg_sig.txt"
 #infilepath="/afs/cern.ch/work/g/gorisek/miha/submitV2NtuplesMiha/SSDiLepAnalysis/doc/EXOT12Data.txt"
-#infilepath="/afs/cern.ch/work/g/gorisek/miha/submitV2NtuplesMiha/SSDiLepAnalysis/doc/EXOT12Data_failed.txt"
+infilepath="/afs/cern.ch/work/g/gorisek/miha/submitV2NtuplesMiha/SSDiLepAnalysis/doc/EXOT12Data_failed.txt"
 #infilepath="/afs/cern.ch/work/g/gorisek/miha/submitV2NtuplesMiha/SSDiLepAnalysis/doc/EXOT19Data.txt"
 # infilepath="/afs/cern.ch/work/g/gorisek/miha/submitV2NtuplesMiha/SSDiLepAnalysis/doc/EXOT19Data_failed.txt"
-infilepath="/afs/cern.ch/work/g/gorisek/miha/submitV2NtuplesMiha/SSDiLepAnalysis/doc/EXOT12MC_higgs.txt"
+# infilepath="/afs/cern.ch/work/g/gorisek/miha/submitV2NtuplesMiha/SSDiLepAnalysis/doc/EXOT12MC_higgs.txt"
 #infilepath="/afs/cern.ch/work/g/gorisek/miha/submitV2NtuplesMiha/SSDiLepAnalysis/doc/EXOT19Data2015.txt"
 #infilepath="/afs/cern.ch/work/g/gorisek/miha/submitV2NtuplesMiha/SSDiLepAnalysis/doc/EXOT0test.txt"
 #infilepath="/afs/cern.ch/work/g/gorisek/miha/submitV2NtuplesMiha/SSDiLepAnalysis/doc/EXOT0.txt"
-#infilepath="/afs/cern.ch/work/g/gorisek/miha/submitV2NtuplesMiha/SSDiLepAnalysis/doc/MCEXOT12signal.txt"
+# infilepath="/afs/cern.ch/work/g/gorisek/miha/submitV2NtuplesMiha/SSDiLepAnalysis/doc/MCEXOT12signal.txt"
 #infilepath="/afs/cern.ch/work/g/gorisek/miha/submitV2NtuplesMiha/SSDiLepAnalysis/doc/MCEXOT12signal2.txt"
 #infilepath="/afs/cern.ch/work/g/gorisek/miha/submitV2NtuplesMiha/SSDiLepAnalysis/doc/EXOT12Data2015.txt"
 #infilepath="/afs/cern.ch/work/g/gorisek/miha/submitV2NtuplesMiha/SSDiLepAnalysis/doc/MCEXOT12.txt"
@@ -57,8 +57,7 @@ destSE=SIGNET_LOCALGROUPDISK
 ##exclSE=ANALY_INFN-T1,ANALY_MWT2_SL6,ANALY_OU_OCHEP_SWT2,ANALY_SWT2_CPB,ANALY_BU_ATLAS_Tier2_SL6,ANALY_HU_ATLAS_Tier2,ANALY_PIC_SL6,ANALY_MANC_SL6,ANALY_OX_SL6,ANALY_DCSC,ANALY_LUNARC,ANALY_SCINET,ANALY_SLAC,RU-Protvino-IHEP
 
 
-exclSE=FZK-LCG2,Microsoft-Azure,UKI-SCOTGRID-ECDF,RAL-LCG2,SMU_HPC,T2_PK_NCP,T2_FI_HIP,CA-SCINET-T2,Indiana,ru-Moscow-FIAN-LCG2,IEPSAS-Kosice,OU_OCHEP_SWT2,UNI-SIEGEN-HEP,CERN-EXTENSION,CSCS-LCG2,T1_UK_RAL,UKI-SOUTHGRID-RALPP,OUHEP_OSG,DESY-HH,T2_GR_Ioannina,T2_IN_TIFR,CA-VICTORIA-WESTGRID-T2,UAM-LCG2,RAL-LCG2-ECHO,UKI-SCOTGRID-ECDF-RDF,T1_DE_KIT,CERN-CMSTEST,CERN-PROD,CERN-P1,IAAS,IN2P3-CPPM
-
+exclSE=INFN-T1,T1_IT_CNAF,Microsoft-Azure,UKI-SCOTGRID-GLASGOW,SMU_HPC,Indiana,ru-Moscow-FIAN-LCG2,OU_OCHEP_SWT2,CERN-EXTENSION,CSCS-LCG2,UKI-SOUTHGRID-RALPP,TRIUMF-LCG2,OUHEP_OSG,GR-12-TEIKAV,T2_GR_Ioannina,AGLT2,UAM-LCG2,UKI-SOUTHGRID-CAM-HEP,Australia-NECTAR,Australia-ATLAS,CERN-CMSTEST,CERN-PROD,UKI-LT2-QMUL,INFN-BOLOGNA-T3,CERN-P1
 ##exclSE=RU-Protvino-IHEP
 
 gridDSname="user.${username}.SSDiLep.${prodtag}.%in:name[2]%.%in:name[3]%"
