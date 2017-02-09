@@ -299,6 +299,7 @@ OverlapRemoverDict =     { "m_name"                       : "overlap_removal_SSD
                            "m_createSelectedContainers"   : True,
                            "m_decorateSelectedObjects"    : True,
                            "m_useSelected"                : True,
+                           "m_bTagWP"                     : "BTag",
                            "m_inContainerName_Muons"      : "Muons_Selected",
                            "m_outContainerName_Muons"     : "Muons_OR",
                            "m_inputAlgoMuons"             : "",
