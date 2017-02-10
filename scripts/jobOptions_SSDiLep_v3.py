@@ -1,12 +1,12 @@
 import ROOT
 
 from xAH_config import xAH_config
-from xAH_config import generateElectronEfficiencyCorrector
 import sys, os
 
 sys.path.insert(0, os.environ['ROOTCOREBIN']+"/user_scripts/SSDiLepAnalysis/")
 
 from config_v3 import *
+from helperFunctions import generateElectronEfficiencyCorrector
 
 c = xAH_config()
 

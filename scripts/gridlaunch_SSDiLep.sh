@@ -10,7 +10,7 @@ username=mmuskinj
 #prodtag=presc
 #prodtag=allsingle
 
-prodtag=v2_EXOT12_MC
+prodtag=v2_EXOT12_data_2_4_26
 
 ##infilepath="/home/fscutti/Analysis/SSDiLepAnalysis/doc/grid_input.txt"
 ##infilepath="/home/fscutti/Analysis/SSDiLepAnalysis/doc/single_grid_input.txt"
@@ -29,10 +29,10 @@ prodtag=v2_EXOT12_MC
 
 #infilepath="/home/fscutti/Analysis/SSDiLepAnalysis/doc/data_bkg_sig.txt"
 #infilepath="/afs/cern.ch/work/g/gorisek/miha/submitV2NtuplesMiha/SSDiLepAnalysis/doc/EXOT12Data.txt"
-#infilepath="/afs/cern.ch/work/g/gorisek/miha/submitV2NtuplesMiha/SSDiLepAnalysis/doc/EXOT12Data_failed.txt"
+infilepath="/afs/cern.ch/work/g/gorisek/miha/submitV2NtuplesMiha/SSDiLepAnalysis/doc/EXOT12Data_failed.txt"
 #infilepath="/afs/cern.ch/work/g/gorisek/miha/submitV2NtuplesMiha/SSDiLepAnalysis/doc/EXOT19Data.txt"
 # infilepath="/afs/cern.ch/work/g/gorisek/miha/submitV2NtuplesMiha/SSDiLepAnalysis/doc/EXOT19Data_failed.txt"
-infilepath="/afs/cern.ch/work/g/gorisek/miha/submitV2NtuplesMiha/SSDiLepAnalysis/doc/EXOT12MC_higgs.txt"
+# infilepath="/afs/cern.ch/work/g/gorisek/miha/submitV2NtuplesMiha/SSDiLepAnalysis/doc/EXOT12MC_higgs.txt"
 #infilepath="/afs/cern.ch/work/g/gorisek/miha/submitV2NtuplesMiha/SSDiLepAnalysis/doc/EXOT19Data2015.txt"
 #infilepath="/afs/cern.ch/work/g/gorisek/miha/submitV2NtuplesMiha/SSDiLepAnalysis/doc/EXOT0test.txt"
 #infilepath="/afs/cern.ch/work/g/gorisek/miha/submitV2NtuplesMiha/SSDiLepAnalysis/doc/EXOT0.txt"
@@ -42,7 +42,7 @@ infilepath="/afs/cern.ch/work/g/gorisek/miha/submitV2NtuplesMiha/SSDiLepAnalysis
 #infilepath="/afs/cern.ch/work/g/gorisek/miha/submitV2NtuplesMiha/SSDiLepAnalysis/doc/MCEXOT12.txt"
 
 
-configpath="$ROOTCOREBIN/user_scripts/SSDiLepAnalysis/jobOptions_SSDiLep_v2.py"
+configpath="$ROOTCOREBIN/user_scripts/SSDiLepAnalysis/jobOptions_SSDiLep_v3.py"
 
 current_time="$(date +'%d-%m-%Y-%T')"
 outdir=output_grid_DxAOD-2015-13TeV_${current_time}
