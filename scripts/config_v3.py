@@ -113,16 +113,16 @@ mutrigeffYears = "2015,2016"
 
 # This is just a RootCore path!!!
 path_ext = "$ROOTCOREBIN/data/SSDiLepAnalysis/External"
-path_ext2015 = "$ROOTCOREBIN/data/SSDiLepAnalysis/External2015"
-path_ext2016 = "$ROOTCOREBIN/data/SSDiLepAnalysis/External2016"
+#path_ext2015 = "$ROOTCOREBIN/data/SSDiLepAnalysis/External2015"
+#path_ext2016 = "$ROOTCOREBIN/data/SSDiLepAnalysis/External2016"
 
 # ------------------------------------------------------------------------------------
 # GRLs:
 #      https://twiki.cern.ch/twiki/bin/view/AtlasProtected/GoodRunListsForAnalysisRun2
 # ------------------------------------------------------------------------------------
 GRL_list = []
-GRL_list.append(os.path.join(path_ext2015,"data15_13TeV.periodAllYear_DetStatus-v79-repro20-02_DQDefects-00-02-02_PHYS_StandardGRL_All_Good_25ns.xml"))
-GRL_list.append(os.path.join(path_ext2016,"data16_13TeV.periodAllYear_DetStatus-v83-pro20-15_DQDefects-00-02-04_PHYS_StandardGRL_All_Good_25ns.xml"))
+GRL_list.append(os.path.join(path_ext,"data15_13TeV.periodAllYear_DetStatus-v79-repro20-02_DQDefects-00-02-02_PHYS_StandardGRL_All_Good_25ns.xml"))
+GRL_list.append(os.path.join(path_ext,"data16_13TeV.periodAllYear_DetStatus-v83-pro20-15_DQDefects-00-02-04_PHYS_StandardGRL_All_Good_25ns.xml"))
 GRL_config = ",".join(GRL_list)
 
 
@@ -130,8 +130,8 @@ GRL_config = ",".join(GRL_list)
 # Lumi config
 # ------------------
 LUMICALC_files = []
-LUMICALC_files.append(os.path.join(path_ext2015,"ilumicalc_histograms_None_276262-284484_OflLumi-13TeV-005.root"))
-LUMICALC_files.append(os.path.join(path_ext2016,"ilumicalc_histograms_None_297730-311481_OflLumi-13TeV-005.root"))
+LUMICALC_files.append(os.path.join(path_ext,"ilumicalc_histograms_None_276262-284484_OflLumi-13TeV-005.root"))
+LUMICALC_files.append(os.path.join(path_ext,"ilumicalc_histograms_None_297730-311481_OflLumi-13TeV-005.root"))
 LUMICALC_config = ','.join(LUMICALC_files)
 
 
@@ -362,7 +362,7 @@ MuonEfficiencyCorrectorLooseLooseDict = {  "m_name"                  : "muonEffi
                                       "m_outputSystNamesIso"    : "MuonEfficiencyCorrector_IsoSyst",
                                       "m_outputSystNamesTrig"   : "MuonEfficiencyCorrector_TrigSyst",
                                       "m_outputSystNamesTTVA"   : "MuonEfficiencyCorrector_TTVASyst",
-                                      "m_calibRelease"          : "160624_ICHEP",
+                                      "m_calibRelease"          : "160928_PostICHEP",
                                       "m_WorkingPointReco"      : "Loose",
                                       "m_WorkingPointIso"       : "Loose",
                                       "m_WorkingPointRecoTrig"  : "Loose",
@@ -385,7 +385,7 @@ MuonEfficiencyCorrectorLooseGradientDict = {  "m_name"                  : "muonE
                                       "m_outputSystNamesIso"    : "MuonEfficiencyCorrector_IsoSyst",
                                       "m_outputSystNamesTrig"   : "MuonEfficiencyCorrector_TrigSyst",
                                       "m_outputSystNamesTTVA"   : "MuonEfficiencyCorrector_TTVASyst",
-                                      "m_calibRelease"          : "160624_ICHEP",
+                                      "m_calibRelease"          : "160928_PostICHEP",
                                       "m_WorkingPointReco"      : "Loose",
                                       "m_WorkingPointIso"       : "Gradient",
                                       "m_WorkingPointRecoTrig"  : "Loose",
@@ -409,7 +409,7 @@ MuonEfficiencyCorrectorMediumGradientDict = {  "m_name"                  : "muon
                                       "m_outputSystNamesIso"    : "MuonEfficiencyCorrector_IsoSyst",
                                       "m_outputSystNamesTrig"   : "MuonEfficiencyCorrector_TrigSyst",
                                       "m_outputSystNamesTTVA"   : "MuonEfficiencyCorrector_TTVASyst",
-                                      "m_calibRelease"          : "160624_ICHEP",
+                                      "m_calibRelease"          : "160928_PostICHEP",
                                       "m_WorkingPointReco"      : "Medium",
                                       "m_WorkingPointIso"       : "Gradient",
                                       "m_WorkingPointRecoTrig"  : "Medium",
@@ -433,7 +433,7 @@ MuonEfficiencyCorrectorLooseFixedCutTightTrackOnlyDict = {  "m_name"            
                                       "m_outputSystNamesIso"    : "MuonEfficiencyCorrector_IsoSyst",
                                       "m_outputSystNamesTrig"   : "MuonEfficiencyCorrector_TrigSyst",
                                       "m_outputSystNamesTTVA"   : "MuonEfficiencyCorrector_TTVASyst",
-                                      "m_calibRelease"          : "160624_ICHEP",
+                                      "m_calibRelease"          : "160928_PostICHEP",
                                       "m_WorkingPointReco"      : "Loose",
                                       "m_WorkingPointIso"       : "FixedCutTightTrackOnly",
                                       "m_WorkingPointRecoTrig"  : "Loose",
@@ -457,7 +457,7 @@ MuonEfficiencyCorrectorMediumFixedCutTightTrackOnlyDict = {  "m_name"           
                                       "m_outputSystNamesIso"    : "MuonEfficiencyCorrector_IsoSyst",
                                       "m_outputSystNamesTrig"   : "MuonEfficiencyCorrector_TrigSyst",
                                       "m_outputSystNamesTTVA"   : "MuonEfficiencyCorrector_TTVASyst",
-                                      "m_calibRelease"          : "160624_ICHEP",
+                                      "m_calibRelease"          : "160928_PostICHEP",
                                       "m_WorkingPointReco"      : "Medium",
                                       "m_WorkingPointIso"       : "FixedCutTightTrackOnly",
                                       "m_WorkingPointRecoTrig"  : "Medium",
@@ -481,7 +481,7 @@ MuonEfficiencyCorrectorLooseGradientLooseDict = {  "m_name"                  : "
                                       "m_outputSystNamesIso"    : "MuonEfficiencyCorrector_IsoSyst",
                                       "m_outputSystNamesTrig"   : "MuonEfficiencyCorrector_TrigSyst",
                                       "m_outputSystNamesTTVA"   : "MuonEfficiencyCorrector_TTVASyst",
-                                      "m_calibRelease"          : "160624_ICHEP",
+                                      "m_calibRelease"          : "160928_PostICHEP",
                                       "m_WorkingPointReco"      : "Loose",
                                       "m_WorkingPointIso"       : "GradientLoose",
                                       "m_WorkingPointRecoTrig"  : "Loose",
@@ -505,7 +505,7 @@ MuonEfficiencyCorrectorMediumGradientLooseDict = {  "m_name"                  : 
                                       "m_outputSystNamesIso"    : "MuonEfficiencyCorrector_IsoSyst",
                                       "m_outputSystNamesTrig"   : "MuonEfficiencyCorrector_TrigSyst",
                                       "m_outputSystNamesTTVA"   : "MuonEfficiencyCorrector_TTVASyst",
-                                      "m_calibRelease"          : "160624_ICHEP",
+                                      "m_calibRelease"          : "160928_PostICHEP",
                                       "m_WorkingPointReco"      : "Medium",
                                       "m_WorkingPointIso"       : "GradientLoose",
                                       "m_WorkingPointRecoTrig"  : "Medium",
