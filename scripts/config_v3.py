@@ -52,6 +52,7 @@ trig_single_mu = []
 trig_single_mu.append('HLT_mu20_L1MU15')
 trig_single_mu.append('HLT_mu24_L1MU15')
 trig_single_mu.append('HLT_mu26_imedium')
+trig_single_mu.append('HLT_mu24_imedium')     # new trigger !
 trig_single_mu.append('HLT_mu26_ivarmedium')
 trig_single_mu.append('HLT_mu50')
 
@@ -84,8 +85,10 @@ mu_trig_corr.append("HLT_mu8noL1")
 mu_trig_corr.append("HLT_mu50")
 mu_trig_corr.append("HLT_mu26_imedium")
 mu_trig_corr.append("HLT_mu26_imedium_OR_HLT_mu50")
-#mu_trig_corr.append("HLT_mu26_ivarmedium")
-#mu_trig_corr.append("HLT_mu26_ivarmedium_OR_HLT_mu50")
+mu_trig_corr.append("HLT_mu26_ivarmedium")
+mu_trig_corr.append("HLT_mu26_ivarmedium_OR_HLT_mu50")
+mu_trig_corr.append("HLT_mu24_imedium")
+mu_trig_corr.append("HLT_mu24_imedium_OR_HLT_mu50")
 
 mu_reco_corr = []
 mu_reco_corr.append("Loose")
@@ -147,7 +150,7 @@ BasicEventSelectionDict = {"m_name"                       : "SSDiLep",
                            "m_derivationName"             : "EXOT12Kernel",
                            "m_applyPrimaryVertexCut"      : True,
                            "m_vertexContainerName"        : "PrimaryVertices",
-                           "m_PVNTrack"                   : 0,  #### remove the legacy run-1 cut
+                           #"m_PVNTrack"                   : 0,  #### remove the legacy run-1 cut
                            "m_applyEventCleaningCut"      : True,
                            "m_truthLevelOnly"             : False,
                            "m_applyCoreFlagsCut"          : True,
@@ -193,10 +196,13 @@ MuonCalibratorDict =     { "m_name"                       : "muonCalib",
                            "m_outContainerName"           : "Muons_Calib",
                            "m_inputAlgoSystNames"         : "",
                            "m_outputAlgoSystNames"        : "MuonCalibrator_Syst",
-                           "m_release"                    : "Recs2016_08_07", #This should be more up to date!!!
-                           #"m_release"                    : "PreRecs2016_05_23",
+                           "m_release"                    : "Recs2016_08_07", 
                            "m_systName"                   : "",
                            "m_systVal"                    : 0.0,
+                           "m_Years"                      : "Data16,Data15",
+                           "m_do_sagittaCorr"             : True,
+                           "m_sagittaRelease"             : "sagittaBiasDataAll_06_02_17",
+                           "m_do_sagittaMCDistortion"     : False,
                          }
 
 
@@ -248,12 +254,9 @@ MuonSelectorDict =       { "m_name"                       : "muonSelect_selectio
                            "m_pass_max"                   : 1000,
                            "m_pT_min"                     : 20e3, # min pT of derivations
                            "m_eta_max"                    : 2.5,
-                           "m_muonType"                   : "Combined",
-                           #"m_muonQuality"             : ROOT.xAOD.Muon.Loose,
-                           "m_muonQualityStr"             : "Loose",
-                           "m_d0sig_max"                  : 20.0,
-                           "m_z0sintheta_max"             : 20.0,
-                           #"m_MinIsoWPCut"                : "Loose",
+                           "m_muonQualityStr"             : "Medium",
+                           "m_d0sig_max"                  : 10.0,
+                           "m_z0sintheta_max"             : 10.0,
                            "m_MinIsoWPCut"                : "",
                            "m_IsoWPList"                  : ",".join(mu_iso_corr),
                            "m_CaloIsoEff"                 : "0.1*x",
@@ -357,6 +360,7 @@ MuonEfficiencyCorrectorLooseLooseDict = {  "m_name"                  : "muonEffi
                                       "m_systNameTrig"          : "",
                                       "m_systNameTTVA"          : "",
                                       "m_useRandomRunNumber"    : True,
+                                      "m_AllowZeroSF"           : True,
                                       "m_Years"                 : mutrigeffYears,
                                       "m_outputSystNamesReco"   : "MuonEfficiencyCorrector_RecoSyst",
                                       "m_outputSystNamesIso"    : "MuonEfficiencyCorrector_IsoSyst",
@@ -380,6 +384,7 @@ MuonEfficiencyCorrectorLooseGradientDict = {  "m_name"                  : "muonE
                                       "m_systNameTrig"          : "",
                                       "m_systNameTTVA"          : "",
                                       "m_useRandomRunNumber"    : True,
+                                      "m_AllowZeroSF"           : True,
                                       "m_Years"                 : mutrigeffYears,
                                       "m_outputSystNamesReco"   : "MuonEfficiencyCorrector_RecoSyst",
                                       "m_outputSystNamesIso"    : "MuonEfficiencyCorrector_IsoSyst",
@@ -404,6 +409,7 @@ MuonEfficiencyCorrectorMediumGradientDict = {  "m_name"                  : "muon
                                       "m_systNameTrig"          : "",
                                       "m_systNameTTVA"          : "",
                                       "m_useRandomRunNumber"    : True,
+                                      "m_AllowZeroSF"           : True,
                                       "m_Years"                 : mutrigeffYears,
                                       "m_outputSystNamesReco"   : "MuonEfficiencyCorrector_RecoSyst",
                                       "m_outputSystNamesIso"    : "MuonEfficiencyCorrector_IsoSyst",
@@ -428,6 +434,7 @@ MuonEfficiencyCorrectorLooseFixedCutTightTrackOnlyDict = {  "m_name"            
                                       "m_systNameTrig"          : "",
                                       "m_systNameTTVA"          : "",
                                       "m_useRandomRunNumber"    : True,
+                                      "m_AllowZeroSF"           : True,
                                       "m_Years"                 : mutrigeffYears,
                                       "m_outputSystNamesReco"   : "MuonEfficiencyCorrector_RecoSyst",
                                       "m_outputSystNamesIso"    : "MuonEfficiencyCorrector_IsoSyst",
@@ -452,6 +459,7 @@ MuonEfficiencyCorrectorMediumFixedCutTightTrackOnlyDict = {  "m_name"           
                                       "m_systNameTrig"          : "",
                                       "m_systNameTTVA"          : "",
                                       "m_useRandomRunNumber"    : True,
+                                      "m_AllowZeroSF"           : True,
                                       "m_Years"                 : mutrigeffYears,
                                       "m_outputSystNamesReco"   : "MuonEfficiencyCorrector_RecoSyst",
                                       "m_outputSystNamesIso"    : "MuonEfficiencyCorrector_IsoSyst",
@@ -476,6 +484,7 @@ MuonEfficiencyCorrectorLooseGradientLooseDict = {  "m_name"                  : "
                                       "m_systNameTrig"          : "",
                                       "m_systNameTTVA"          : "",
                                       "m_useRandomRunNumber"    : True,
+                                      "m_AllowZeroSF"           : True,
                                       "m_Years"                 : mutrigeffYears,
                                       "m_outputSystNamesReco"   : "MuonEfficiencyCorrector_RecoSyst",
                                       "m_outputSystNamesIso"    : "MuonEfficiencyCorrector_IsoSyst",
@@ -500,6 +509,7 @@ MuonEfficiencyCorrectorMediumGradientLooseDict = {  "m_name"                  : 
                                       "m_systNameTrig"          : "",
                                       "m_systNameTTVA"          : "",
                                       "m_useRandomRunNumber"    : True,
+                                      "m_AllowZeroSF"           : True,
                                       "m_Years"                 : mutrigeffYears,
                                       "m_outputSystNamesReco"   : "MuonEfficiencyCorrector_RecoSyst",
                                       "m_outputSystNamesIso"    : "MuonEfficiencyCorrector_IsoSyst",
