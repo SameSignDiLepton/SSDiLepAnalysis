@@ -48,7 +48,9 @@ c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorMediumGradientLooseDi
 #  -) LooseAndBLayerLLH + no iso
 #  -) MediumLLH         + isolLoose
 #"""
-path_el_eff = "ElectronEfficiencyCorrection/2015_2016/rel20.7/ICHEP_June2016_v3/"
+
+#https://twiki.cern.ch/twiki/bin/view/AtlasProtected/LatestRecommendationsElectronIDRun2
+path_el_eff = "ElectronEfficiencyCorrection/2015_2016/rel20.7/Moriond_February2017_v1/"
 
 el_IDWPs   = ["LooseAndBLayerLLH","MediumLLH" ]
 el_isolWPs = [""                 ,"_isolLoose"]
@@ -57,7 +59,8 @@ trigger_el_single               = "SINGLE_E_2015_e24_lhmedium_L1EM20VH_OR_e60_lh
 trigger_el_double_unrecommended = "DI_E_2015_e17_lhloose_2016_e17_lhloose"
 trigger_el_double_recommended   = "DI_E_2015_e12_lhloose_L1EM10VH_2016_e17_lhvloose_nod0"
 
-el_trigWPs = [trigger_el_single,trigger_el_double_unrecommended,trigger_el_double_recommended]
+#el_trigWPs = [trigger_el_single,trigger_el_double_unrecommended,trigger_el_double_recommended]
+el_trigWPs = [trigger_el_double_unrecommended]
 
 for ID,isol in zip(el_IDWPs,el_isolWPs):
   for trig in el_trigWPs:

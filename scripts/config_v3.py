@@ -163,7 +163,7 @@ BasicEventSelectionDict = {"m_name"                       : "SSDiLep",
                            }
 
 
-
+#https://twiki.cern.ch/twiki/bin/view/AtlasProtected/ApplyJetCalibration2016
 JetCalibratorDict =      { "m_name"                       : "jetCalib_AntiKt4EMTopo",
                            "m_debug"                      : False,
                            "m_inContainerName"            : "AntiKt4EMTopoJets",
@@ -205,17 +205,17 @@ MuonCalibratorDict =     { "m_name"                       : "muonCalib",
                            "m_do_sagittaMCDistortion"     : False,
                          }
 
-
+# https://twiki.cern.ch/twiki/bin/view/AtlasProtected/ElectronPhotonFourMomentumCorrection#Recommendations_for_data15_data1
 ElectronCalibratorDict = { "m_name"                       : "electronCalib",
                            "m_debug"                      : False,
                            "m_inContainerName"            : "Electrons",
                            "m_outContainerName"           : "Electrons_Calib",
                            "m_inputAlgoSystNames"         : "",
                            "m_outputAlgoSystNames"        : "ElectronCalibrator_Syst",
-                           "m_esModel"                    : "es2016PRE",
-                           "m_decorrelationModel"         : "FULL_v1",
-                           "m_systName"                   : "",
-                           "m_systVal"                    : 0.0,
+                           "m_esModel"                    : "es2016data_mc15c",
+                           "m_decorrelationModel"         : "1NPCOR_PLUS_UNCOR",
+                           "m_systName"                   : "All",
+                           "m_systVal"                    : 1.0,
                          }
 
 
@@ -277,11 +277,11 @@ ElectronSelectorDict = { "m_name"                      : "electronSelect_selecti
                          "m_createSelectedContainer"   : True,
                          "m_decorateSelectedObjects"   : True,
                          "m_pass_min"                  : 0,
-                         "m_pT_min"                    : 10e3,
+                         "m_pT_min"                    : 30e3,
                          "m_eta_max"                   : 2.47,
                          "m_vetoCrack"                 : True,
-                         "m_d0sig_max"                 : 10.0,
-                         "m_z0sintheta_max"            : 2.0,
+                         "m_d0sig_max"                 : 5.0,
+                         "m_z0sintheta_max"            : 0.5,
                          "m_doAuthorCut"               : True,
                          "m_doOQCut"                   : True,
                          "m_doBLTrackQualityCut"       : True, # set this to True if reading ID flags from DAOD
@@ -328,7 +328,7 @@ OverlapRemoverDict =     { "m_name"                       : "overlap_removal_SSD
                            "m_inputAlgoMuons"             : "",
                            "m_inContainerName_Electrons"  : "Electrons_Selected",
                            "m_outContainerName_Electrons" : "Electrons_OR",
-                           "m_inputAlgoElectrons"         : "",
+                           "m_inputAlgoElectrons"         : "ElectronCalibrator_Syst",
                            "m_inContainerName_Jets"       : "AntiKt4EMTopoJets_Selected",
                            "m_outContainerName_Jets"      : "AntiKt4EMTopoJets_OR",
                            "m_inputAlgoJets"              : "",
@@ -547,6 +547,7 @@ SSDiLepTreeAlgoDict      = { "m_name"                   : "physics",
                              "m_debug"                 : False,
                              "m_muContainerName"       : "Muons_OR",
                              "m_elContainerName"       : "Electrons_OR",
+                             "m_elSystsVec"            : "ElectronSelector_Syst",
                              "m_jetContainerName"      : "AntiKt4EMTopoJets_OR",
                              "m_METContainerName"      : "RefFinal_SSDiLep",
                              "m_outHistDir"            : False,
