@@ -32,10 +32,10 @@ c.setalg("BJetEfficiencyCorrector", BJetEfficiencyCorrectorDict)
 # ----------------
 # muon corrections
 # ----------------
-c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorLooseLooseDict)
-c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorLooseGradientLooseDict)
-c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorLooseGradientDict)
-c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorLooseFixedCutTightTrackOnlyDict)
+#c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorLooseLooseDict)
+#c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorLooseGradientLooseDict)
+#c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorLooseGradientDict)
+#c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorLooseFixedCutTightTrackOnlyDict)
 c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorMediumGradientDict)
 c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorMediumFixedCutTightTrackOnlyDict)
 c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorMediumGradientLooseDict)
@@ -47,7 +47,7 @@ c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorMediumGradientLooseDi
 # save scale-factors only for two combinations of ID/isol WPs:
 #  -) LooseAndBLayerLLH + no iso
 #  -) MediumLLH         + isolLoose
-
+#"""
 path_el_eff = "ElectronEfficiencyCorrection/2015_2016/rel20.7/ICHEP_June2016_v3/"
 
 el_IDWPs   = ["LooseAndBLayerLLH","MediumLLH" ]
@@ -67,7 +67,7 @@ c.setalg("ElectronEfficiencyCorrector", generateElectronEfficiencyCorrector(path
 
 SSDiLepTreeAlgoDict["m_elDetailStr"] = trigger_el_single + " " + trigger_el_double_unrecommended + " " + trigger_el_double_recommended \
                                      + " LooseAndBLayerLLH MediumLLH TightLLH isolNoRequirement isolLoose kinematic trigger isolation PID trackparams effSF"
-
+#"""
 c.setalg("TruthMatchAlgo", TruthMatchAlgoDict)
 c.setalg("XSAlgo", XSAlgoDict)
 c.setalg("SSDiLepTreeAlgo", SSDiLepTreeAlgoDict)

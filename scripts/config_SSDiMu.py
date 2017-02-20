@@ -11,12 +11,22 @@ from xAH_config import xAH_config
 alg = ROOT.xAH.Algorithm()
 del alg
 
+do_HIGG3D3 = False
+kernel = "HIGG3D3Kernel"
+use_truth_mu_cont = True
+
+if not do_HIGG3D3:
+  kernel = "EXOT12Kernel"
+  use_truth_mu_cont = False
+
+
 # electron triggers
 trig_el = []
 
 # muon triggers
 trig_single_mu = []
 trig_single_mu.append('HLT_mu20_L1MU15')
+trig_single_mu.append('HLT_mu24')
 trig_single_mu.append('HLT_mu24_L1MU15')
 trig_single_mu.append('HLT_mu26_imedium')
 trig_single_mu.append('HLT_mu26_ivarmedium')
@@ -24,7 +34,7 @@ trig_single_mu.append('HLT_mu50')
 
 trig_di_mu = []
 trig_di_mu.append('HLT_2mu14')
-trig_di_mu.append('HLT_mu22_mu8noL1')
+#trig_di_mu.append('HLT_mu22_mu8noL1')
 
 single_mu_triglist = ",".join(trig_single_mu)
 di_mu_triglist = ",".join(trig_di_mu)
@@ -37,9 +47,9 @@ triglist = ",".join(all_triggers)
 # muon corrections
 mu_trig_corr = []
 mu_trig_corr.append("HLT_mu14")
-mu_trig_corr.append("HLT_mu22")
+#mu_trig_corr.append("HLT_mu22")
 mu_trig_corr.append("HLT_mu24")
-mu_trig_corr.append("HLT_mu8noL1")
+#mu_trig_corr.append("HLT_mu8noL1")
 mu_trig_corr.append("HLT_mu50")
 mu_trig_corr.append("HLT_mu26_imedium")
 mu_trig_corr.append("HLT_mu26_imedium_OR_HLT_mu50")
@@ -98,8 +108,6 @@ PRW_files = []
 PRW_files.append(os.path.join(path_ext,"PRW_mc15c_410000_ttbar_nonallhad.root")) 
 PRW_config = ','.join(PRW_files)
 
-##path_el_eff = "ElectronEfficiencyCorrection/2015_2016/rel20.7/ICHEP_June2016_v3/"
-
 BasicEventSelectionDict = {"m_name"                       : "SSDiLep", 
                            "m_debug"                      : False,
                            "m_applyGRLCut"                : True,
@@ -110,10 +118,10 @@ BasicEventSelectionDict = {"m_name"                       : "SSDiLep",
                            "m_lumiCalcFileNames"          : LUMICALC_config,
                            "m_PRWFileNames"               : PRW_config,
                            "m_useMetaData"                : True, 
-                           "m_derivationName"             : "EXOT12Kernel",
+                           "m_derivationName"             : kernel,
                            "m_applyPrimaryVertexCut"      : True,
                            "m_vertexContainerName"        : "PrimaryVertices", 
-                           "m_PVNTrack"                   : 3,
+                           "m_PVNTrack"                   : 3, ## check the validity of this!!!
                            "m_applyEventCleaningCut"      : True,
                            "m_truthLevelOnly"             : False,
                            "m_applyCoreFlagsCut"          : True,
@@ -187,14 +195,20 @@ JetSelectorDict =        { "m_name"                       :  "jetSelect_selectio
                            "m_createSelectedContainer"    :  True,
                            "m_decorateSelectedObjects"    :  True,
                            "m_useCutFlow"                 :  True,
+                           #"m_pT_min"                     :  20e3,
                            "m_pT_min"                     :  25e3,
                            "m_eta_max"                    :  2.5,
+                           #"m_doJVT"                      :  True,
                            "m_doJVT"                      :  True,
+                           #"m_pt_max_JVT"                 :  60e3,
                            "m_pt_max_JVT"                 :  50e3,
                            "m_eta_max_JVT"                :  2.4,
+                           #"m_JVTCut"                     :  0.59,
                            "m_JVTCut"                     :  0.64,
                            "m_doBTagCut"                  :  False,
                            "m_operatingPt"                :  "FixedCutBEff_77",
+                           #"m_cleanJets"                  :  False,
+                           "m_cleanJets"                  :  True,
                          }                                
                                                           
                                                           
@@ -224,6 +238,7 @@ MuonSelectorDict =       { "m_name"                       : "muonSelect_selectio
                            "m_TrackBasedIsoType"          : "ptvarcone30",
                            "m_singleMuTrigChains"         : single_mu_triglist,
                            "m_diMuTrigChains"             : di_mu_triglist,
+                           "m_removeEventBadMuon"         : True, 
                          }                                
                                                           
                                                           
@@ -242,19 +257,14 @@ ElectronSelectorDict =   { "m_name"                       : "electronSelect_sele
                            "m_vetoCrack"                  : True,
                            "m_d0sig_max"                  : 10.0,
                            "m_z0sintheta_max"             : 2.0,
-                           "m_doAuthorCut"                : False,
-                           "m_doOQCut"                    : True, # changed from original !!!
+                           "m_doAuthorCut"                : True,
+                           "m_doOQCut"                    : True, 
                            "m_doBLTrackQualityCut"        : True, # set this to True if reading ID flags from DAOD
                            "m_readIDFlagsFromDerivation"  : True,
-                           #"m_confDirPID"                 : "mc15_20150712",
-                           #"m_confDirPID"                 : "mc15_20160512",
-                           "m_doLHPIDcut"                 : True, # Saves the failed electrons
+                           "m_doLHPIDcut"                 : True, 
                            "m_LHOperatingPoint"           : "Loose", # for loose ID, use "LooseAndBLayer" if NOT reading ID flags from DAOD
                            "m_doCutBasedPIDcut"           : False,
                            "m_CutBasedOperatingPoint"     : "Loose",
-                           #"m_CutBasedConfigYear"         : "",
-                           #"m_MinIsoWPCut"                : "Loose",
-                           "m_MinIsoWPCut"                : "", # Saves the failed electrons
                            "m_IsoWPList"                  : "Loose,GradientLoose,Gradient,FixedCutLoose,FixedCutTight,FixedCutTightTrackOnly,UserDefinedCut",
                            "m_CaloIsoEff"                 : "0.05*x",
                            "m_TrackIsoEff"                : "0.05*x",
@@ -264,20 +274,6 @@ ElectronSelectorDict =   { "m_name"                       : "electronSelect_sele
                            #"m_ElTrigChains"               : "",
                          }                                
                                                           
-"""                                                          
-TauSelectorDict =        { "m_name"                       : "tauSelect_selection",
-                           "m_debug"                      :  False,
-                           "m_inContainerName"            : "TauJets",                 # No input container available for EXOT12
-                           "m_outContainerName"           : "Taus_Selected",
-                           "m_inputAlgoSystNames"         : "",
-                           "m_outputAlgoSystNames"        : "TauSelector_Syst",
-                           "m_createSelectedContainer"    : True,
-                           "m_decorateSelectedObjects"    : True,
-                           "m_minPtDAOD"                  : 15e3,
-                           "m_ConfigPath"                 : "$ROOTCOREBIN/data/SSDiLepAnalysis/Taus/recommended_selection_mc15_final_sel.conf",
-                           #"m_EleOLRFilePath"             : "$ROOTCOREBIN/data/HTopMultilepAnalysis/Taus/eveto_cutvals.root"
-                         }                                
-"""                                                          
                                                           
 METConstructorDict =     { "m_name"                       : "met",
                            "m_debug"                      : False,
@@ -289,8 +285,7 @@ METConstructorDict =     { "m_name"                       : "met",
                            "m_useCaloJetTerm"             : True,
                            "m_useTrackJetTerm"            : False,                     
                            "m_inputElectrons"             : "Electrons_Selected",     
-                           #"m_inputPhotons"               : "Photons",                 
-                           ###"m_inputTaus"                  : "TauJets",          
+                           "m_inputPhotons"               : "Photons",                 
                            "m_inputMuons"                 : "Muons_Selected",
                            #"m_inputJets"                  : "AntiKt4EMTopoJets_Calib", 
                            "m_inputJets"                  : "AntiKt4EMTopoJets_Selected", 
@@ -304,6 +299,7 @@ OverlapRemoverDict =     { "m_name"                       : "overlap_removal_SSD
                            "m_createSelectedContainers"   : True,
                            "m_decorateSelectedObjects"    : True,
                            "m_useSelected"                : True,
+                           "m_bTagWP"                     : "BTag",
                            "m_inContainerName_Muons"      : "Muons_Selected",
                            "m_outContainerName_Muons"     : "Muons_OR",
                            "m_inputAlgoMuons"             : "",
@@ -313,8 +309,6 @@ OverlapRemoverDict =     { "m_name"                       : "overlap_removal_SSD
                            "m_inContainerName_Jets"       : "AntiKt4EMTopoJets_Selected",
                            "m_outContainerName_Jets"      : "AntiKt4EMTopoJets_OR",
                            "m_inputAlgoJets"              : "",
-                           #"m_inContainerName_Taus"       : "Taus_Selected",
-                           #"m_outContainerName_Taus"      : "Taus_OR",
                            "m_inputAlgoTaus"              : "",
                          }
 
@@ -490,101 +484,13 @@ MuonEfficiencyCorrectorMediumGradientLooseDict = {  "m_name"                  : 
                                       "m_MuTrigLegs"            : ",".join(mu_trig_corr),
                                     }
 
-# --------------------
-# electron corrections
-# --------------------
-"""
-ElectronEfficiencyCorrectorMediumDict = { "m_name"                    : "electronEfficiencyCorrectorMedium",
-                                          "m_debug"                 : False,
-                                          "m_inContainerName"       : "Electrons_OR",
-                                          "m_inputAlgoSystNames"    : "ElectronSelector_Syst",
-                                          "m_systNameReco"          : "",
-                                          "m_systNameIso"           : "",
-                                          "m_systNamePID"           : "",
-                                          "m_systNameTrig"          : "",
-                                          "m_systNameTrigMCEff"     : "",
-                                          "m_outputSystNamesReco"   : "ElectronEfficiencyCorrector_RecoSyst",
-                                          "m_outputSystNamesPID"    : "ElectronEfficiencyCorrector_PIDSyst",
-                                          "m_outputSystNamesIso"    : "ElectronEfficiencyCorrector_IsoSyst",
-                                          "m_outputSystNamesTrig"   : "ElectronEfficiencyCorrector_TrigSyst",
-                                          "m_outputSystNamesTrigMCEff"   : "ElectronEfficiencyCorrector_TrigMCEffSyst",
-                                          "m_corrFileNameReco"      : path_el_eff + "offline/efficiencySF.offline.RecoTrk.root",
-                                          "m_corrFileNamePID"       : path_el_eff + "offline/efficiencySF.offline.MediumLLH_d0z0_v11.root",
-                                          "m_corrFileNameIso"       : path_el_eff + "isolation/efficiencySF.Isolation.MediumLLH_d0z0_v11_isolLoose.root", # comment if d0z0 cuts are NOT tight (TTVA)
-                                          "m_WorkingPointIDTrig"    : "LHMedium",
-                                          "m_corrFileNameTrig"      : path_el_eff + "trigger/efficiencySF." + trigger_el_eff + ".MediumLLH_d0z0_v11_isolLoose.root",
-                                          "m_corrFileNameTrigMCEff" : path_el_eff + "trigger/efficiency." + trigger_el_eff + ".MediumLLH_d0z0_v11_isolLoose.root",
-                                       }
-ElectronEfficiencyCorrectorDict = { "m_name"                     : "electronEfficiencyCorrector",
-                                    "m_debug"                    : False,
-                                    "m_inContainerName"          : "Electrons_OR",
-                                    "m_inputAlgoSystNames"       : "ElectronSelector_Syst",
-                                    "m_systNameReco"             : "",
-                                    "m_systNamePID"              : "",
-                                    "m_systNameTrig"             : "",
-                                    "m_systNameTrigMCEff"        : "",
-                                    "m_outputSystNamesReco"      : "ElectronEfficiencyCorrector_RecoSyst",
-                                    "m_outputSystNamesPID"       : "ElectronEfficiencyCorrector_PIDSyst",
-                                    "m_outputSystNamesIso"       : "ElectronEfficiencyCorrector_IsoSyst",
-                                    "m_outputSystNamesTrig"      : "ElectronEfficiencyCorrector_TrigSyst",
-                                    "m_outputSystNamesTrigMCEff" : "ElectronEfficiencyCorrector_TrigMCEffSyst",
-                                    "m_corrFileNameReco"         : "$ROOTCOREBIN/data/ElectronEfficiencyCorrection/efficiencySF.offline.RecoTrk.2015.13TeV.rel20p0.25ns.v04.root",
-                                    "m_corrFileNamePID"          : "$ROOTCOREBIN/data/ElectronEfficiencyCorrection/efficiencySF.offline.LooseAndBLayerLLH_d0z0.2015.13TeV.rel20p0.25ns.v04.root",
-                                    "m_corrFileNameIso"          : "$ROOTCOREBIN/data/ElectronEfficiencyCorrection/efficiencySF.Isolation.LooseAndBLayerLLH_d0z0_v8_isolLoose.2015.13TeV.rel20p0.25ns.v04.root",
-                                    "m_WorkingPointIDTrig"       : "LHLooseAndBLayer",
-                                    #"m_corrFileNameTrig"         : "$ROOTCOREBIN/data/ElectronEfficiencyCorrection/efficiencySF.e12_lhloose_L1EM10VH.LooseAndBLayerLLH_d0z0_v8.2015.13TeV.rel20p0.25ns.v04.root",
-                                    #"m_corrFileNameTrigMCEff"    : "$ROOTCOREBIN/data/ElectronEfficiencyCorrection/efficiency.e12_lhloose_L1EM10VH.LooseAndBLayerLLH_d0z0_v8.2015.13TeV.rel20p0.25ns.v04.root",
-                                   }
-
-ElectronEfficiencyCorrectorMediumDict = { "m_name"                    : "electronEfficiencyCorrectorMedium",
-                                         "m_debug"                    : False,
-                                         "m_inContainerName"          : "Electrons_OR",
-                                         "m_inputAlgoSystNames"       : "ElectronSelector_Syst",
-                                         "m_systNameReco"             : "",
-                                         "m_systNamePID"              : "",
-                                         "m_systNameTrig"             : "",
-                                         "m_systNameTrigMCEff"        : "",
-                                         "m_outputSystNamesReco"      : "ElectronEfficiencyCorrector_RecoSyst",
-                                         "m_outputSystNamesPID"       : "ElectronEfficiencyCorrector_PIDSyst",
-                                         "m_outputSystNamesIso"       : "ElectronEfficiencyCorrector_IsoSyst",
-                                         "m_outputSystNamesTrig"      : "ElectronEfficiencyCorrector_TrigSyst",
-                                         "m_outputSystNamesTrigMCEff"   : "ElectronEfficiencyCorrector_TrigMCEffSyst",
-                                         "m_corrFileNameReco"         : "$ROOTCOREBIN/data/ElectronEfficiencyCorrection/efficiencySF.offline.RecoTrk.2015.13TeV.rel20p0.25ns.v04.root",
-                                         "m_corrFileNamePID"          : "$ROOTCOREBIN/data/ElectronEfficiencyCorrection/efficiencySF.offline.MediumLLH_d0z0.2015.13TeV.rel20p0.25ns.v04.root",
-                                         "m_corrFileNameIso"          : "$ROOTCOREBIN/data/ElectronEfficiencyCorrection/efficiencySF.Isolation.MediumLLH_d0z0_v8_isolFixedCutLoose.2015.13TeV.rel20p0.25ns.v04.root",
-                                         "m_WorkingPointIDTrig"       : "LHMedium",
-                                         #"m_corrFileNameTrig"         : "$ROOTCOREBIN/data/ElectronEfficiencyCorrection/efficiencySF.e12_lhloose_L1EM10VH.MediumLLH_d0z0_v8.2015.13TeV.rel20p0.25ns.v04.root",
-                                         #"m_corrFileNameTrigMCEff"    : "$ROOTCOREBIN/data/ElectronEfficiencyCorrection/efficiency.e12_lhloose_L1EM10VH.MediumLLH_d0z0_v8.2015.13TeV.rel20p0.25ns.v04.root",
-                                       }
-
-ElectronEfficiencyCorrectorTightDict = { "m_name"                     : "electronEfficiencyCorrectorTight",
-                                         "m_debug"                    : False,
-                                         "m_inContainerName"          : "Electrons_OR",
-                                         "m_inputAlgoSystNames"       : "ElectronSelector_Syst",
-                                         "m_systNameReco"             : "",
-                                         "m_systNamePID"              : "",
-                                         "m_systNameTrig"             : "",
-                                         "m_systNameTrigMCEff"        : "",
-                                         "m_outputSystNamesReco"      : "ElectronEfficiencyCorrector_RecoSyst",
-                                         "m_outputSystNamesPID"       : "ElectronEfficiencyCorrector_PIDSyst",
-                                         "m_outputSystNamesIso"       : "ElectronEfficiencyCorrector_IsoSyst",
-                                         "m_outputSystNamesTrig"      : "ElectronEfficiencyCorrector_TrigSyst",
-                                         "m_outputSystNamesTrigMCEff"   : "ElectronEfficiencyCorrector_TrigMCEffSyst",
-                                         "m_corrFileNameReco"         : "$ROOTCOREBIN/data/ElectronEfficiencyCorrection/efficiencySF.offline.RecoTrk.2015.13TeV.rel20p0.25ns.v04.root",
-                                         "m_corrFileNamePID"          : "$ROOTCOREBIN/data/ElectronEfficiencyCorrection/efficiencySF.offline.TightLLH_d0z0.2015.13TeV.rel20p0.25ns.v04.root",
-                                         "m_corrFileNameIso"          : "$ROOTCOREBIN/data/ElectronEfficiencyCorrection/efficiencySF.Isolation.TightLLH_d0z0_v8_isolFixedCutTight.2015.13TeV.rel20p0.25ns.v04.root",
-                                         "m_WorkingPointIDTrig"       : "LHTight",
-                                         #"m_corrFileNameTrig"         : "$ROOTCOREBIN/data/ElectronEfficiencyCorrection/efficiencySF.e12_lhloose_L1EM10VH.TightLLH_d0z0_v8.2015.13TeV.rel20p0.25ns.v04.root",
-                                         #"m_corrFileNameTrigMCEff"    : "$ROOTCOREBIN/data/ElectronEfficiencyCorrection/efficiency.e12_lhloose_L1EM10VH.TightLLH_d0z0_v8.2015.13TeV.rel20p0.25ns.v04.root",
-                                       }
-"""
 
 # Truth matching info just for muons
 TruthMatchAlgoDict       = { "m_name"                           : "truthMatching",
                              "m_debug"                          : False,
                              "m_inContainerName_Electrons"      : "Electrons_OR",
                              "m_inContainerName_Muons"          : "Muons_OR",
-                             "m_doMuonTruthContMatching"        : False,
+                             "m_doMuonTruthContMatching"        : use_truth_mu_cont,
                            }
 
 XSAlgoDict               = { "m_name"                           : "xsalgo",
