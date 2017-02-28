@@ -68,8 +68,7 @@ for ID,isol in zip(el_IDWPs,el_isolWPs):
 c.setalg("ElectronEfficiencyCorrector", generateElectronEfficiencyCorrector(path_el_eff,"TightLLH","","") )
 c.setalg("ElectronEfficiencyCorrector", generateElectronEfficiencyCorrector(path_el_eff,"LooseAndBLayerLLH","_isolLoose","") )
 
-SSDiLepTreeAlgoDict["m_elDetailStr"] = trigger_el_single + " " + trigger_el_double_unrecommended + " " + trigger_el_double_recommended \
-                                     + " LooseAndBLayerLLH MediumLLH TightLLH isolNoRequirement isolLoose kinematic trigger isolation PID trackparams effSF"
+SSDiLepTreeAlgoDict["m_elDetailStr"] = trigger_el_double_unrecommended + " LooseAndBLayerLLH MediumLLH TightLLH isolNoRequirement isolLoose kinematic trigger isolation PID trackparams effSF"
 #"""
 c.setalg("TruthMatchAlgo", TruthMatchAlgoDict)
 c.setalg("XSAlgo", XSAlgoDict)
