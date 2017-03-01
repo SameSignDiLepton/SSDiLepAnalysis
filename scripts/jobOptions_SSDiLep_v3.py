@@ -32,13 +32,8 @@ c.setalg("BJetEfficiencyCorrector", BJetEfficiencyCorrectorDict)
 # ----------------
 # muon corrections
 # ----------------
-#c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorLooseLooseDict)
-#c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorLooseGradientLooseDict)
-#c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorLooseGradientDict)
-#c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorLooseFixedCutTightTrackOnlyDict)
 c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorMediumGradientDict)
 c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorMediumFixedCutTightTrackOnlyDict)
-c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorMediumGradientLooseDict)
 
 # --------------------
 # electron corrections
