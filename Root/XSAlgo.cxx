@@ -49,6 +49,9 @@ XSAlgo :: XSAlgo () :
 
   Info("XSAlgo()", "Calling constructor");
 
+  m_systNameKfactorTool = "";
+  m_systValKfactorTool = 0.0;
+
   m_doSomething   = false;
 }
 
@@ -165,7 +168,8 @@ EL::StatusCode XSAlgo :: initialize ()
   // decorators
   m_xsDecor        = nullptr ;   m_xsDecor        = new SG::AuxElement::Decorator< double >("xsection");
   m_FiltEffDecor   = nullptr ;   m_FiltEffDecor   = new SG::AuxElement::Decorator< double >("FiltEff");
-  m_KFactorDecor   = nullptr ;   m_KFactorDecor   = new SG::AuxElement::Decorator< double >("KfactorWeight");
+  m_KFactorDecor   = nullptr ;   m_KFactorDecor   = new SG::AuxElement::Decorator< std::vector<double> >("KfactorWeightXSAlgo");
+  m_KFactorDecorSys= nullptr ;   m_KFactorDecorSys= new SG::AuxElement::Decorator< std::vector<std::string> >("KfactorWeightXSAlgoSysNames");
   
   // accessors 
   m_mcEvtWeightAcc = nullptr ;   m_mcEvtWeightAcc = new SG::AuxElement::Accessor< float >("mcEventWeight");
@@ -173,6 +177,22 @@ EL::StatusCode XSAlgo :: initialize ()
   m_p_kfactorTool = new LPXKfactorTool("LPXKfactorTool");
   RETURN_CHECK( "::initialize()", m_p_kfactorTool->setProperty("isMC15",true), "Failed to set MC15 property of LPXKfactorTool" );
   RETURN_CHECK( "::initialize()", m_p_kfactorTool->initialize(), "Failed to properly initialize LPXKfactorTool" );
+
+  // sys
+  CP::SystematicSet affectSystsKfactorTool = m_p_kfactorTool->affectingSystematics();
+  for ( const auto& syst_it : affectSystsKfactorTool ) { Info("initialize()","XSAlgo can be affected by kfactorTool systematic: %s", (syst_it.name()).c_str()); }
+
+  const CP::SystematicSet SystsKfactorTool = m_p_kfactorTool->recommendedSystematics();
+  m_systListKfactorTool = HelperFunctions::getListofSystematics( SystsKfactorTool, m_systNameKfactorTool, m_systValKfactorTool, m_debug );
+
+  Info("initialize()","Will be using XSAlgo systematic:");
+  for ( const auto& syst_it : m_systListKfactorTool ) {
+    if ( m_systNameKfactorTool.empty() ) {
+    Info("initialize()","\t Running w/ nominal configuration only!");
+    break;
+    }
+    Info("initialize()","\t %s", (syst_it.name()).c_str());
+  }
 
   Info("initialize()", " Interface succesfully initialized!" );
 
@@ -197,17 +217,45 @@ EL::StatusCode XSAlgo :: execute ()
 
   (*m_xsDecor)( *eventInfo ) = -999.;
   (*m_FiltEffDecor)( *eventInfo ) = -999.;
-  (*m_KFactorDecor)( *eventInfo ) = -999.;
+
+  std::vector<double> dummyVec;
+  dummyVec.push_back(-999);
+  (*m_KFactorDecor)( *eventInfo ) = dummyVec;
+
+  std::vector<std::string> dummyVecString;
+  dummyVecString.push_back(std::string("empty"));
+  (*m_KFactorDecorSys)( *eventInfo ) = dummyVecString;
 
   //Apply the tool only if we are running on MC..
   if( m_isMC ) {
-    
-    // KFactor decoration is performed here 
-    m_p_kfactorTool->execute();
-    // convert the xs from the tool in pb
-    (*m_xsDecor)( *eventInfo ) = m_p_kfactorTool->getMCCrossSection() * 1000.;
-    (*m_FiltEffDecor)( *eventInfo ) = m_p_kfactorTool->getMCFilterEfficiency();
-
+    std::vector<double> kfactorVec;
+    std::vector<std::string> kfactorVecSys;
+    static SG::AuxElement::Accessor< double > KfactorWeightAcc("KfactorWeight");
+    for ( const auto& syst_it : m_systListKfactorTool ) {
+      if ( m_p_kfactorTool->applySystematicVariation(syst_it) != CP::SystematicCode::Ok ) {
+        Error("executeSF()", "Failed to configure XSAlgo for systematic %s", syst_it.name().c_str());
+        return EL::StatusCode::FAILURE;
+      }
+      // KFactor decoration is performed here 
+      m_p_kfactorTool->execute();
+      if ( KfactorWeightAcc.isAvailable( *eventInfo ) )   {
+        kfactorVec.push_back(KfactorWeightAcc( *eventInfo ));
+        kfactorVecSys.push_back(syst_it.name());
+      }
+      else { 
+        kfactorVec.push_back(-999.);
+        kfactorVecSys.push_back("NotAvailable");
+      }
+      // convert the xs from the tool in pb
+      if ( !syst_it.name().compare("") ) {
+        (*m_xsDecor)( *eventInfo ) = m_p_kfactorTool->getMCCrossSection() * 1000.;
+        (*m_FiltEffDecor)( *eventInfo ) = m_p_kfactorTool->getMCFilterEfficiency();
+      }
+    }
+    if(kfactorVec.size()>0) {
+      (*m_KFactorDecor)( *eventInfo ) = kfactorVec;
+      (*m_KFactorDecorSys)( *eventInfo ) = kfactorVecSys;
+    }
   }
   
   // MC event weight

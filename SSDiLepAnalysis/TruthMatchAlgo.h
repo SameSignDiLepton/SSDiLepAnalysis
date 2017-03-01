@@ -60,6 +60,8 @@ private:
   SG::AuxElement::Decorator< std::vector< int > >*         m_HLmm_DaughtersDecor;            //!
   SG::AuxElement::Decorator< std::vector< int > >*         m_HRpp_DaughtersDecor;            //!
   SG::AuxElement::Decorator< std::vector< int > >*         m_HRmm_DaughtersDecor;            //!
+
+  SG::AuxElement::Decorator< std::vector< int > >*         m_status3_leptonsDecor;           //!
   
   SG::AuxElement::Decorator< char >* 	   m_isTruthMatchedDecor;	   //! /* has a lepton truth match */
   SG::AuxElement::Decorator< int >*  	   m_truthTypeDecor;		   //! /* type of the parent particle (according to MCTruthClassifier) - need it for muons since we have to retrieve this from the truth track */
@@ -115,6 +117,7 @@ public:
   /
   */
   virtual EL::StatusCode applySignalTruthMatching ( const xAOD::EventInfo* eventInfo );
+  virtual EL::StatusCode applyStatus3Leptons ( const xAOD::EventInfo* eventInfo );
   virtual EL::StatusCode applyTruthMatchingMuon ( const xAOD::IParticle* recoParticle );
   virtual EL::StatusCode doMuonTruthMatching ( const xAOD::IParticle* recoParticle, bool useTruthContainer );
   virtual EL::StatusCode applyTruthMatchingElectron ( const xAOD::IParticle* recoParticle );

@@ -189,6 +189,8 @@ EL::StatusCode TruthMatchAlgo :: initialize ()
   m_HRpp_DaughtersDecor = nullptr          ; m_HRpp_DaughtersDecor	    = new SG::AuxElement::Decorator< std::vector<int> >("HRpp_Daughters");
   m_HRmm_DaughtersDecor = nullptr          ; m_HRmm_DaughtersDecor	    = new SG::AuxElement::Decorator< std::vector<int> >("HRmm_Daughters");
 
+  m_status3_leptonsDecor = nullptr          ; m_status3_leptonsDecor      = new SG::AuxElement::Decorator< std::vector<int> >("status3_leptons");
+
   m_isTruthMatchedDecor = nullptr          ; m_isTruthMatchedDecor          = new SG::AuxElement::Decorator< char >("isTruthMatched");	        // has a lepton truth match
   m_truthPdgIdDecor = nullptr	           ; m_truthPdgIdDecor              = new SG::AuxElement::Decorator< int >("truthPdgId");		// pdgId of the match particle
   m_truthTypeDecor = nullptr	           ; m_truthTypeDecor               = new SG::AuxElement::Decorator< int >("truthType"); 	        // type of the parent particle (according to MCTruthClassifier) - this decorates only muons 
@@ -257,6 +259,11 @@ EL::StatusCode TruthMatchAlgo :: execute ()
       Error("execute()", "Problem with applySignalTruthMatching()! Aborting" );
       return EL::StatusCode::FAILURE;
     }
+
+    if ( this->applyStatus3Leptons( eventInfo ) != EL::StatusCode::SUCCESS ) {
+      Error("execute()", "Problem with applyStatus3Leptons()! Aborting" );
+      return EL::StatusCode::FAILURE;
+    }
     
     for ( auto muon_itr : *(inputMuons) ) {
       if ( muon_itr->type() == xAOD::Type::Muon ) {
@@ -323,6 +330,8 @@ EL::StatusCode TruthMatchAlgo :: finalize ()
   delete m_HLmm_DaughtersDecor;      m_HLmm_DaughtersDecor = nullptr;
   delete m_HRpp_DaughtersDecor;      m_HRpp_DaughtersDecor = nullptr;
   delete m_HRmm_DaughtersDecor;      m_HRmm_DaughtersDecor = nullptr;
+
+  delete m_status3_leptonsDecor;      m_status3_leptonsDecor = nullptr;
 
   delete m_isTruthMatchedDecor;      m_isTruthMatchedDecor = nullptr;
   delete m_truthTypeDecor;           m_truthTypeDecor = nullptr;
@@ -627,6 +636,31 @@ EL::StatusCode TruthMatchAlgo :: applySignalTruthMatching ( const xAOD::EventInf
        }
      }
    }
+  
+  return EL::StatusCode::SUCCESS;
+}
+
+EL::StatusCode TruthMatchAlgo :: applyStatus3Leptons ( const xAOD::EventInfo* eventInfo )
+{
+
+  (*m_status3_leptonsDecor)( *eventInfo ) = std::vector<int>();
+  
+  (*m_status3_leptonsDecor)( *eventInfo ).push_back(-999);
+
+  const xAOD::TruthParticleContainer* TruthPartContainer(nullptr);
+  RETURN_CHECK("TruthMatchAlgo::applyTruthMatchingMuon()", HelperFunctions::retrieve(TruthPartContainer, "TruthParticles", m_event, m_store, m_verbose) , "");
+
+  std::vector<int> leptonVec;
+
+  for ( auto truth_itr : *(TruthPartContainer) ) {
+    if( truth_itr->status() == 3 && truth_itr->isChLepton() ) {
+      leptonVec.push_back(truth_itr->pdgId());
+    }
+  }
+
+  if ( leptonVec.size() > 0 ){
+    (*m_status3_leptonsDecor)( *eventInfo ) = leptonVec;
+  }
   
   return EL::StatusCode::SUCCESS;
 }

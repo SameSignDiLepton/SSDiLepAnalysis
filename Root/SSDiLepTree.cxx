@@ -25,11 +25,16 @@ void SSDiLepTree::AddEventUser(const std::string detailStrUser)
     m_tree->Branch("HLmm_Daughters", &m_HLmm_Daughters);
     m_tree->Branch("HRpp_Daughters", &m_HRpp_Daughters);
     m_tree->Branch("HRmm_Daughters", &m_HRmm_Daughters);
+
+    m_tree->Branch("status3_leptons", &m_status3_leptons);
     
     m_tree->Branch("LPXKfactor",     &m_KfactorWeight , "LPXKfactor/D");
     m_tree->Branch("BornMass",       &m_BornMass , "BornMass/D");
     m_tree->Branch("XS",             &m_XS, "XS/D");
     m_tree->Branch("FiltEff",        &m_FiltEff, "FiltEff/D");
+
+    m_tree->Branch("LPXKfactorVec",     &m_KfactorWeightXSAlgo);
+    m_tree->Branch("LPXKfactorVecNames",     &m_KfactorWeightXSAlgoSysNames);
 
   }
 }
@@ -93,6 +98,8 @@ void SSDiLepTree::ClearEventUser()
     m_HRpp_Daughters.clear();
     m_HRmm_Daughters.clear();
 
+    m_status3_leptons.clear();
+
   }
 }
 
@@ -145,15 +152,23 @@ void SSDiLepTree::FillEventUser( const xAOD::EventInfo* eventInfo )
   static SG::AuxElement::Accessor< std::vector<int> > HLmm_DaughtersAcc("HLmm_Daughters");
   static SG::AuxElement::Accessor< std::vector<int> > HRpp_DaughtersAcc("HRpp_Daughters");
   static SG::AuxElement::Accessor< std::vector<int> > HRmm_DaughtersAcc("HRmm_Daughters");
+
+  static SG::AuxElement::Accessor< std::vector<int> > status3_leptonsAcc("status3_leptons");
   
   static SG::AuxElement::Accessor< double > xsAcc("xsection");
   static SG::AuxElement::Accessor< double > FiltEffAcc("FiltEff");
   static SG::AuxElement::Accessor< double > KfactorWeightAcc("KfactorWeight");
   static SG::AuxElement::Accessor< double > BornMassAcc("BornMass");
 
+  static SG::AuxElement::Accessor< std::vector<double> > KfactorWeightXSAlgoAcc("KfactorWeightXSAlgo");
+  static SG::AuxElement::Accessor< std::vector<std::string> > KfactorWeightXSAlgoSysNamesAcc("KfactorWeightXSAlgoSysNames");
+
   static SG::AuxElement::Accessor< dielectron_trigmatch_pair_map > diElectronTrigMatchPairMapAcc( "diElectronTrigMatchPairMap" );
   
   std::vector<int> dummyCODE(1,-999); 
+  std::vector<double> dummyVec(1,-999); 
+  std::vector<std::string> dummyVecString;
+  dummyVecString.push_back(std::string("empty"));
   
   if ( HLpp_DaughtersAcc.isAvailable( *eventInfo ) )   { m_HLpp_Daughters = HLpp_DaughtersAcc( *eventInfo ) ; }
   else   { m_HLpp_Daughters = dummyCODE; }
@@ -163,6 +178,9 @@ void SSDiLepTree::FillEventUser( const xAOD::EventInfo* eventInfo )
   else   { m_HRpp_Daughters = dummyCODE; }
   if ( HRmm_DaughtersAcc.isAvailable( *eventInfo ) )   { m_HRmm_Daughters = HRmm_DaughtersAcc( *eventInfo ) ; }
   else   { m_HRmm_Daughters = dummyCODE; }
+
+  if ( status3_leptonsAcc.isAvailable( *eventInfo ) )   { m_status3_leptons = status3_leptonsAcc( *eventInfo ) ; }
+  else   { m_status3_leptons = dummyCODE; }
   
   if ( xsAcc.isAvailable( *eventInfo ) )   { m_XS = xsAcc( *eventInfo ) ; }
   else   { m_XS = -999.; }
@@ -172,6 +190,11 @@ void SSDiLepTree::FillEventUser( const xAOD::EventInfo* eventInfo )
   else   { m_KfactorWeight = -999.; }
   if ( BornMassAcc.isAvailable( *eventInfo ) )   { m_BornMass = BornMassAcc( *eventInfo ) ; }
   else   { m_BornMass = -999.; }
+
+  if ( KfactorWeightXSAlgoAcc.isAvailable( *eventInfo ) )   { m_KfactorWeightXSAlgo = KfactorWeightXSAlgoAcc( *eventInfo ) ; }
+  else   { m_KfactorWeightXSAlgo = dummyVec; }
+  if ( KfactorWeightXSAlgoSysNamesAcc.isAvailable( *eventInfo ) )   { m_KfactorWeightXSAlgoSysNames = KfactorWeightXSAlgoSysNamesAcc( *eventInfo ) ; }
+  else   { m_KfactorWeightXSAlgoSysNames = dummyVecString; }
 
   if ( diElectronTrigMatchPairMapAcc.isAvailable( *eventInfo ) )   { m_diElectronTrigMatchPairMap = diElectronTrigMatchPairMapAcc( *eventInfo ) ; }
   else   { m_diElectronTrigMatchPairMap = dielectron_trigmatch_pair_map() ; }

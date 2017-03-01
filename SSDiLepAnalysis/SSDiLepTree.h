@@ -38,6 +38,10 @@ class SSDiLepTree : public HelpTreeBase
     std::vector<int>  m_HLmm_Daughters;
     std::vector<int>  m_HRpp_Daughters;
     std::vector<int>  m_HRmm_Daughters;
+
+    std::vector<int>  m_status3_leptons;
+    std::vector<double>       m_KfactorWeightXSAlgo;
+    std::vector<std::string>  m_KfactorWeightXSAlgoSysNames;
     
     /* jet variables */
     std::vector<float> m_jet_m;

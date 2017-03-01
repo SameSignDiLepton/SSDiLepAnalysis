@@ -28,6 +28,8 @@ class XSAlgo : public xAH::Algorithm
 public:
 
   bool m_doSomething;
+  std::string m_systNameKfactorTool;
+  float m_systValKfactorTool;
 
 private:
 
@@ -51,10 +53,13 @@ private:
   /* Initialise decorators */
   SG::AuxElement::Decorator< double >*        m_xsDecor;           //!
   SG::AuxElement::Decorator< double >*        m_FiltEffDecor;      //!
-  SG::AuxElement::Decorator< double >*        m_KFactorDecor;      //!
+  SG::AuxElement::Decorator< std::vector<double> >*        m_KFactorDecor;      //!
+  SG::AuxElement::Decorator< std::vector<std::string> >*   m_KFactorDecorSys;   //!
 
   /* Initialise accessors */
   SG::AuxElement::Accessor< float >*         m_mcEvtWeightAcc;	   //!
+
+  std::vector<CP::SystematicSet> m_systListKfactorTool; //!
 
   // variables that don't get filled at submission time should be
   // protected from being send from the submission node to the worker

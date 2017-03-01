@@ -40,7 +40,7 @@ trig_el_single.append('HLT_e24_lhtight_nod0_ivarloose')
 trig_el_single.append('HLT_e26_lhtight_nod0_ivarloose')
 
 trig_el_double = []
-trig_el_double.append('HLT_2e12_lhloose_L1EM10VH')
+trig_el_double.append('HLT_2e12_lhloose_L12EM10VH')
 trig_el_double.append('HLT_2e17_lhloose')
 trig_el_double.append('HLT_2e17_lhvloose_nod0')
 
@@ -68,6 +68,9 @@ trig_emu = []
 trig_emu.append('HLT_e17_lhloose_nod0_mu14')
 trig_emu.append('HLT_e26_lhmedium_nod0_L1EM22VHI_mu8noL1')
 trig_emu.append('HLT_e7_lhmedium_nod0_mu24')
+trig_emu.append('HLT_e17_lhloose_mu14')
+trig_emu.append('HLT_e24_lhmedium_L1EM20VHI_mu8noL1')
+trig_emu.append('HLT_e7_lhmedium_mu24')
 trigemulist=",".join(trig_emu)
 
 trigMuMuEMulist=",".join(trig_emu+trig_di_mu)
@@ -536,6 +539,8 @@ TruthMatchAlgoDict       = { "m_name"                           : "truthMatching
 
 XSAlgoDict               = { "m_name"                           : "xsalgo",
                              "m_debug"                          : False,
+                             "m_systNameKfactorTool"            : "All",
+                             "m_systValKfactorTool"             : 1.0,
                            }
 
 ### electron working points to be written out

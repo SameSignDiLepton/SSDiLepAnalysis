@@ -9,6 +9,9 @@
 inDS="mc15_13TeV.361106.PowhegPythia8EvtGen_AZNLOCTEQ6L1_Zee.merge.DAOD_EXOT12.e3601_s2576_s2132_r7725_r7676_p2823"
 sample="DAOD_EXOT12.09520232._000002.pool.root.1"
 
+# inDS="mc15_13TeV.363490.Sherpa_221_NNPDF30NNLO_llll.merge.DAOD_EXOT12.e5332_s2726_r7772_r7676_p2949"
+# sample="DAOD_EXOT12.10711285._000038.pool.root.1"
+
 infilepath="/afs/cern.ch/work/g/gorisek/miha/${inDS}/${sample}"
 
 # ------------------------------------------------------------------------------------

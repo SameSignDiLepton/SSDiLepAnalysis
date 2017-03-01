@@ -60,7 +60,7 @@ trigger_el_double_unrecommended = "DI_E_2015_e17_lhloose_2016_e17_lhloose"
 trigger_el_double_recommended   = "DI_E_2015_e12_lhloose_L1EM10VH_2016_e17_lhvloose_nod0"
 
 #el_trigWPs = [trigger_el_single,trigger_el_double_unrecommended,trigger_el_double_recommended]
-el_trigWPs = [trigger_el_double_unrecommended]
+el_trigWPs = [trigger_el_double_recommended,trigger_el_double_unrecommended]
 
 for ID,isol in zip(el_IDWPs,el_isolWPs):
   for trig in el_trigWPs:
@@ -68,7 +68,7 @@ for ID,isol in zip(el_IDWPs,el_isolWPs):
 c.setalg("ElectronEfficiencyCorrector", generateElectronEfficiencyCorrector(path_el_eff,"TightLLH","","") )
 c.setalg("ElectronEfficiencyCorrector", generateElectronEfficiencyCorrector(path_el_eff,"LooseAndBLayerLLH","_isolLoose","") )
 
-SSDiLepTreeAlgoDict["m_elDetailStr"] = trigger_el_double_unrecommended + " LooseAndBLayerLLH MediumLLH TightLLH isolNoRequirement isolLoose kinematic trigger isolation PID trackparams effSF"
+SSDiLepTreeAlgoDict["m_elDetailStr"] = trigger_el_double_unrecommended + " " + trigger_el_double_recommended + " LooseAndBLayerLLH MediumLLH TightLLH isolNoRequirement isolLoose kinematic trigger isolation PID trackparams effSF"
 #"""
 c.setalg("TruthMatchAlgo", TruthMatchAlgoDict)
 c.setalg("XSAlgo", XSAlgoDict)
