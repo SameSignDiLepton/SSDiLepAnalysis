@@ -14,8 +14,8 @@
 #sample="DAOD_HIGG3D3.08602705._000023.pool.root.1"
 #sample="DAOD_EXOT12.08607164._000011.pool.root.1"
 
-#inDS="data16_13TeV"
-#sample="DAOD_HIGG3D3.08562588._000003.pool.root.1"
+inDS="data16_13TeV"
+sample="DAOD_HIGG3D3.08562588._000003.pool.root.1"
 #sample="DAOD_EXOT12.09582167._000012.pool.root.1"
 #sample="DAOD_EXOT12.09582167._000080.pool.root.1"
 
@@ -49,10 +49,10 @@
 #inDS="DxAODtest"
 #sample="AOD.08536744._000001.pool.root.1" #p2666
 
-inDS="mc15_13TeV"
-sample="DAOD_EXOT12.09529848._000001.pool.root.1"
+#inDS="mc15_13TeV"
+#sample="DAOD_EXOT12.09529848._000001.pool.root.1"
 #sample="DAOD_EXOT12.09520445._000013.pool.root.1"
-##sample="Zmumu.root"
+#sample="Zmumu.root"
 #sample="DAOD_EXOT12.09520232._000002.pool.root.1"
 #sample="ttbar_EXOT12_410000.root"
 
@@ -69,10 +69,12 @@ infilepath="/data/fscutti/${inDS}/${sample}"
 tokens=(${inDS//./ })
 #configpath="$ROOTCOREBIN/user_scripts/SSDiLepAnalysis/jobOptions_SSDiMu.py"
 ##configpath="$ROOTCOREBIN/user_scripts/SSDiLepAnalysis/jobOptions_SSDiLep_v2.py"
-configpath="$ROOTCOREBIN/user_scripts/SSDiLepAnalysis/jobOptions_SSDiLep_v3.py"
+
+##configpath="$ROOTCOREBIN/user_scripts/SSDiLepAnalysis/jobOptions_SSDiLep_v3.py"
+configpath="$ROOTCOREBIN/user_scripts/SSDiLepAnalysis/jobOptions_SSDiMu_v2.py"
 current_time="$(date +'%d-%m-%Y-%T')"
 outdir=output_local_DxAOD-2016-13TeV_${tokens[2]}_${current_time}
-nevents=10
+nevents=1000
 
 echo ""
 echo "Input file path :"
