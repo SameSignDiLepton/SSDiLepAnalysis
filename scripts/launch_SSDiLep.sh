@@ -1,16 +1,16 @@
 #!/bin/bash
 
-#inDS="mc15_13TeV.410000.PowhegPythiaEvtGen_P2012_ttbar_hdamp172p5_nonallhad.merge.DAOD_EXOT12.e3698_s2608_s2183_r7725_r7676_p2927"
-#sample="DAOD_EXOT12.10140311._000073.pool.root.1" 
-
-#inDS="data16_13TeV.00310863.physics_Main.merge.DAOD_EXOT12.f756_m1710_p2933"
-#sample="DAOD_EXOT12.10154245._000237.pool.root.1" 
-
-inDS="mc15_13TeV.361106.PowhegPythia8EvtGen_AZNLOCTEQ6L1_Zee.merge.DAOD_EXOT12.e3601_s2576_s2132_r7725_r7676_p2823"
-sample="DAOD_EXOT12.09520232._000002.pool.root.1"
+# inDS="mc15_13TeV.361106.PowhegPythia8EvtGen_AZNLOCTEQ6L1_Zee.merge.DAOD_EXOT12.e3601_s2576_s2132_r7725_r7676_p2823"
+# sample="DAOD_EXOT12.09520232._000002.pool.root.1"
 
 # inDS="mc15_13TeV.363490.Sherpa_221_NNPDF30NNLO_llll.merge.DAOD_EXOT12.e5332_s2726_r7772_r7676_p2949"
 # sample="DAOD_EXOT12.10711285._000038.pool.root.1"
+
+inDS="data16_13TeV.00298609.physics_Main.merge.DAOD_EXOT12.f698_m1594_p2950"
+sample="DAOD_EXOT12.10323328._000053.pool.root.1"
+
+# inDS="data16_13TeV.00302380.physics_Main.merge.DAOD_EXOT19.f711_m1620_p2950"
+# sample="DAOD_EXOT19.10324909._000047.pool.root.1"
 
 infilepath="/afs/cern.ch/work/g/gorisek/miha/${inDS}/${sample}"
 

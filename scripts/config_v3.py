@@ -136,8 +136,8 @@ GRL_config = ",".join(GRL_list)
 # Lumi config
 # ------------------
 LUMICALC_files = []
-LUMICALC_files.append(os.path.join(path_ext,"ilumicalc_histograms_None_276262-284484_OflLumi-13TeV-005.root"))
-LUMICALC_files.append(os.path.join(path_ext,"ilumicalc_histograms_None_297730-311481_OflLumi-13TeV-005.root"))
+LUMICALC_files.append(os.path.join(path_ext,"ilumicalc_histograms_None_276262-284484_OflLumi-13TeV-008.root"))
+LUMICALC_files.append(os.path.join(path_ext,"ilumicalc_histograms_None_297730-311481_OflLumi-13TeV-008.root"))
 LUMICALC_config = ','.join(LUMICALC_files)
 
 
@@ -344,6 +344,7 @@ BJetEfficiencyCorrectorDict = { "m_name"            : "bJetEfficiencyCorrector",
                                 "m_debug"           : False,
                                 "m_inContainerName" : "AntiKt4EMTopoJets_OR",
                                 "m_operatingPt"     : "FixedCutBEff_77",
+                                "m_corrFileName"    : "xAODBTaggingEfficiency/13TeV/2016-20_7-13TeV-MC15-CDI-2017-01-31_v1.root",
                               }
 
 
