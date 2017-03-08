@@ -593,7 +593,7 @@ EL::StatusCode TruthMatchAlgo :: applySignalTruthMatching ( const xAOD::EventInf
 
   for ( auto truth_itr : *(TruthPartContainer) ) {    
     
-    if( truth_itr->status() == 62 && abs(truth_itr->pdgId())>9900040 ) {
+    if( truth_itr->status() == 62 && abs(truth_itr->pdgId())>9900040 && abs(truth_itr->pdgId())<9900043 ) {
        
        std::vector<int> bosonVect;
        

@@ -235,6 +235,7 @@ JetSelectorDict =        { "m_name"                       :  "jetSelect_selectio
                            "m_eta_max"                    :  2.5,
                            "m_doJVT"                      :  True,
                            "m_SFFileJVT"                  : "JetJvtEfficiency/Moriond2017/JvtSFFile_EM.root",
+                           "m_truthJetContainer"          : "AntiKt4TruthJets",
                            "m_pt_max_JVT"                 :  60e3,
                            "m_eta_max_JVT"                :  2.4,
                            "m_JVTCut"                     :  0.59,
