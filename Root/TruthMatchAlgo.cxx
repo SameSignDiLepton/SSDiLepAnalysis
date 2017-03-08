@@ -591,14 +591,9 @@ EL::StatusCode TruthMatchAlgo :: applySignalTruthMatching ( const xAOD::EventInf
   const xAOD::TruthParticleContainer* TruthPartContainer(nullptr);
   RETURN_CHECK("TruthMatchAlgo::applyTruthMatchingMuon()", HelperFunctions::retrieve(TruthPartContainer, "TruthParticles", m_event, m_store, m_verbose) , "");
 
-  //std::cout << "signal truth matching " << &TruthPartContainer << std::endl;
-
-  for ( auto truth_itr : *(TruthPartContainer) ) {
-    //std::cout << "inside the loop " << &truth_itr << std::endl;
+  for ( auto truth_itr : *(TruthPartContainer) ) {    
     
-    //std::cout << "truth_itr->status() " << truth_itr->status() << std::endl;
-    
-    if( truth_itr->status() == 62 ) {
+    if( truth_itr->status() == 62 && abs(truth_itr->pdgId())>9900040 ) {
        
        std::vector<int> bosonVect;
        
