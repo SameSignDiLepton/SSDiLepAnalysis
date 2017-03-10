@@ -32,7 +32,7 @@ c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorLooseGradientDict)
 c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorLooseFixedCutTightTrackOnlyDict)      
 c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorMediumGradientDict)      
 c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorMediumFixedCutTightTrackOnlyDict)      
-c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorMediumGradientLooseDict)      
+c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorMediumGradientLooseDict)
 
 # --------------------
 # electron corrections
@@ -52,5 +52,6 @@ c.setalg("ElectronEfficiencyCorrector", ElectronEfficiencyCorrectorTightTightDic
 
 
 c.setalg("TruthMatchAlgo", TruthMatchAlgoDict)
+c.setalg("XSAlgo", XSAlgoDict)
 c.setalg("SSDiLepTreeAlgo", SSDiLepTreeAlgoDict)
 

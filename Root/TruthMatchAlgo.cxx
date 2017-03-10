@@ -66,6 +66,8 @@ TruthMatchAlgo :: TruthMatchAlgo () :
 
   Info("TruthMatchAlgo()", "Calling constructor");
 
+
+  m_inputAlgoMuonSystNames      = ""; // This is just required for muons now!
   m_inContainerName_Electrons   = "";
   m_inContainerName_Muons       = "";
   //m_inContainerName_Leptons     = "";
@@ -189,6 +191,8 @@ EL::StatusCode TruthMatchAlgo :: initialize ()
   m_HRpp_DaughtersDecor = nullptr          ; m_HRpp_DaughtersDecor	    = new SG::AuxElement::Decorator< std::vector<int> >("HRpp_Daughters");
   m_HRmm_DaughtersDecor = nullptr          ; m_HRmm_DaughtersDecor	    = new SG::AuxElement::Decorator< std::vector<int> >("HRmm_Daughters");
 
+  m_status3_leptonsDecor = nullptr          ; m_status3_leptonsDecor      = new SG::AuxElement::Decorator< std::vector<int> >("status3_leptons");
+
   m_isTruthMatchedDecor = nullptr          ; m_isTruthMatchedDecor          = new SG::AuxElement::Decorator< char >("isTruthMatched");	        // has a lepton truth match
   m_truthPdgIdDecor = nullptr	           ; m_truthPdgIdDecor              = new SG::AuxElement::Decorator< int >("truthPdgId");		// pdgId of the match particle
   m_truthTypeDecor = nullptr	           ; m_truthTypeDecor               = new SG::AuxElement::Decorator< int >("truthType"); 	        // type of the parent particle (according to MCTruthClassifier) - this decorates only muons 
@@ -238,18 +242,69 @@ EL::StatusCode TruthMatchAlgo :: execute ()
   mcEvtWeight = (*m_mcEvtWeightAcc)( *eventInfo );
 
   m_numEvent++;
-  
+ 
   const xAOD::MuonContainer* inputMuons(nullptr);
-  RETURN_CHECK("TruthMatchAlgo::execute()", HelperFunctions::retrieve(inputMuons, m_inContainerName_Muons, m_event, m_store, m_verbose) ,"");
-  if ( m_debug ) { Info( "execute", "Number of muons: %i", static_cast<int>(inputMuons->size()) ); }
   
-  /*
-  // not needed for now
-  const xAOD::ElectronContainer* inputElectrons(nullptr);
-  RETURN_CHECK("TruthMatchAlgo::execute()", HelperFunctions::retrieve(inputElectrons, m_inContainerName_Electrons, m_event, m_store, m_verbose) ,"");
-  if ( m_debug ) { Info( "execute", "Number of electrons: %i", static_cast<int>(inputElectrons->size()) ); }
-  */
   
+  if ( m_inputAlgoMuonSystNames.empty() ) { 
+    
+    // I might not want to decorate sys altered muons but for some events the nominal container might not exist 
+    // if muons are only allowed in systematic instances, hence, we have to check for the existence of the nominal container
+    //
+    if ( m_store->contains<ConstDataVector<xAOD::MuonContainer> >(m_inContainerName_Muons) ) {
+      
+      RETURN_CHECK("TruthMatchAlgo::execute()", HelperFunctions::retrieve(inputMuons, m_inContainerName_Muons, m_event, m_store, m_verbose) ,"");
+      
+      if ( m_debug ) { 
+        Info( "TruthMatchAlgo::execute()", "From %s", m_inContainerName_Muons.c_str() );
+        Info( "TruthMatchAlgo::execute()", "Number of muons: %i", static_cast<int>(inputMuons->size()) ); 
+      }
+
+      if ( m_isMC ) {
+        for ( auto muon_itr : *(inputMuons) ) {
+          if ( muon_itr->type() == xAOD::Type::Muon ) {
+           if ( m_debug ) { Info("execute()"," truth matching reco muon, pT = %2f ", muon_itr->pt() / 1e3 ); }
+           
+           if ( this->applyTruthMatchingMuon( muon_itr ) != EL::StatusCode::SUCCESS ) {
+             Error("execute()", "Problem with applyTruthMatchingMuon()! Aborting" );
+             return EL::StatusCode::FAILURE;
+            }
+          }
+        } // end loop over muons
+      }  // end check isMC
+    }   // if the container exists
+           
+  } else {
+
+    std::vector<std::string>* systNames(nullptr);
+    RETURN_CHECK("TruthMatchAlgo::execute()", HelperFunctions::retrieve(systNames, m_inputAlgoMuonSystNames, 0, m_store, m_verbose) ,"");
+
+    // loop over systematic sets available
+    //
+    for ( auto systName : *systNames ) {
+
+      RETURN_CHECK("TruthMatchAlgo::execute()", HelperFunctions::retrieve(inputMuons, m_inContainerName_Muons+systName, m_event, m_store, m_verbose) ,"");
+      if ( m_debug ) { 
+        Info( "TruthMatchAlgo::execute()", "From %s%s", m_inContainerName_Muons.c_str(), systName.c_str() );
+        Info( "TruthMatchAlgo::execute()", "Number of muons: %i", static_cast<int>(inputMuons->size()) ); 
+      }
+
+      if ( m_isMC ) {
+        for ( auto muon_itr : *(inputMuons) ) {
+          if ( muon_itr->type() == xAOD::Type::Muon ) {
+           if ( m_debug ) { Info("execute()"," truth matching reco muon, pT = %2f ", muon_itr->pt() / 1e3 ); }
+           
+           if ( this->applyTruthMatchingMuon( muon_itr ) != EL::StatusCode::SUCCESS ) {
+             Error("execute()", "Problem with applyTruthMatchingMuon()! Aborting" );
+             return EL::StatusCode::FAILURE;
+            }
+          }
+        } // end loop over muons
+      }  // end check isMC
+
+    } // close loop on systematic sets available from upstream algo
+
+  }
 
   if ( m_isMC ) {
     
@@ -257,37 +312,15 @@ EL::StatusCode TruthMatchAlgo :: execute ()
       Error("execute()", "Problem with applySignalTruthMatching()! Aborting" );
       return EL::StatusCode::FAILURE;
     }
-    
-    for ( auto muon_itr : *(inputMuons) ) {
-      if ( muon_itr->type() == xAOD::Type::Muon ) {
-       if ( m_debug ) { Info("execute()"," truth matching reco muon, pT = %2f ", muon_itr->pt() / 1e3 ); }
-       
-       if ( this->applyTruthMatchingMuon( muon_itr ) != EL::StatusCode::SUCCESS ) {
-    	 Error("execute()", "Problem with applyTruthMatchingMuon()! Aborting" );
-	 return EL::StatusCode::FAILURE;
-       }
-      }
-
-    } // end loop over muons
-    
-    /**
-    // not needed for now
-    for ( auto el_itr : *(inputElectrons) ) {
-      if ( el_itr->type() == xAOD::Type::Electron ) {
-       if ( m_debug ) { Info("execute()"," truth matching reco electron, pT = %2f ", el_itr->pt() / 1e3 ); }
-      
-        if ( this->applyTruthMatchingElectron( el_itr ) != EL::StatusCode::SUCCESS ) {
-         Error("execute()", "Problem with applyTruthMatchingElectron()! Aborting" );
-         return EL::StatusCode::FAILURE;
-        }
-      } 
-    
-    } // end loop over electrons 
-    */
+   
+    if ( this->applyStatus3Leptons( eventInfo ) != EL::StatusCode::SUCCESS ) {
+      Error("execute()", "Problem with applyStatus3Leptons()! Aborting" );
+      return EL::StatusCode::FAILURE;
+    }
   
   } // end check isMC
-
-
+  
+  
   m_numEventPass++;
   m_weightNumEventPass += mcEvtWeight;
 
@@ -323,6 +356,8 @@ EL::StatusCode TruthMatchAlgo :: finalize ()
   delete m_HLmm_DaughtersDecor;      m_HLmm_DaughtersDecor = nullptr;
   delete m_HRpp_DaughtersDecor;      m_HRpp_DaughtersDecor = nullptr;
   delete m_HRmm_DaughtersDecor;      m_HRmm_DaughtersDecor = nullptr;
+
+  delete m_status3_leptonsDecor;      m_status3_leptonsDecor = nullptr;
 
   delete m_isTruthMatchedDecor;      m_isTruthMatchedDecor = nullptr;
   delete m_truthTypeDecor;           m_truthTypeDecor = nullptr;
@@ -582,14 +617,9 @@ EL::StatusCode TruthMatchAlgo :: applySignalTruthMatching ( const xAOD::EventInf
   const xAOD::TruthParticleContainer* TruthPartContainer(nullptr);
   RETURN_CHECK("TruthMatchAlgo::applyTruthMatchingMuon()", HelperFunctions::retrieve(TruthPartContainer, "TruthParticles", m_event, m_store, m_verbose) , "");
 
-  //std::cout << "signal truth matching " << &TruthPartContainer << std::endl;
-
-  for ( auto truth_itr : *(TruthPartContainer) ) {
-    //std::cout << "inside the loop " << &truth_itr << std::endl;
+  for ( auto truth_itr : *(TruthPartContainer) ) {    
     
-    //std::cout << "truth_itr->status() " << truth_itr->status() << std::endl;
-    
-    if( truth_itr->status() == 62 ) {
+    if( truth_itr->status() == 62 && abs(truth_itr->pdgId())>9900040 && abs(truth_itr->pdgId())<9900043 ) {
        
        std::vector<int> bosonVect;
        
@@ -627,6 +657,31 @@ EL::StatusCode TruthMatchAlgo :: applySignalTruthMatching ( const xAOD::EventInf
        }
      }
    }
+  
+  return EL::StatusCode::SUCCESS;
+}
+
+EL::StatusCode TruthMatchAlgo :: applyStatus3Leptons ( const xAOD::EventInfo* eventInfo )
+{
+
+  (*m_status3_leptonsDecor)( *eventInfo ) = std::vector<int>();
+  
+  (*m_status3_leptonsDecor)( *eventInfo ).push_back(-999);
+
+  const xAOD::TruthParticleContainer* TruthPartContainer(nullptr);
+  RETURN_CHECK("TruthMatchAlgo::applyTruthMatchingMuon()", HelperFunctions::retrieve(TruthPartContainer, "TruthParticles", m_event, m_store, m_verbose) , "");
+
+  std::vector<int> leptonVec;
+
+  for ( auto truth_itr : *(TruthPartContainer) ) {
+    if( truth_itr->status() == 3 && truth_itr->isChLepton() ) {
+      leptonVec.push_back(truth_itr->pdgId());
+    }
+  }
+
+  if ( leptonVec.size() > 0 ){
+    (*m_status3_leptonsDecor)( *eventInfo ) = leptonVec;
+  }
   
   return EL::StatusCode::SUCCESS;
 }

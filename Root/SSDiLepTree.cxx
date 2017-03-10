@@ -15,14 +15,27 @@ void SSDiLepTree::AddEventUser(const std::string detailStrUser)
   if ( m_debug ) { Info("AddEventUser()", "Adding branches w/ detail: %s", detailStrUser.c_str()); }
 
   // event variables
-  m_tree->Branch("isMC",              &m_is_mc, "isMC/I");
-  m_tree->Branch("LPXKfactor",        &m_LPXKfactor, "isMC/D");
+  m_tree->Branch("isMC",             &m_isMC, "isMC/B");
+
+  // di-elec trigger match
+  m_tree->Branch("diElectronTrigMatchPairMap", &m_diElectronTrigMatchPairMap);
 
   if ( m_isMC ) {
     m_tree->Branch("HLpp_Daughters", &m_HLpp_Daughters);
     m_tree->Branch("HLmm_Daughters", &m_HLmm_Daughters);
     m_tree->Branch("HRpp_Daughters", &m_HRpp_Daughters);
     m_tree->Branch("HRmm_Daughters", &m_HRmm_Daughters);
+
+    m_tree->Branch("status3_leptons", &m_status3_leptons);
+    
+    // m_tree->Branch("LPXKfactor",     &m_KfactorWeight , "LPXKfactor/D");
+    m_tree->Branch("BornMass",       &m_BornMass , "BornMass/D");
+    m_tree->Branch("XS",             &m_XS, "XS/D");
+    m_tree->Branch("FiltEff",        &m_FiltEff, "FiltEff/D");
+
+    m_tree->Branch("LPXKfactorVec",     &m_KfactorWeightXSAlgo);
+    m_tree->Branch("LPXKfactorVecNames",     &m_KfactorWeightXSAlgoSysNames);
+
   }
 }
 
@@ -34,6 +47,8 @@ void SSDiLepTree::AddJetsUser(const std::string detailStrUser, const std::string
 
   // jet variables
   m_tree->Branch("jet_m",     &m_jet_m);
+  m_tree->Branch("jet_isClean",     &m_jet_isClean);
+  m_tree->Branch("jet_jvtSF",     &m_jet_jvtSF);
 }
 
 void SSDiLepTree::AddMuonsUser(const std::string detailStrUser)
@@ -76,11 +91,15 @@ void SSDiLepTree::AddElectronsUser(const std::string detailStrUser)
 
 void SSDiLepTree::ClearEventUser()
 {
+  m_diElectronTrigMatchPairMap.clear();
   if ( m_isMC ) {
     m_HLpp_Daughters.clear();
     m_HLmm_Daughters.clear();
     m_HRpp_Daughters.clear();
     m_HRmm_Daughters.clear();
+
+    m_status3_leptons.clear();
+
   }
 }
 
@@ -119,6 +138,8 @@ void SSDiLepTree::ClearJetsUser( const std::string jetName )
 
   // jet variables
   m_jet_m.clear();
+  m_jet_isClean.clear();
+  m_jet_jvtSF.clear();
   if ( m_debug ) { Info("ClearJetsUser()", "done with clearing"); }
 
 }
@@ -131,8 +152,23 @@ void SSDiLepTree::FillEventUser( const xAOD::EventInfo* eventInfo )
   static SG::AuxElement::Accessor< std::vector<int> > HLmm_DaughtersAcc("HLmm_Daughters");
   static SG::AuxElement::Accessor< std::vector<int> > HRpp_DaughtersAcc("HRpp_Daughters");
   static SG::AuxElement::Accessor< std::vector<int> > HRmm_DaughtersAcc("HRmm_Daughters");
+
+  static SG::AuxElement::Accessor< std::vector<int> > status3_leptonsAcc("status3_leptons");
+  
+  static SG::AuxElement::Accessor< double > xsAcc("xsection");
+  static SG::AuxElement::Accessor< double > FiltEffAcc("FiltEff");
+  static SG::AuxElement::Accessor< double > KfactorWeightAcc("KfactorWeight");
+  static SG::AuxElement::Accessor< double > BornMassAcc("BornMass");
+
+  static SG::AuxElement::Accessor< std::vector<double> > KfactorWeightXSAlgoAcc("KfactorWeightXSAlgo");
+  static SG::AuxElement::Accessor< std::vector<std::string> > KfactorWeightXSAlgoSysNamesAcc("KfactorWeightXSAlgoSysNames");
+
+  static SG::AuxElement::Accessor< dielectron_trigmatch_pair_map > diElectronTrigMatchPairMapAcc( "diElectronTrigMatchPairMap" );
   
   std::vector<int> dummyCODE(1,-999); 
+  std::vector<double> dummyVec(1,-999); 
+  std::vector<std::string> dummyVecString;
+  dummyVecString.push_back(std::string("empty"));
   
   if ( HLpp_DaughtersAcc.isAvailable( *eventInfo ) )   { m_HLpp_Daughters = HLpp_DaughtersAcc( *eventInfo ) ; }
   else   { m_HLpp_Daughters = dummyCODE; }
@@ -142,13 +178,26 @@ void SSDiLepTree::FillEventUser( const xAOD::EventInfo* eventInfo )
   else   { m_HRpp_Daughters = dummyCODE; }
   if ( HRmm_DaughtersAcc.isAvailable( *eventInfo ) )   { m_HRmm_Daughters = HRmm_DaughtersAcc( *eventInfo ) ; }
   else   { m_HRmm_Daughters = dummyCODE; }
-  
-  m_is_mc                =  ( eventInfo->eventType( xAOD::EventInfo::IS_SIMULATION ) );
 
-  //Apply the tool only if we are running on MC..
-  if(m_is_mc) m_LPXKfactor           =  eventInfo->auxdata< double >( "KfactorWeight" );
-  //..Otherwise put the variable to 1.
-  else m_LPXKfactor=1;
+  if ( status3_leptonsAcc.isAvailable( *eventInfo ) )   { m_status3_leptons = status3_leptonsAcc( *eventInfo ) ; }
+  else   { m_status3_leptons = dummyCODE; }
+  
+  if ( xsAcc.isAvailable( *eventInfo ) )   { m_XS = xsAcc( *eventInfo ) ; }
+  else   { m_XS = -999.; }
+  if ( FiltEffAcc.isAvailable( *eventInfo ) )   { m_FiltEff = FiltEffAcc( *eventInfo ) ; }
+  else   { m_FiltEff = -999.; }
+  // if ( KfactorWeightAcc.isAvailable( *eventInfo ) )   { m_KfactorWeight = KfactorWeightAcc( *eventInfo ) ; }
+  // else   { m_KfactorWeight = -999.; }
+  if ( BornMassAcc.isAvailable( *eventInfo ) )   { m_BornMass = BornMassAcc( *eventInfo ) ; }
+  else   { m_BornMass = -999.; }
+
+  if ( KfactorWeightXSAlgoAcc.isAvailable( *eventInfo ) )   { m_KfactorWeightXSAlgo = KfactorWeightXSAlgoAcc( *eventInfo ) ; }
+  else   { m_KfactorWeightXSAlgo = dummyVec; }
+  if ( KfactorWeightXSAlgoSysNamesAcc.isAvailable( *eventInfo ) )   { m_KfactorWeightXSAlgoSysNames = KfactorWeightXSAlgoSysNamesAcc( *eventInfo ) ; }
+  else   { m_KfactorWeightXSAlgoSysNames = dummyVecString; }
+
+  if ( diElectronTrigMatchPairMapAcc.isAvailable( *eventInfo ) )   { m_diElectronTrigMatchPairMap = diElectronTrigMatchPairMapAcc( *eventInfo ) ; }
+  else   { m_diElectronTrigMatchPairMap = dielectron_trigmatch_pair_map() ; }
   
 }
 
@@ -157,6 +206,17 @@ void SSDiLepTree::FillJetsUser( const xAOD::Jet* jet, const std::string jetName 
   if ( m_debug ) { Info("FillJetsUser()", "Filling jets - Jet name: %s", jetName.c_str()); }
 
   m_jet_m.push_back( jet->m() );
+
+  static SG::AuxElement::Accessor< char > isCleanAcc("cleanJet");
+  static SG::AuxElement::Accessor< std::vector<float> > sfVecJVTAcc( "JetJvtEfficiency_JVTSyst_JVT_Medium" );
+
+  std::vector<float> junkSF(1);
+
+  if ( isCleanAcc.isAvailable( *jet ) )   { m_jet_isClean.push_back( isCleanAcc( *jet ) ) ; }
+  else   { m_jet_isClean.push_back( -1 ); }
+  if ( sfVecJVTAcc.isAvailable( *jet ) )   { m_jet_jvtSF.push_back( sfVecJVTAcc( *jet ) ) ; }
+  else   { m_jet_jvtSF.push_back( junkSF ); }
+
 }
 
 void SSDiLepTree::FillMuonsUser( const xAOD::Muon* muon, const std::string )

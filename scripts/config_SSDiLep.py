@@ -8,7 +8,6 @@ from xAH_config import xAH_config
 # ROOT config files like ilumicalc, PRW and GRLs are kept here:
 # https://www.dropbox.com/sh/19kljimhoo1ntjd/AADjOdx7xDK5YaHQywtuD6x2a?dl=0
 
-
 # Hack to force just-in-time libraries to load,
 # needed for Muon quality enum. Ask gstark@cern.ch for questions.
 #
@@ -27,6 +26,10 @@ trig_el.append('HLT_e26_lhtight_nod0_ivarloos')
 trig_el.append('HLT_e60_lhmedium_nod0')
 trig_el.append('HLT_e140_lhloose_nod0')
 trig_el.append('HLT_2e17_lhvloose_nod0')
+#Trigger for fake rate measurement
+trig_el.append('HLT_e24_lhvloose_L1EM20VH')
+trig_el.append('HLT_e40_lhvloose')
+trig_el.append('HLT_e60_lhvloose')
 trigellist = ",".join(trig_el)
 
 # muon triggers
@@ -283,21 +286,18 @@ ElectronSelectorDict = { "m_name"                      : "electronSelect_selecti
                          "m_doOQCut"                   : False,
                          "m_doBLTrackQualityCut"       : True, # set this to True if reading ID flags from DAOD
                          "m_readIDFlagsFromDerivation" : True,
-                         "m_confDirPID"                : "mc15_20160113",
                          "m_doLHPIDcut"                : True,
                          "m_LHOperatingPoint"          : "Loose", # for loose ID, use "LooseAndBLayer" if NOT reading ID flags from DAOD
                          "m_doCutBasedPIDcut"          : False,
-                         "m_CutBasedOperatingPoint"    : "IsEMLoose",
-                         "m_CutBasedConfigYear"        : "",
                          "m_IsoWPList"                 : "LooseTrackOnly,Loose,GradientLoose,Gradient,FixedCutLoose,FixedCutTight,FixedCutTightTrackOnly,Tight",
                          "m_CaloIsoEff"                : "0.05*x",
                          "m_TrackIsoEff"               : "0.05*x",
                          "m_CaloBasedIsoType"          : "topoetcone20",
                          "m_TrackBasedIsoType"         : "ptvarcone20",
-                         "m_singleElTrigChains"        : "HLT_e24_lhmedium_L1EM20VH,HLT_e24_lhmedium_L1EM18VH,HLT_e60_lhmedium,HLT_e120_lhloose,HLT_e26_lhtight_nod0_ivarloose,HLT_e60_lhmedium_nod0 ,HLT_e140_lhloose_nod0",
+                         "m_singleElTrigChains"        : "HLT_e24_lhmedium_L1EM20VH,HLT_e24_lhmedium_L1EM18VH,HLT_e60_lhmedium,HLT_e120_lhloose,HLT_e26_lhtight_nod0_ivarloose,HLT_e60_lhmedium_nod0 ,HLT_e140_lhloose_nod0,HLT_e24_lhvloose_L1EM20VH,HLT_e40_lhvloose,HLT_e60_lhvloose",
                          "m_diElTrigChains"            : "HLT_2e12_lhloose_L12EM10VH,HLT_2e15_lhvloose_nod0_L12EM13VH,HLT_2e17_lhloose,HLT_2e17_lhvloose_nod0,HLT_e17_lhloose_nod0_mu14,HLT_e26_lhmedium_nod0_L1EM22VHI_mu8noL1,HLT_e7_lhmedium_nod0_mu24",
-                         }                               
-                                                          
+                         
+                         }                                                                                   
                                                           
                                                           
 METConstructorDict =     { "m_name"                       : "met",
@@ -342,7 +342,7 @@ OverlapRemoverDict =     { "m_name"                       : "overlap_removal_SSD
 
 # name of config: reco+id wp
 
-MuonEfficiencyCorrectorLooseLooseDict = {  "m_name"                  : "muonEfficiencyCorrectorLooseLoose",
+"""MuonEfficiencyCorrectorLooseLooseDict = {  "m_name"                  : "muonEfficiencyCorrectorLooseLoose",
                                       "m_debug"                 : False,
                                       "m_inContainerName"       : "Muons_OR",
                                       "m_inputAlgoSystNames"    : "MuonSelector_Syst",
@@ -515,7 +515,7 @@ MuonEfficiencyCorrectorMediumGradientLooseDict = {  "m_name"                  : 
                                       "m_SingleMuTrig"          : "HLT_mu26_imedium_OR_HLT_mu50",
                                       "m_DiMuTrig"              : "",
                                     }
-
+"""
 
 # --------------------
 # electron corrections
@@ -523,12 +523,13 @@ MuonEfficiencyCorrectorMediumGradientLooseDict = {  "m_name"                  : 
 
 path_el_eff = "ElectronEfficiencyCorrection/2015_2016/rel20.7/ICHEP_June2016_v3/"
 trigger_el_eff = "DI_E_2015_e17_lhloose_2016_e17_lhloose"
+trigger_el_eff2 = "SINGLE_E_2015_e24_lhmedium_L1EM20VH_OR_e60_lhmedium_OR_e120_lhloose_2016_e24_lhtight_nod0_ivarloose_OR_e60_lhmedium_nod0_OR_e140_lhloose_nod0"
 
 # LooseAndBLayerLLH PID 
 # ---------------------
 
 ### no isolation
-ElectronEfficiencyCorrectorLooseDict = { "m_name"                  : "electronEfficiencyCorrectorLoose",
+ElectronEfficiencyCorrectorLooseDict = { "m_name"                  : "EleEffCorrLoose",
                                     "m_debug"                 : False,
                                     "m_inContainerName"       : "Electrons_OR",
                                     "m_inputAlgoSystNames"    : "ElectronSelector_Syst",
@@ -537,11 +538,11 @@ ElectronEfficiencyCorrectorLooseDict = { "m_name"                  : "electronEf
                                     "m_systNamePID"           : "",
                                     "m_systNameTrig"          : "",
                                     "m_systNameTrigMCEff"     : "",
-                                    "m_outputSystNamesReco"   : "ElectronEfficiencyCorrector_RecoSyst",
-                                    "m_outputSystNamesPID"    : "ElectronEfficiencyCorrector_PIDSyst",
+                                    "m_outputSystNamesReco"   : "EleEffCorr_RecoSyst",
+                                    "m_outputSystNamesPID"    : "EleEffCorr_PIDSyst",
                                     "m_outputSystNamesIso"    : "",
-                                    "m_outputSystNamesTrig"   : "ElectronEfficiencyCorrector_TrigSyst",
-                                    "m_outputSystNamesTrigMCEff"   : "ElectronEfficiencyCorrector_TrigMCEffSyst",
+                                    "m_outputSystNamesTrig"   : "EleEffCorr_TrigSyst",
+                                    "m_outputSystNamesTrigMCEff"   : "EleEffCorr_TrigMCEffSyst",
                                     "m_corrFileNameReco"      : path_el_eff + "offline/efficiencySF.offline.RecoTrk.root",
                                     "m_corrFileNamePID"       : path_el_eff + "offline/efficiencySF.offline.LooseAndBLayerLLH_d0z0_v11.root",
                                     "m_corrFileNameIso"       : "",
@@ -549,8 +550,8 @@ ElectronEfficiencyCorrectorLooseDict = { "m_name"                  : "electronEf
                                     "m_corrFileNameTrigMCEff" : path_el_eff + "trigger/efficiency." + trigger_el_eff + ".LooseAndBLayerLLH_d0z0_v11.root",
                                    }
 
-# FixedCutLoose isolation
-ElectronEfficiencyCorrectorLooseFCLDict = { "m_name"                  : "electronEfficiencyCorrectorLooseFCL",
+### no isolation
+"""ElectronEfficiencyCorrectorLooseDict2 = { "m_name"                  : "EleEffCorrLoose",
                                     "m_debug"                 : False,
                                     "m_inContainerName"       : "Electrons_OR",
                                     "m_inputAlgoSystNames"    : "ElectronSelector_Syst",
@@ -559,11 +560,33 @@ ElectronEfficiencyCorrectorLooseFCLDict = { "m_name"                  : "electro
                                     "m_systNamePID"           : "",
                                     "m_systNameTrig"          : "",
                                     "m_systNameTrigMCEff"     : "",
-                                    "m_outputSystNamesReco"   : "ElectronEfficiencyCorrector_RecoSyst",
-                                    "m_outputSystNamesPID"    : "ElectronEfficiencyCorrector_PIDSyst",
-                                    "m_outputSystNamesIso"    : "ElectronEfficiencyCorrector_IsoSyst",
-                                    "m_outputSystNamesTrig"   : "ElectronEfficiencyCorrector_TrigSyst",
-                                    "m_outputSystNamesTrigMCEff"   : "ElectronEfficiencyCorrector_TrigMCEffSyst",
+                                    "m_outputSystNamesReco"   : "EleEffCorr_RecoSyst",
+                                    "m_outputSystNamesPID"    : "EleEffCorr_PIDSyst",
+                                    "m_outputSystNamesIso"    : "",
+                                    "m_outputSystNamesTrig"   : "EleEffCorr_TrigSyst",
+                                    "m_outputSystNamesTrigMCEff"   : "EleEffCorr_TrigMCEffSyst",
+                                    "m_corrFileNameReco"      : path_el_eff + "offline/efficiencySF.offline.RecoTrk.root",
+                                    "m_corrFileNamePID"       : path_el_eff + "offline/efficiencySF.offline.LooseAndBLayerLLH_d0z0_v11.root",
+                                    "m_corrFileNameIso"       : "",
+                                    "m_corrFileNameTrig"      : path_el_eff + "trigger/efficiencySF." + trigger_el_eff2 + ".LooseAndBLayerLLH_d0z0_v11.root",
+                                    "m_corrFileNameTrigMCEff" : path_el_eff + "trigger/efficiency." + trigger_el_eff2 + ".LooseAndBLayerLLH_d0z0_v11.root",
+                                   }"""
+
+# FixedCutLoose isolation
+ElectronEfficiencyCorrectorLooseFCLDict = { "m_name"                  : "EleEffCorrLooseFCL",
+                                    "m_debug"                 : False,
+                                    "m_inContainerName"       : "Electrons_OR",
+                                    "m_inputAlgoSystNames"    : "ElectronSelector_Syst",
+                                    "m_systNameReco"          : "",
+                                    "m_systNameIso"           : "",
+                                    "m_systNamePID"           : "",
+                                    "m_systNameTrig"          : "",
+                                    "m_systNameTrigMCEff"     : "",
+                                    "m_outputSystNamesReco"   : "EleEffCorr_RecoSyst",
+                                    "m_outputSystNamesPID"    : "EleEffCorr_PIDSyst",
+                                    "m_outputSystNamesIso"    : "EleEffCorr_IsoSyst",
+                                    "m_outputSystNamesTrig"   : "EleEffCorr_TrigSyst",
+                                    "m_outputSystNamesTrigMCEff"   : "EleEffCorr_TrigMCEffSyst",
                                     "m_corrFileNameReco"      : path_el_eff + "offline/efficiencySF.offline.RecoTrk.root",
                                     "m_corrFileNamePID"       : path_el_eff + "offline/efficiencySF.offline.LooseAndBLayerLLH_d0z0_v11.root",
                                     "m_corrFileNameIso"       : path_el_eff + "isolation/efficiencySF.Isolation.LooseAndBLayerLLH_d0z0_v11_isolFixedCutLoose.root", # comment if d0z0 cuts are NOT tight (TTVA)
@@ -572,7 +595,7 @@ ElectronEfficiencyCorrectorLooseFCLDict = { "m_name"                  : "electro
                                    }
 
 # LooseTrackOnly isolation
-ElectronEfficiencyCorrectorLooseLTODict = { "m_name"                    : "electronEfficiencyCorrectorLooseLTO",
+ElectronEfficiencyCorrectorLooseLTODict = { "m_name"                    : "EleEffCorrLooseLTO",
                                     "m_debug"                 : False,
                                     "m_inContainerName"       : "Electrons_OR",
                                     "m_inputAlgoSystNames"    : "ElectronSelector_Syst",
@@ -581,11 +604,11 @@ ElectronEfficiencyCorrectorLooseLTODict = { "m_name"                    : "elect
                                     "m_systNamePID"           : "",
                                     "m_systNameTrig"          : "",
                                     "m_systNameTrigMCEff"     : "",
-                                    "m_outputSystNamesReco"   : "ElectronEfficiencyCorrector_RecoSyst",
-                                    "m_outputSystNamesPID"    : "ElectronEfficiencyCorrector_PIDSyst",
-                                    "m_outputSystNamesIso"    : "ElectronEfficiencyCorrector_IsoSyst",
-                                    "m_outputSystNamesTrig"   : "ElectronEfficiencyCorrector_TrigSyst",
-                                    "m_outputSystNamesTrigMCEff"   : "ElectronEfficiencyCorrector_TrigMCEffSyst",
+                                    "m_outputSystNamesReco"   : "EleEffCorr_RecoSyst",
+                                    "m_outputSystNamesPID"    : "EleEffCorr_PIDSyst",
+                                    "m_outputSystNamesIso"    : "EleEffCorr_IsoSyst",
+                                    "m_outputSystNamesTrig"   : "EleEffCorr_TrigSyst",
+                                    "m_outputSystNamesTrigMCEff"   : "EleEffCorr_TrigMCEffSyst",
                                     "m_corrFileNameReco"      : path_el_eff + "offline/efficiencySF.offline.RecoTrk.root",
                                     "m_corrFileNamePID"       : path_el_eff + "offline/efficiencySF.offline.LooseAndBLayerLLH_d0z0_v11.root",
                                     "m_corrFileNameIso"       : path_el_eff + "isolation/efficiencySF.Isolation.LooseAndBLayerLLH_d0z0_v11_isolLooseTrackOnly.root", # comment if d0z0 cuts are NOT tight (TTVA)
@@ -597,7 +620,7 @@ ElectronEfficiencyCorrectorLooseLTODict = { "m_name"                    : "elect
 # -------------
 
 ### no isolation
-ElectronEfficiencyCorrectorMediumDict = { "m_name"                  : "electronEfficiencyCorrectorMedium",
+ElectronEfficiencyCorrectorMediumDict = { "m_name"                  : "EleEffCorrMedium",
                                     "m_debug"                 : False,
                                     "m_inContainerName"       : "Electrons_OR",
                                     "m_inputAlgoSystNames"    : "ElectronSelector_Syst",
@@ -606,11 +629,11 @@ ElectronEfficiencyCorrectorMediumDict = { "m_name"                  : "electronE
                                     "m_systNamePID"           : "",
                                     "m_systNameTrig"          : "",
                                     "m_systNameTrigMCEff"     : "",
-                                    "m_outputSystNamesReco"   : "ElectronEfficiencyCorrector_RecoSyst",
-                                    "m_outputSystNamesPID"    : "ElectronEfficiencyCorrector_PIDSyst",
+                                    "m_outputSystNamesReco"   : "EleEffCorr_RecoSyst",
+                                    "m_outputSystNamesPID"    : "EleEffCorr_PIDSyst",
                                     "m_outputSystNamesIso"    : "",
-                                    "m_outputSystNamesTrig"   : "ElectronEfficiencyCorrector_TrigSyst",
-                                    "m_outputSystNamesTrigMCEff"   : "ElectronEfficiencyCorrector_TrigMCEffSyst",
+                                    "m_outputSystNamesTrig"   : "EleEffCorr_TrigSyst",
+                                    "m_outputSystNamesTrigMCEff"   : "EleEffCorr_TrigMCEffSyst",
                                     "m_corrFileNameReco"      : path_el_eff + "offline/efficiencySF.offline.RecoTrk.root",
                                     "m_corrFileNamePID"       : path_el_eff + "offline/efficiencySF.offline.MediumLLH_d0z0_v11.root",
                                     "m_corrFileNameIso"       : "",
@@ -619,7 +642,7 @@ ElectronEfficiencyCorrectorMediumDict = { "m_name"                  : "electronE
                                    }
 
 # gradient isolation
-ElectronEfficiencyCorrectorMediumGradientDict = { "m_name"                  : "electronEfficiencyCorrectorMediumGradient",
+ElectronEfficiencyCorrectorMediumGradientDict = { "m_name"                  : "EleEffCorrMediumGradient",
                                     "m_debug"                 : False,
                                     "m_inContainerName"       : "Electrons_OR",
                                     "m_inputAlgoSystNames"    : "ElectronSelector_Syst",
@@ -628,11 +651,11 @@ ElectronEfficiencyCorrectorMediumGradientDict = { "m_name"                  : "e
                                     "m_systNamePID"           : "",
                                     "m_systNameTrig"          : "",
                                     "m_systNameTrigMCEff"     : "",
-                                    "m_outputSystNamesReco"   : "ElectronEfficiencyCorrector_RecoSyst",
-                                    "m_outputSystNamesPID"    : "ElectronEfficiencyCorrector_PIDSyst",
-                                    "m_outputSystNamesIso"    : "ElectronEfficiencyCorrector_IsoSyst",
-                                    "m_outputSystNamesTrig"   : "ElectronEfficiencyCorrector_TrigSyst",
-                                    "m_outputSystNamesTrigMCEff"   : "ElectronEfficiencyCorrector_TrigMCEffSyst",
+                                    "m_outputSystNamesReco"   : "EleEffCorr_RecoSyst",
+                                    "m_outputSystNamesPID"    : "EleEffCorr_PIDSyst",
+                                    "m_outputSystNamesIso"    : "EleEffCorr_IsoSyst",
+                                    "m_outputSystNamesTrig"   : "EleEffCorr_TrigSyst",
+                                    "m_outputSystNamesTrigMCEff"   : "EleEffCorr_TrigMCEffSyst",
                                     "m_corrFileNameReco"      : path_el_eff + "offline/efficiencySF.offline.RecoTrk.root",
                                     "m_corrFileNamePID"       : path_el_eff + "offline/efficiencySF.offline.MediumLLH_d0z0_v11.root",
                                     "m_corrFileNameIso"       : path_el_eff + "isolation/efficiencySF.Isolation.MediumLLH_d0z0_v11_isolGradient.root", # comment if d0z0 cuts are NOT tight (TTVA)
@@ -641,7 +664,7 @@ ElectronEfficiencyCorrectorMediumGradientDict = { "m_name"                  : "e
                                    }
 
 # loose isolation
-ElectronEfficiencyCorrectorMediumLooseDict = { "m_name"                  : "electronEfficiencyCorrectorMediumLoose",
+ElectronEfficiencyCorrectorMediumLooseDict = { "m_name"                  : "EleEffCorrMediumLoose",
                                     "m_debug"                 : False,
                                     "m_inContainerName"       : "Electrons_OR",
                                     "m_inputAlgoSystNames"    : "ElectronSelector_Syst",
@@ -650,11 +673,11 @@ ElectronEfficiencyCorrectorMediumLooseDict = { "m_name"                  : "elec
                                     "m_systNamePID"           : "",
                                     "m_systNameTrig"          : "",
                                     "m_systNameTrigMCEff"     : "",
-                                    "m_outputSystNamesReco"   : "ElectronEfficiencyCorrector_RecoSyst",
-                                    "m_outputSystNamesPID"    : "ElectronEfficiencyCorrector_PIDSyst",
-                                    "m_outputSystNamesIso"    : "ElectronEfficiencyCorrector_IsoSyst",
-                                    "m_outputSystNamesTrig"   : "ElectronEfficiencyCorrector_TrigSyst",
-                                    "m_outputSystNamesTrigMCEff"   : "ElectronEfficiencyCorrector_TrigMCEffSyst",
+                                    "m_outputSystNamesReco"   : "EleEffCorr_RecoSyst",
+                                    "m_outputSystNamesPID"    : "EleEffCorr_PIDSyst",
+                                    "m_outputSystNamesIso"    : "EleEffCorr_IsoSyst",
+                                    "m_outputSystNamesTrig"   : "EleEffCorr_TrigSyst",
+                                    "m_outputSystNamesTrigMCEff"   : "EleEffCorr_TrigMCEffSyst",
                                     "m_corrFileNameReco"      : path_el_eff + "offline/efficiencySF.offline.RecoTrk.root",
                                     "m_corrFileNamePID"       : path_el_eff + "offline/efficiencySF.offline.MediumLLH_d0z0_v11.root",
                                     "m_corrFileNameIso"       : path_el_eff + "isolation/efficiencySF.Isolation.MediumLLH_d0z0_v11_isolLoose.root", # comment if d0z0 cuts are NOT tight (TTVA)
@@ -663,7 +686,7 @@ ElectronEfficiencyCorrectorMediumLooseDict = { "m_name"                  : "elec
                                    }
 
 # LooseTrackOnly isolation
-ElectronEfficiencyCorrectorMediumLTODict = { "m_name"                    : "electronEfficiencyCorrectorMediumLTO",
+ElectronEfficiencyCorrectorMediumLTODict = { "m_name"                    : "EleEffCorrMediumLTO",
                                     "m_debug"                 : False,
                                     "m_inContainerName"       : "Electrons_OR",
                                     "m_inputAlgoSystNames"    : "ElectronSelector_Syst",
@@ -672,11 +695,11 @@ ElectronEfficiencyCorrectorMediumLTODict = { "m_name"                    : "elec
                                     "m_systNamePID"           : "",
                                     "m_systNameTrig"          : "",
                                     "m_systNameTrigMCEff"     : "",
-                                    "m_outputSystNamesReco"   : "ElectronEfficiencyCorrector_RecoSyst",
-                                    "m_outputSystNamesPID"    : "ElectronEfficiencyCorrector_PIDSyst",
-                                    "m_outputSystNamesIso"    : "ElectronEfficiencyCorrector_IsoSyst",
-                                    "m_outputSystNamesTrig"   : "ElectronEfficiencyCorrector_TrigSyst",
-                                    "m_outputSystNamesTrigMCEff"   : "ElectronEfficiencyCorrector_TrigMCEffSyst",
+                                    "m_outputSystNamesReco"   : "EleEffCorr_RecoSyst",
+                                    "m_outputSystNamesPID"    : "EleEffCorr_PIDSyst",
+                                    "m_outputSystNamesIso"    : "EleEffCorr_IsoSyst",
+                                    "m_outputSystNamesTrig"   : "EleEffCorr_TrigSyst",
+                                    "m_outputSystNamesTrigMCEff"   : "EleEffCorr_TrigMCEffSyst",
                                     "m_corrFileNameReco"      : path_el_eff + "offline/efficiencySF.offline.RecoTrk.root",
                                     "m_corrFileNamePID"       : path_el_eff + "offline/efficiencySF.offline.MediumLLH_d0z0_v11.root",
                                     "m_corrFileNameIso"       : path_el_eff + "isolation/efficiencySF.Isolation.MediumLLH_d0z0_v11_isolLooseTrackOnly.root", # comment if d0z0 cuts are NOT tight (TTVA)
@@ -688,7 +711,7 @@ ElectronEfficiencyCorrectorMediumLTODict = { "m_name"                    : "elec
 # ------------
 
 ### no isolation
-ElectronEfficiencyCorrectorTightDict = { "m_name"                  : "electronEfficiencyCorrectorTight",
+ElectronEfficiencyCorrectorTightDict = { "m_name"                  : "EleEffCorrTight",
                                     "m_debug"                 : False,
                                     "m_inContainerName"       : "Electrons_OR",
                                     "m_inputAlgoSystNames"    : "ElectronSelector_Syst",
@@ -697,11 +720,11 @@ ElectronEfficiencyCorrectorTightDict = { "m_name"                  : "electronEf
                                     "m_systNamePID"           : "",
                                     "m_systNameTrig"          : "",
                                     "m_systNameTrigMCEff"     : "",
-                                    "m_outputSystNamesReco"   : "ElectronEfficiencyCorrector_RecoSyst",
-                                    "m_outputSystNamesPID"    : "ElectronEfficiencyCorrector_PIDSyst",
+                                    "m_outputSystNamesReco"   : "EleEffCorr_RecoSyst",
+                                    "m_outputSystNamesPID"    : "EleEffCorr_PIDSyst",
                                     "m_outputSystNamesIso"    : "",
-                                    "m_outputSystNamesTrig"   : "ElectronEfficiencyCorrector_TrigSyst",
-                                    "m_outputSystNamesTrigMCEff"   : "ElectronEfficiencyCorrector_TrigMCEffSyst",
+                                    "m_outputSystNamesTrig"   : "EleEffCorr_TrigSyst",
+                                    "m_outputSystNamesTrigMCEff"   : "EleEffCorr_TrigMCEffSyst",
                                     "m_corrFileNameReco"      : path_el_eff + "offline/efficiencySF.offline.RecoTrk.root",
                                     "m_corrFileNamePID"       : path_el_eff + "offline/efficiencySF.offline.TightLLH_d0z0_v11.root",
                                     "m_corrFileNameIso"       : "",
@@ -710,7 +733,7 @@ ElectronEfficiencyCorrectorTightDict = { "m_name"                  : "electronEf
                                    }
 
 # gradient isolation
-ElectronEfficiencyCorrectorTightGradientDict = { "m_name"                  : "electronEfficiencyCorrectorTightGradient",
+ElectronEfficiencyCorrectorTightGradientDict = { "m_name"                  : "EleEffCorrTightGradient",
                                     "m_debug"                 : False,
                                     "m_inContainerName"       : "Electrons_OR",
                                     "m_inputAlgoSystNames"    : "ElectronSelector_Syst",
@@ -719,11 +742,11 @@ ElectronEfficiencyCorrectorTightGradientDict = { "m_name"                  : "el
                                     "m_systNamePID"           : "",
                                     "m_systNameTrig"          : "",
                                     "m_systNameTrigMCEff"     : "",
-                                    "m_outputSystNamesReco"   : "ElectronEfficiencyCorrector_RecoSyst",
-                                    "m_outputSystNamesPID"    : "ElectronEfficiencyCorrector_PIDSyst",
-                                    "m_outputSystNamesIso"    : "ElectronEfficiencyCorrector_IsoSyst",
-                                    "m_outputSystNamesTrig"   : "ElectronEfficiencyCorrector_TrigSyst",
-                                    "m_outputSystNamesTrigMCEff"   : "ElectronEfficiencyCorrector_TrigMCEffSyst",
+                                    "m_outputSystNamesReco"   : "EleEffCorr_RecoSyst",
+                                    "m_outputSystNamesPID"    : "EleEffCorr_PIDSyst",
+                                    "m_outputSystNamesIso"    : "EleEffCorr_IsoSyst",
+                                    "m_outputSystNamesTrig"   : "EleEffCorr_TrigSyst",
+                                    "m_outputSystNamesTrigMCEff"   : "EleEffCorr_TrigMCEffSyst",
                                     "m_corrFileNameReco"      : path_el_eff + "offline/efficiencySF.offline.RecoTrk.root",
                                     "m_corrFileNamePID"       : path_el_eff + "offline/efficiencySF.offline.TightLLH_d0z0_v11.root",
                                     "m_corrFileNameIso"       : path_el_eff + "isolation/efficiencySF.Isolation.TightLLH_d0z0_v11_isolGradient.root", # comment if d0z0 cuts are NOT tight (TTVA)
@@ -732,7 +755,7 @@ ElectronEfficiencyCorrectorTightGradientDict = { "m_name"                  : "el
                                    }
 
 # loose isolation
-ElectronEfficiencyCorrectorTightLooseDict = { "m_name"                  : "electronEfficiencyCorrectorTightLoose",
+ElectronEfficiencyCorrectorTightLooseDict = { "m_name"                  : "EleEffCorrTightLoose",
                                     "m_debug"                 : False,
                                     "m_inContainerName"       : "Electrons_OR",
                                     "m_inputAlgoSystNames"    : "ElectronSelector_Syst",
@@ -741,11 +764,11 @@ ElectronEfficiencyCorrectorTightLooseDict = { "m_name"                  : "elect
                                     "m_systNamePID"           : "",
                                     "m_systNameTrig"          : "",
                                     "m_systNameTrigMCEff"     : "",
-                                    "m_outputSystNamesReco"   : "ElectronEfficiencyCorrector_RecoSyst",
-                                    "m_outputSystNamesPID"    : "ElectronEfficiencyCorrector_PIDSyst",
-                                    "m_outputSystNamesIso"    : "ElectronEfficiencyCorrector_IsoSyst",
-                                    "m_outputSystNamesTrig"   : "ElectronEfficiencyCorrector_TrigSyst",
-                                    "m_outputSystNamesTrigMCEff"   : "ElectronEfficiencyCorrector_TrigMCEffSyst",
+                                    "m_outputSystNamesReco"   : "EleEffCorr_RecoSyst",
+                                    "m_outputSystNamesPID"    : "EleEffCorr_PIDSyst",
+                                    "m_outputSystNamesIso"    : "EleEffCorr_IsoSyst",
+                                    "m_outputSystNamesTrig"   : "EleEffCorr_TrigSyst",
+                                    "m_outputSystNamesTrigMCEff"   : "EleEffCorr_TrigMCEffSyst",
                                     "m_corrFileNameReco"      : path_el_eff + "offline/efficiencySF.offline.RecoTrk.root",
                                     "m_corrFileNamePID"       : path_el_eff + "offline/efficiencySF.offline.TightLLH_d0z0_v11.root",
                                     "m_corrFileNameIso"       : path_el_eff + "isolation/efficiencySF.Isolation.TightLLH_d0z0_v11_isolLoose.root", # comment if d0z0 cuts are NOT tight (TTVA)
@@ -754,7 +777,7 @@ ElectronEfficiencyCorrectorTightLooseDict = { "m_name"                  : "elect
                                    }
 
 # LooseTrackOnly isolation
-ElectronEfficiencyCorrectorTightLTODict = { "m_name"                    : "electronEfficiencyCorrectorTightLTO",
+ElectronEfficiencyCorrectorTightLTODict = { "m_name"                    : "EleEffCorrTightLTO",
                                     "m_debug"                 : False,
                                     "m_inContainerName"       : "Electrons_OR",
                                     "m_inputAlgoSystNames"    : "ElectronSelector_Syst",
@@ -763,11 +786,11 @@ ElectronEfficiencyCorrectorTightLTODict = { "m_name"                    : "elect
                                     "m_systNamePID"           : "",
                                     "m_systNameTrig"          : "",
                                     "m_systNameTrigMCEff"     : "",
-                                    "m_outputSystNamesReco"   : "ElectronEfficiencyCorrector_RecoSyst",
-                                    "m_outputSystNamesPID"    : "ElectronEfficiencyCorrector_PIDSyst",
-                                    "m_outputSystNamesIso"    : "ElectronEfficiencyCorrector_IsoSyst",
-                                    "m_outputSystNamesTrig"   : "ElectronEfficiencyCorrector_TrigSyst",
-                                    "m_outputSystNamesTrigMCEff"   : "ElectronEfficiencyCorrector_TrigMCEffSyst",
+                                    "m_outputSystNamesReco"   : "EleEffCorr_RecoSyst",
+                                    "m_outputSystNamesPID"    : "EleEffCorr_PIDSyst",
+                                    "m_outputSystNamesIso"    : "EleEffCorr_IsoSyst",
+                                    "m_outputSystNamesTrig"   : "EleEffCorr_TrigSyst",
+                                    "m_outputSystNamesTrigMCEff"   : "EleEffCorr_TrigMCEffSyst",
                                     "m_corrFileNameReco"      : path_el_eff + "offline/efficiencySF.offline.RecoTrk.root",
                                     "m_corrFileNamePID"       : path_el_eff + "offline/efficiencySF.offline.TightLLH_d0z0_v11.root",
                                     "m_corrFileNameIso"       : path_el_eff + "isolation/efficiencySF.Isolation.TightLLH_d0z0_v11_isolLooseTrackOnly.root", # comment if d0z0 cuts are NOT tight (TTVA)
@@ -776,7 +799,7 @@ ElectronEfficiencyCorrectorTightLTODict = { "m_name"                    : "elect
                                   }
 
 # tight isolation
-ElectronEfficiencyCorrectorTightTightDict = { "m_name"                    : "electronEfficiencyCorrectorTightTight",
+ElectronEfficiencyCorrectorTightTightDict = { "m_name"                    : "EleEffCorrTightTight",
                                     "m_debug"                 : False,
                                     "m_inContainerName"       : "Electrons_OR",
                                     "m_inputAlgoSystNames"    : "ElectronSelector_Syst",
@@ -785,11 +808,11 @@ ElectronEfficiencyCorrectorTightTightDict = { "m_name"                    : "ele
                                     "m_systNamePID"           : "",
                                     "m_systNameTrig"          : "",
                                     "m_systNameTrigMCEff"     : "",
-                                    "m_outputSystNamesReco"   : "ElectronEfficiencyCorrector_RecoSyst",
-                                    "m_outputSystNamesPID"    : "ElectronEfficiencyCorrector_PIDSyst",
-                                    "m_outputSystNamesIso"    : "ElectronEfficiencyCorrector_IsoSyst",
-                                    "m_outputSystNamesTrig"   : "ElectronEfficiencyCorrector_TrigSyst",
-                                    "m_outputSystNamesTrigMCEff"   : "ElectronEfficiencyCorrector_TrigMCEffSyst",
+                                    "m_outputSystNamesReco"   : "EleEffCorr_RecoSyst",
+                                    "m_outputSystNamesPID"    : "EleEffCorr_PIDSyst",
+                                    "m_outputSystNamesIso"    : "EleEffCorr_IsoSyst",
+                                    "m_outputSystNamesTrig"   : "EleEffCorr_TrigSyst",
+                                    "m_outputSystNamesTrigMCEff"   : "EleEffCorr_TrigMCEffSyst",
                                     "m_corrFileNameReco"      : path_el_eff + "offline/efficiencySF.offline.RecoTrk.root",
                                     "m_corrFileNamePID"       : path_el_eff + "offline/efficiencySF.offline.TightLLH_d0z0_v11.root",
                                     "m_corrFileNameIso"       : path_el_eff + "isolation/efficiencySF.Isolation.TightLLH_d0z0_v11_isolTight.root", # comment if d0z0 cuts are NOT tight (TTVA)
@@ -808,6 +831,8 @@ TruthMatchAlgoDict       = { "m_name"                           : "truthMatching
 
 electronPIDWorkingPoints     = "LooseAndBLayerLLH MediumLLH TightLLH " # space at the end
 electronIsolWorkingPoints    = "isolNoRequirement isolFixedCutLoose isolLooseTrackOnly isolGradient isolLoose isolTight " # space at the end
+electronTrigWorkingPoints    = "DI_E_2015_e17_lhloose_2016_e17_lhloose " # space at the end
+#electronTrigWorkingPoints    = "DI_E_2015_e17_lhloose_2016_e17_lhloose SINGLE_E_2015_e24_lhmedium_L1EM20VH_OR_e60_lhmedium_OR_e120_lhloose_2016_e24_lhtight_nod0_ivarloose_OR_e60_lhmedium_nod0_OR_e140_lhloose_nod0 " # space at the end
 SSDiLepTreeAlgoDict      = { "m_name"                  : "physics",
                              "m_debug"                 : False,
                              "m_muContainerName"       : "Muons_OR",
@@ -819,7 +844,7 @@ SSDiLepTreeAlgoDict      = { "m_name"                  : "physics",
                              "m_evtDetailStr"          : "pileup",
                              "m_trigDetailStr"         : "basic passTriggers menuKeys",
                              "m_muDetailStr"           : "kinematic trigger isolation quality trackparams effSF",
-                             "m_elDetailStr"           : electronPIDWorkingPoints + electronIsolWorkingPoints + "kinematic trigger isolation PID trackparams effSF",
+                             "m_elDetailStr"           : electronTrigWorkingPoints + electronPIDWorkingPoints + electronIsolWorkingPoints + "kinematic trigger isolation PID trackparams effSF",
                              #"m_tauDetailStr"          : "kinematic",
                              "m_jetDetailStr"          : "kinematic energy flavorTag sfFTagFix77 truth",
                              "m_METDetailStr"          : "RefEle RefGamma Muons RefJet RefJetTrk SoftClus PVSoftTrk",

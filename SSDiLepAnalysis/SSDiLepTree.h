@@ -11,7 +11,7 @@
 #include "xAODEgamma/Electron.h"
 #include "xAODJet/Jet.h"
 #include "xAODTau/TauJet.h"
-#include  "xAODCaloEvent/CaloCluster.h"
+#include "xAODCaloEvent/CaloCluster.h"
 
 // Infrastructure include(s):
 #include "xAODRootAccess/TEvent.h"
@@ -20,21 +20,33 @@
 #include "TTree.h"
 #include "TFile.h"
 
+typedef std::pair< std::pair<unsigned int,unsigned int>, char>     dielectron_trigmatch_pair;
+typedef std::multimap< std::string, dielectron_trigmatch_pair >    dielectron_trigmatch_pair_map; 
+
 class SSDiLepTree : public HelpTreeBase
 {
 
   private:
 
     /* event variables*/
-    int             m_is_mc;
-    double          m_LPXKfactor;
+    int               m_is_mc;
+    double            m_KfactorWeight;
+    double            m_XS;
+    double            m_FiltEff;
+    double            m_BornMass;
     std::vector<int>  m_HLpp_Daughters;
     std::vector<int>  m_HLmm_Daughters;
     std::vector<int>  m_HRpp_Daughters;
     std::vector<int>  m_HRmm_Daughters;
+
+    std::vector<int>  m_status3_leptons;
+    std::vector<double>       m_KfactorWeightXSAlgo;
+    std::vector<std::string>  m_KfactorWeightXSAlgoSysNames;
     
     /* jet variables */
     std::vector<float> m_jet_m;
+    std::vector<float> m_jet_isClean;
+    std::vector< std::vector < float > > m_jet_jvtSF;
 
     /* muon variables */
     std::vector<int> m_muon_isTruthMatched;
@@ -56,6 +68,8 @@ class SSDiLepTree : public HelpTreeBase
     std::vector<int>   m_electron_firstEgMotherTruthType;
     std::vector<int>   m_electron_firstEgMotherTruthOrigin;
     std::vector<int>   m_electron_firstEgMotherPdgId;
+
+    dielectron_trigmatch_pair_map  m_diElectronTrigMatchPairMap;
 
 
   public:
