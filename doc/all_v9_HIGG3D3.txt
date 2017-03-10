@@ -421,6 +421,17 @@ mc15_13TeV.364128.Sherpa_221_NNPDF30NNLO_Ztautau_MAXHTPTV0_70_CVetoBVeto.merge.D
 mc15_13TeV.364114.Sherpa_221_NNPDF30NNLO_Zee_MAXHTPTV0_70_CVetoBVeto.merge.DAOD_HIGG3D3.e5299_s2726_r7772_r7676_p2812                     
 mc15_13TeV.364131.Sherpa_221_NNPDF30NNLO_Ztautau_MAXHTPTV70_140_CVetoBVeto.merge.DAOD_HIGG3D3.e5307_s2726_r7772_r7676_p2812               
 #
+# ---------------------
+# Z+jets (PowhegPythia)
+# ---------------------
+#
+mc15_13TeV.361107.PowhegPythia8EvtGen_AZNLOCTEQ6L1_Zmumu.merge.DAOD_HIGG3D3.e3601_a766_a818_r7676_p2812
+mc15_13TeV.361107.PowhegPythia8EvtGen_AZNLOCTEQ6L1_Zmumu.merge.DAOD_HIGG3D3.e3601_s2576_s2132_r7725_r7676_p2812
+mc15_13TeV.361108.PowhegPythia8EvtGen_AZNLOCTEQ6L1_Ztautau.merge.DAOD_HIGG3D3.e3601_a766_a818_r7676_p2812
+mc15_13TeV.361106.PowhegPythia8EvtGen_AZNLOCTEQ6L1_Zee.merge.DAOD_HIGG3D3.e3601_s2576_s2132_r7725_r7676_p2812
+mc15_13TeV.361108.PowhegPythia8EvtGen_AZNLOCTEQ6L1_Ztautau.merge.DAOD_HIGG3D3.e3601_s2726_r7725_r7676_p2812
+mc15_13TeV.361106.PowhegPythia8EvtGen_AZNLOCTEQ6L1_Zee.merge.DAOD_HIGG3D3.e3601_a766_a818_r7676_p2812
+#
 # -------------------
 # W+jets (Sherpa 2.2)
 # -------------------
@@ -545,11 +556,23 @@ mc15_13TeV.364167.Sherpa_221_NNPDF30NNLO_Wmunu_MAXHTPTV280_500_BFilter.merge.DAO
 mc15_13TeV.364188.Sherpa_221_NNPDF30NNLO_Wtaunu_MAXHTPTV70_140_CFilterBVeto.merge.DAOD_HIGG3D3.e5340_s2726_r7772_r7676_p2812               
 mc15_13TeV.364161.Sherpa_221_NNPDF30NNLO_Wmunu_MAXHTPTV70_140_BFilter.merge.DAOD_HIGG3D3.e5340_s2726_r7772_r7676_p2812                     
 #
+# ---------------------
+# W+jets (PowhegPythia)
+# ---------------------
+#
+mc15_13TeV.361104.PowhegPythia8EvtGen_AZNLOCTEQ6L1_Wminusmunu.merge.DAOD_HIGG3D3.e3601_s2576_s2132_r7725_r7676_p2812
+mc15_13TeV.361100.PowhegPythia8EvtGen_AZNLOCTEQ6L1_Wplusenu.merge.DAOD_HIGG3D3.e3601_s2576_s2132_r7725_r7676_p2812
+mc15_13TeV.361101.PowhegPythia8EvtGen_AZNLOCTEQ6L1_Wplusmunu.merge.DAOD_HIGG3D3.e3601_s2576_s2132_r7725_r7676_p2812
+mc15_13TeV.361103.PowhegPythia8EvtGen_AZNLOCTEQ6L1_Wminusenu.merge.DAOD_HIGG3D3.e3601_s2576_s2132_r7725_r7676_p2812
+mc15_13TeV.361105.PowhegPythia8EvtGen_AZNLOCTEQ6L1_Wminustaunu.merge.DAOD_HIGG3D3.e3601_s2576_s2132_r7772_r7676_p2812
+mc15_13TeV.361102.PowhegPythia8EvtGen_AZNLOCTEQ6L1_Wplustaunu.merge.DAOD_HIGG3D3.e3601_s2576_s2132_r7725_r7676_p2812
+#
 # ----
 # top
 # ----
 #
-mc15_13TeV.410000.PowhegPythiaEvtGen_P2012_ttbar_hdamp172p5_nonallhad.merge.DAOD_HIGG3D3.e3698_s2608_s2183_r7725_r7676_p2812
+#mc15_13TeV.410000.PowhegPythiaEvtGen_P2012_ttbar_hdamp172p5_nonallhad.merge.DAOD_HIGG3D3.e3698_s2608_s2183_r7725_r7676_p2812
+mc15_13TeV.410000.PowhegPythiaEvtGen_P2012_ttbar_hdamp172p5_nonallhad.merge.DAOD_HIGG3D3.e3698_s2608_s2183_r7725_r7676_p2927
 mc15_13TeV.410011.PowhegPythiaEvtGen_P2012_singletop_tchan_lept_top.merge.DAOD_HIGG3D3.e3824_s2608_s2183_r7725_r7676_p2812
 mc15_13TeV.410012.PowhegPythiaEvtGen_P2012_singletop_tchan_lept_antitop.merge.DAOD_HIGG3D3.e3824_s2608_s2183_r7725_r7676_p2812
 mc15_13TeV.410013.PowhegPythiaEvtGen_P2012_Wt_inclusive_top.merge.DAOD_HIGG3D3.e3753_s2608_s2183_r7725_r7676_p2812    

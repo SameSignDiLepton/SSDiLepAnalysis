@@ -33,6 +33,8 @@ class TruthMatchAlgo : public xAH::Algorithm
   // that way they can be set directly from CINT and python.
 public:
 
+  std::string    m_inputAlgoMuonSystNames;
+  
   std::string    m_inContainerName_Electrons;
   std::string    m_inContainerName_Muons;
 

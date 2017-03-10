@@ -22,18 +22,21 @@ c.setalg("JetSelector",         JetSelectorDict)
 c.setalg("MuonSelector",        MuonSelectorDict)
 c.setalg("ElectronSelector",    ElectronSelectorDict)
 c.setalg("METConstructor",      METConstructorDict)
-c.setalg("OverlapRemover",      OverlapRemoverDict)
 
 # --------------------
 # jet corrections
 # --------------------
 c.setalg("BJetEfficiencyCorrector", BJetEfficiencyCorrectorDict)
 
+c.setalg("OverlapRemover",      OverlapRemoverDict)
+
+
 # ----------------
 # muon corrections
 # ----------------
 c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorMediumGradientDict)
 c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorMediumFixedCutTightTrackOnlyDict)
+
 
 # --------------------
 # electron corrections
@@ -42,7 +45,7 @@ c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorMediumFixedCutTightTr
 # save scale-factors only for two combinations of ID/isol WPs:
 #  -) LooseAndBLayerLLH + no iso
 #  -) MediumLLH         + isolLoose
-#"""
+
 
 #https://twiki.cern.ch/twiki/bin/view/AtlasProtected/LatestRecommendationsElectronIDRun2
 path_el_eff = "ElectronEfficiencyCorrection/2015_2016/rel20.7/Moriond_February2017_v1/"
@@ -64,7 +67,7 @@ c.setalg("ElectronEfficiencyCorrector", generateElectronEfficiencyCorrector(path
 c.setalg("ElectronEfficiencyCorrector", generateElectronEfficiencyCorrector(path_el_eff,"LooseAndBLayerLLH","_isolLoose","") )
 
 SSDiLepTreeAlgoDict["m_elDetailStr"] = trigger_el_double_unrecommended + " " + trigger_el_double_recommended + " LooseAndBLayerLLH MediumLLH TightLLH isolNoRequirement isolLoose kinematic trigger isolation PID trackparams effSF"
-#"""
+
 c.setalg("TruthMatchAlgo", TruthMatchAlgoDict)
 c.setalg("XSAlgo", XSAlgoDict)
 c.setalg("SSDiLepTreeAlgo", SSDiLepTreeAlgoDict)
