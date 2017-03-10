@@ -28,7 +28,7 @@ void SSDiLepTree::AddEventUser(const std::string detailStrUser)
 
     m_tree->Branch("status3_leptons", &m_status3_leptons);
     
-    m_tree->Branch("LPXKfactor",     &m_KfactorWeight , "LPXKfactor/D");
+    // m_tree->Branch("LPXKfactor",     &m_KfactorWeight , "LPXKfactor/D");
     m_tree->Branch("BornMass",       &m_BornMass , "BornMass/D");
     m_tree->Branch("XS",             &m_XS, "XS/D");
     m_tree->Branch("FiltEff",        &m_FiltEff, "FiltEff/D");
@@ -186,8 +186,8 @@ void SSDiLepTree::FillEventUser( const xAOD::EventInfo* eventInfo )
   else   { m_XS = -999.; }
   if ( FiltEffAcc.isAvailable( *eventInfo ) )   { m_FiltEff = FiltEffAcc( *eventInfo ) ; }
   else   { m_FiltEff = -999.; }
-  if ( KfactorWeightAcc.isAvailable( *eventInfo ) )   { m_KfactorWeight = KfactorWeightAcc( *eventInfo ) ; }
-  else   { m_KfactorWeight = -999.; }
+  // if ( KfactorWeightAcc.isAvailable( *eventInfo ) )   { m_KfactorWeight = KfactorWeightAcc( *eventInfo ) ; }
+  // else   { m_KfactorWeight = -999.; }
   if ( BornMassAcc.isAvailable( *eventInfo ) )   { m_BornMass = BornMassAcc( *eventInfo ) ; }
   else   { m_BornMass = -999.; }
 

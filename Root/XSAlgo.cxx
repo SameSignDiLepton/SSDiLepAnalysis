@@ -233,7 +233,7 @@ EL::StatusCode XSAlgo :: execute ()
     static SG::AuxElement::Accessor< double > KfactorWeightAcc("KfactorWeight");
     for ( const auto& syst_it : m_systListKfactorTool ) {
       if ( m_p_kfactorTool->applySystematicVariation(syst_it) != CP::SystematicCode::Ok ) {
-        Error("executeSF()", "Failed to configure XSAlgo for systematic %s", syst_it.name().c_str());
+        Error("execute()", "Failed to configure XSAlgo for systematic %s", syst_it.name().c_str());
         return EL::StatusCode::FAILURE;
       }
       // KFactor decoration is performed here 
