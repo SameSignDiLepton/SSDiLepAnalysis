@@ -200,8 +200,8 @@ MuonCalibratorDict =     { "m_name"                       : "muonCalib",
                            "m_outContainerName"           : "Muons_Calib",
                            "m_inputAlgoSystNames"         : "",
                            "m_outputAlgoSystNames"        : "MuonCalibrator_Syst",
-                           # "m_systName"                   : "All",
-                           # "m_systVal"                    : 1.0,
+                           "m_systName"                   : "All",
+                           "m_systVal"                    : 1.0,
                            "m_Years"                      : "Data16,Data15",
                            "m_do_sagittaCorr"             : True,
                            "m_sagittaRelease"             : "sagittaBiasDataAll_06_02_17",
@@ -217,8 +217,8 @@ ElectronCalibratorDict = { "m_name"                       : "electronCalib",
                            "m_outputAlgoSystNames"        : "ElectronCalibrator_Syst",
                            "m_esModel"                    : "es2016data_mc15c",
                            "m_decorrelationModel"         : "1NPCOR_PLUS_UNCOR",
-                           # "m_systName"                   : "All",
-                           # "m_systVal"                    : 1.0,
+                           "m_systName"                   : "All",
+                           "m_systVal"                    : 1.0,
                          }
 
 
@@ -446,7 +446,7 @@ electronPIDWorkingPoints     = "LooseAndBLayerLLH MediumLLH " # space at the end
 electronIsolWorkingPoints    = "isolNoRequirement isolLoose " # space at the end
 electronTrigWorkingPoints    = "SINGLE_E_2015_e24_lhmedium_L1EM20VH_OR_e60_lhmedium_OR_e120_lhloose_2016_e26_lhtight_nod0_ivarloose_OR_e60_lhmedium_nod0_OR_e140_lhloose_nod0 DI_E_2015_e17_lhloose_2016_e17_lhloose DI_E_2015_e12_lhloose_L1EM10VH_2016_e17_lhvloose_nod0 " # space at the end
 
-SSDiLepTreeAlgoDict      = { "m_name"                   : "physics",
+SSDiLepTreeAlgoDict      = { "m_name"                  : "physics",
                              "m_debug"                 : True,
                              "m_muContainerName"       : "Muons_OR",
                              "m_elContainerName"       : "Electrons_OR",
