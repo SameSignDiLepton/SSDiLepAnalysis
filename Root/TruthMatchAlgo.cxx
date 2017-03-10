@@ -256,8 +256,8 @@ EL::StatusCode TruthMatchAlgo :: execute ()
       RETURN_CHECK("TruthMatchAlgo::execute()", HelperFunctions::retrieve(inputMuons, m_inContainerName_Muons, m_event, m_store, m_verbose) ,"");
       
       if ( m_debug ) { 
-        Info( "execute", "From %s", m_inContainerName_Muons.c_str() );
-        Info( "execute", "Number of muons: %i", static_cast<int>(inputMuons->size()) ); 
+        Info( "TruthMatchAlgo::execute()", "From %s", m_inContainerName_Muons.c_str() );
+        Info( "TruthMatchAlgo::execute()", "Number of muons: %i", static_cast<int>(inputMuons->size()) ); 
       }
 
       if ( m_isMC ) {
@@ -285,8 +285,8 @@ EL::StatusCode TruthMatchAlgo :: execute ()
 
       RETURN_CHECK("TruthMatchAlgo::execute()", HelperFunctions::retrieve(inputMuons, m_inContainerName_Muons+systName, m_event, m_store, m_verbose) ,"");
       if ( m_debug ) { 
-        Info( "execute", "From %s%s", m_inContainerName_Muons.c_str(), systName.c_str() );
-        Info( "execute", "Number of muons: %i", static_cast<int>(inputMuons->size()) ); 
+        Info( "TruthMatchAlgo::execute()", "From %s%s", m_inContainerName_Muons.c_str(), systName.c_str() );
+        Info( "TruthMatchAlgo::execute()", "Number of muons: %i", static_cast<int>(inputMuons->size()) ); 
       }
 
       if ( m_isMC ) {
