@@ -46,7 +46,6 @@ c.setalg("MuonEfficiencyCorrector", MuonEfficiencyCorrectorMediumFixedCutTightTr
 #  -) LooseAndBLayerLLH + no iso
 #  -) MediumLLH         + isolLoose
 
-
 #https://twiki.cern.ch/twiki/bin/view/AtlasProtected/LatestRecommendationsElectronIDRun2
 path_el_eff = "ElectronEfficiencyCorrection/2015_2016/rel20.7/Moriond_February2017_v1/"
 
@@ -65,7 +64,6 @@ for ID,isol in zip(el_IDWPs,el_isolWPs):
     c.setalg("ElectronEfficiencyCorrector", generateElectronEfficiencyCorrector(path_el_eff,ID,isol,trig) )
 c.setalg("ElectronEfficiencyCorrector", generateElectronEfficiencyCorrector(path_el_eff,"TightLLH","","") )
 c.setalg("ElectronEfficiencyCorrector", generateElectronEfficiencyCorrector(path_el_eff,"LooseAndBLayerLLH","_isolLoose","") )
-
 SSDiLepTreeAlgoDict["m_elDetailStr"] = trigger_el_double_unrecommended + " " + trigger_el_double_recommended + " LooseAndBLayerLLH MediumLLH TightLLH isolNoRequirement isolLoose kinematic trigger isolation PID trackparams effSF"
 
 c.setalg("TruthMatchAlgo", TruthMatchAlgoDict)
