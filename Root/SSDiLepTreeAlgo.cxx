@@ -170,7 +170,7 @@ EL::StatusCode SSDiLepTreeAlgo :: execute ()
       const xAOD::MuonContainer inMuonsSorted = HelperFunctions::sort_container_pt( inMuon );
       helpTree->FillMuons( &inMuonsSorted, primaryVertex );
     } else { continue; }
-
+    
     if ( !m_elContainerName.empty() && m_store->contains<xAOD::ElectronContainer>( m_elContainerName+elSuffix ) ) {
       const xAOD::ElectronContainer* inElec(nullptr);
       if ( m_debug ) { Info("SSDiLepTreeAlgo::execute()", "ElectronsContainer name: %s%s", m_elContainerName.c_str(), elSuffix.c_str() ); }

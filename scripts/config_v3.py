@@ -99,7 +99,7 @@ mu_reco_corr.append("Medium")
 
 mu_iso_corr = []
 #mu_iso_corr.append("Loose")
-mu_iso_corr.append("Gradient")
+#mu_iso_corr.append("Gradient")
 #mu_iso_corr.append("GradientLoose")
 mu_iso_corr.append("FixedCutTightTrackOnly")
 
@@ -305,12 +305,11 @@ ElectronSelectorDict = { "m_name"                      : "electronSelect_selecti
 
 
 METConstructorDict =     { "m_name"                       : "met",
-                           "m_debug"                      : False,
+                           "m_debug"                      : True,
                            "m_referenceMETContainer"      : "MET_Reference_AntiKt4EMTopo",
                            "m_mapName"                    : "METAssoc_AntiKt4EMTopo",
                            "m_coreName"                   : "MET_Core_AntiKt4EMTopo",
                            "m_outputContainer"            : "RefFinal_SSDiLep",
-                           #"m_inputAlgoSystMuons"         : "MuonSelector_Syst", # new addition
                            "m_doPhotonCuts"               : True,
                            "m_doMuonCuts"                 : True,                 # new addition
                            "m_useCaloJetTerm"             : True,
@@ -321,7 +320,8 @@ METConstructorDict =     { "m_name"                       : "met",
                            #"m_inputJets"                  : "AntiKt4EMTopoJets_Calib",
                            "m_inputJets"                  : "AntiKt4EMTopoJets_Selected",# not sure this is correct. All jets should be fed to the tool. Though this is still before OR
                            "m_runNominal"                 : False,
-                           #"m_runNominal"                 : True,
+                           "m_eleSystematics"             : "ElectronSelector_Syst", 
+                           "m_muonSystematics"            : "MuonSelector_Syst", 
                            "m_doJVTCut"                   : True,
                          }
 
@@ -340,7 +340,7 @@ BJetEfficiencyCorrectorDict = { "m_name"            : "bJetEfficiencyCorrector",
 
 OverlapRemoverDict =     { "m_name"                       : "overlap_removal_SSDiLep",
                            "m_debug"                      : False,
-                           #"m_verbose"                    : True,
+                           "m_verbose"                    : False,
                            "m_useCutFlow"                 : True,
                            "m_createSelectedContainers"   : True,
                            "m_decorateSelectedObjects"    : True,
@@ -348,10 +348,8 @@ OverlapRemoverDict =     { "m_name"                       : "overlap_removal_SSD
                            "m_inContainerName_Muons"      : "Muons_Selected",
                            "m_outContainerName_Muons"     : "Muons_OR",
                            "m_inputAlgoMuons"             : "MuonSelector_Syst",      # new addition
-                           #"m_inputAlgoMuons"             : "MuonCalibrator_Syst",
                            "m_inContainerName_Electrons"  : "Electrons_Selected",
                            "m_outContainerName_Electrons" : "Electrons_OR",
-                           #"m_inputAlgoElectrons"         : "ElectronCalibrator_Syst",
                            "m_inputAlgoElectrons"         : "ElectronSelector_Syst",  # new addition
                            "m_inContainerName_Jets"       : "AntiKt4EMTopoJets_Selected",
                            "m_outContainerName_Jets"      : "AntiKt4EMTopoJets_OR",
@@ -369,7 +367,9 @@ OverlapRemoverDict =     { "m_name"                       : "overlap_removal_SSD
 MuonEfficiencyCorrectorMediumGradientDict = {  "m_name"                  : "muonEfficiencyCorrectorMediumGradient",
                                       "m_debug"                 : False,
                                       "m_inContainerName"       : "Muons_OR",
-                                      "m_inputAlgoSystNames"    : "MuonSelector_Syst",
+                                      "m_outContainerName"      : "Muons_EFF",
+                                      "m_inputAlgoSystNames"    : "OR_Algo",
+                                      "m_outputAlgoSystNames"   : "MuonEfficiencyCorrector_Syst",
                                       "m_decorateWithNomOnInputSys" : True,
                                       "m_systNameReco"          : "All",
                                       "m_systNameIso"           : "All",
@@ -398,8 +398,11 @@ MuonEfficiencyCorrectorMediumGradientDict = {  "m_name"                  : "muon
 
 MuonEfficiencyCorrectorMediumFixedCutTightTrackOnlyDict = {  "m_name"                  : "muonEfficiencyCorrectorMediumFixedCutTightTrackOnly",
                                       "m_debug"                 : False,
+                                      "m_verbose"               : False,
                                       "m_inContainerName"       : "Muons_OR",
-                                      "m_inputAlgoSystNames"    : "MuonSelector_Syst",
+                                      "m_outContainerName"      : "Muons_EFF",
+                                      "m_inputAlgoSystNames"    : "OR_Algo",
+                                      "m_outputAlgoSystNames"   : "MuonEfficiencyCorrector_Syst",
                                       "m_decorateWithNomOnInputSys" : True,
                                       "m_systNameReco"          : "All",
                                       "m_systNameIso"           : "All",
@@ -428,9 +431,9 @@ MuonEfficiencyCorrectorMediumFixedCutTightTrackOnlyDict = {  "m_name"           
 # Truth matching info just for muons
 TruthMatchAlgoDict       = { "m_name"                           : "truthMatching",
                              "m_debug"                          : False,
-                             "m_inContainerName_Muons"          : "Muons_OR",
-                             "m_inputAlgoMuonSystNames"         : "MuonSelector_Syst",
-                             "m_inContainerName_Electrons"      : "Electrons_OR",
+                             "m_inContainerName_Muons"          : "Muons_EFF",
+                             "m_inputAlgoMuonSystNames"         : "MuonEfficiencyCorrector_Syst",
+                             "m_inContainerName_Electrons"      : "Electrons_EFF",
                              "m_doMuonTruthContMatching"        : False,
                            }
 
@@ -448,10 +451,10 @@ electronTrigWorkingPoints    = "SINGLE_E_2015_e24_lhmedium_L1EM20VH_OR_e60_lhmed
 
 SSDiLepTreeAlgoDict      = { "m_name"                  : "physics",
                              "m_debug"                 : True,
-                             "m_muContainerName"       : "Muons_OR",
-                             "m_elContainerName"       : "Electrons_OR",
-                             "m_elSystsVec"            : "ElectronSelector_Syst",
-                             "m_muSystsVec"            : "MuonSelector_Syst",
+                             "m_muContainerName"       : "Muons_EFF",
+                             "m_elContainerName"       : "Electrons_EFF",
+                             "m_elSystsVec"            : "ElectronEfficiencyCorrector_Syst",
+                             "m_muSystsVec"            : "MuonEfficiencyCorrector_Syst",
                              "m_jetContainerName"      : "AntiKt4EMTopoJets_OR",
                              "m_METContainerName"      : "RefFinal_SSDiLep",
                              "m_outHistDir"            : False,
