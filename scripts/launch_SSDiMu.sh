@@ -69,10 +69,9 @@ infilepath="/data/fscutti/${inDS}/${sample}"
 #
 tokens=(${inDS//./ })
 #configpath="$ROOTCOREBIN/user_scripts/SSDiLepAnalysis/jobOptions_SSDiMu.py"
-##configpath="$ROOTCOREBIN/user_scripts/SSDiLepAnalysis/jobOptions_SSDiLep_v2.py"
 
-configpath="$ROOTCOREBIN/user_scripts/SSDiLepAnalysis/jobOptions_SSDiLep_v3.py"
-#configpath="$ROOTCOREBIN/user_scripts/SSDiLepAnalysis/jobOptions_SSDiMu_v2.py"
+#configpath="$ROOTCOREBIN/user_scripts/SSDiLepAnalysis/jobOptions_SSDiLep_v3.py"
+configpath="$ROOTCOREBIN/user_scripts/SSDiLepAnalysis/jobOptions_SSDiMu_v3.py"
 current_time="$(date +'%d-%m-%Y-%T')"
 outdir=output_local_DxAOD-2016-13TeV_${tokens[2]}_${current_time}
 nevents=2000
