@@ -51,6 +51,7 @@ EL::StatusCode SSDiLepTreeAlgo :: execute ()
   std::vector<std::string> muSystNames;
   std::vector<std::string> elSystNames;
   std::vector<std::string> jetSystNames;
+  std::vector<std::string> metSystNames;
   //std::vector<std::string> photonSystNames;
 
   // this is a temporary pointer that gets switched around to check each of the systematics
@@ -61,27 +62,36 @@ EL::StatusCode SSDiLepTreeAlgo :: execute ()
   if(!m_muSystsVec.empty()){
     RETURN_CHECK("SSDiLepTreeAlgo::execute()", HelperFunctions::retrieve(systNames, m_muSystsVec, 0, m_store, m_verbose) ,"");
     for(const auto& systName: *systNames){
+      muSystNames.push_back(systName);
       if (std::find(event_systNames.begin(), event_systNames.end(), systName) != event_systNames.end()) continue;
       event_systNames.push_back(systName);
-      muSystNames.push_back(systName);
     }
   }
 
   if(!m_elSystsVec.empty()){
     RETURN_CHECK("SSDiLepTreeAlgo::execute()", HelperFunctions::retrieve(systNames, m_elSystsVec, 0, m_store, m_verbose) ,"");
     for(const auto& systName: *systNames){
+      elSystNames.push_back(systName);
       if (std::find(event_systNames.begin(), event_systNames.end(), systName) != event_systNames.end()) continue;
       event_systNames.push_back(systName);
-      elSystNames.push_back(systName);
     }
   }
 
   if(!m_jetSystsVec.empty()){
     RETURN_CHECK("SSDiLepTreeAlgo::execute()", HelperFunctions::retrieve(systNames, m_jetSystsVec, 0, m_store, m_verbose) ,"");
     for(const auto& systName: *systNames){
+      jetSystNames.push_back(systName);
       if (std::find(event_systNames.begin(), event_systNames.end(), systName) != event_systNames.end()) continue;
       event_systNames.push_back(systName);
-      jetSystNames.push_back(systName);
+    }
+  }
+  
+  if(!m_metSystsVec.empty()){
+    RETURN_CHECK("SSDiLepTreeAlgo::execute()", HelperFunctions::retrieve(systNames, m_metSystsVec, 0, m_store, m_verbose) ,"");
+    for(const auto& systName: *systNames){
+      metSystNames.push_back(systName);
+      if (std::find(event_systNames.begin(), event_systNames.end(), systName) != event_systNames.end()) continue;
+      event_systNames.push_back(systName);
     }
   }
 
@@ -141,6 +151,7 @@ EL::StatusCode SSDiLepTreeAlgo :: execute ()
     std::string muSuffix("");
     std::string elSuffix("");
     std::string jetSuffix("");
+    std::string metSuffix("");
     //std::string photonSuffix("");
     /*
        if we find the systematic in the corresponding vector, we will use that container's systematic version instead of nominal version
@@ -152,6 +163,7 @@ EL::StatusCode SSDiLepTreeAlgo :: execute ()
     if (std::find(muSystNames.begin(), muSystNames.end(), systName) != muSystNames.end()) muSuffix = systName; 
     if (std::find(elSystNames.begin(), elSystNames.end(), systName) != elSystNames.end()) elSuffix = systName; 
     if (std::find(jetSystNames.begin(), jetSystNames.end(), systName) != jetSystNames.end()) jetSuffix = systName; 
+    if (std::find(metSystNames.begin(), metSystNames.end(), systName) != metSystNames.end()) metSuffix = systName; 
 
     helpTree->FillEvent( eventInfo, m_event );
 
@@ -164,7 +176,7 @@ EL::StatusCode SSDiLepTreeAlgo :: execute ()
     // for the containers the were supplied, fill the appropriate vectors
     if ( !m_muContainerName.empty() && m_store->contains<xAOD::MuonContainer>( m_muContainerName+muSuffix ) ) {
       const xAOD::MuonContainer* inMuon(nullptr);
-      if ( m_debug ) { Info("SSDiLepTreeAlgo::execute()", "MuonContainer name: %s%s", m_muContainerName.c_str(), muSuffix.c_str() ); }
+      if ( m_debug ) std::cout << "MuonContainer name: " << m_muContainerName+muSuffix << std::endl;
       RETURN_CHECK("SSDiLepTreeAlgo::execute()", HelperFunctions::retrieve(inMuon, m_muContainerName+muSuffix, m_event, m_store, m_verbose) ,"");
       // sort, and pass the reference to FillMuons()
       const xAOD::MuonContainer inMuonsSorted = HelperFunctions::sort_container_pt( inMuon );
@@ -173,27 +185,26 @@ EL::StatusCode SSDiLepTreeAlgo :: execute ()
     
     if ( !m_elContainerName.empty() && m_store->contains<xAOD::ElectronContainer>( m_elContainerName+elSuffix ) ) {
       const xAOD::ElectronContainer* inElec(nullptr);
-      if ( m_debug ) { Info("SSDiLepTreeAlgo::execute()", "ElectronsContainer name: %s%s", m_elContainerName.c_str(), elSuffix.c_str() ); }
+      if ( m_debug ) std::cout << "ElectronContainer name: " << m_elContainerName+elSuffix << std::endl;
       RETURN_CHECK("SSDiLepTreeAlgo::execute()", HelperFunctions::retrieve(inElec, m_elContainerName+elSuffix, m_event, m_store, m_verbose) ,"");
       // sort, and pass the reference to FillElectrons()
       const xAOD::ElectronContainer inElectronsSorted = HelperFunctions::sort_container_pt( inElec );
       helpTree->FillElectrons( &inElectronsSorted, primaryVertex );
-
     } else { continue; }
     
     if ( !m_jetContainerName.empty() && m_store->contains<xAOD::JetContainer>( m_jetContainerName+jetSuffix ) ) {
       const xAOD::JetContainer* inJets(nullptr);
-      if ( m_debug ) { Info("SSDiLepTreeAlgo::execute()", "JetContainer name: %s%s", m_jetContainerName.c_str(), jetSuffix.c_str() ); }
+      if ( m_debug ) std::cout << "JetContainer name: " << m_jetContainerName+jetSuffix << std::endl;
       RETURN_CHECK("SSDiLepTreeAlgo::execute()", HelperFunctions::retrieve(inJets, m_jetContainerName+jetSuffix, m_event, m_store, m_verbose) ,"");
       // sort, and pass the reference to FillJets()
       const xAOD::JetContainer inJetsSorted = HelperFunctions::sort_container_pt( inJets );
       helpTree->FillJets( &inJetsSorted );
     } else { continue; }
     
-    if ( !m_METContainerName.empty() && m_store->contains<xAOD::MissingETContainer>( m_METContainerName ) ) {
+    if ( !m_METContainerName.empty() && m_store->contains<xAOD::MissingETContainer>( m_METContainerName+metSuffix  ) ) {
       const xAOD::MissingETContainer* inMETCont(nullptr);
-      if ( m_debug ) { Info("SSDiLepTreeAlgo::execute()", "METContainer name: %s", m_METContainerName.c_str() ); }
-      RETURN_CHECK("SSDiLepTreeAlgo::execute()", HelperFunctions::retrieve(inMETCont, m_METContainerName, m_event, m_store, m_debug) , "");
+      if ( m_debug ) std::cout << "METContainer name: " << m_METContainerName+metSuffix << std::endl;
+      RETURN_CHECK("SSDiLepTreeAlgo::execute()", HelperFunctions::retrieve(inMETCont, m_METContainerName+metSuffix, m_event, m_store, m_debug) , "");
       helpTree->FillMET( inMETCont );
     } else { continue; }
 
