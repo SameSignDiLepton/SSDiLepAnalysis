@@ -231,6 +231,13 @@ EL::StatusCode TruthMatchAlgo :: execute ()
   //
   const xAOD::EventInfo* eventInfo(nullptr);
   RETURN_CHECK("TruthMatchAlgo::execute()", HelperFunctions::retrieve(eventInfo, "EventInfo", m_event, m_store, m_verbose) , "");
+  
+  m_numEvent++;
+
+  if ( !m_isMC ) {
+    if ( m_numEvent == 1 ) { Info("execute()", "Sample is Data! Do not decorate with truth info... "); }
+    return EL::StatusCode::SUCCESS;
+  }
 
   // MC event weight
   //
@@ -241,8 +248,6 @@ EL::StatusCode TruthMatchAlgo :: execute ()
   }
   mcEvtWeight = (*m_mcEvtWeightAcc)( *eventInfo );
 
-  m_numEvent++;
- 
   const xAOD::MuonContainer* inputMuons(nullptr);
   
   
@@ -260,7 +265,7 @@ EL::StatusCode TruthMatchAlgo :: execute ()
         Info( "TruthMatchAlgo::execute()", "Number of muons: %i", static_cast<int>(inputMuons->size()) ); 
       }
 
-      if ( m_isMC ) {
+      //if ( m_isMC ) {
         for ( auto muon_itr : *(inputMuons) ) {
           if ( muon_itr->type() == xAOD::Type::Muon ) {
            if ( m_debug ) { Info("execute()"," truth matching reco muon, pT = %2f ", muon_itr->pt() / 1e3 ); }
@@ -271,42 +276,42 @@ EL::StatusCode TruthMatchAlgo :: execute ()
             }
           }
         } // end loop over muons
-      }  // end check isMC
+      //}  // end check isMC
     }   // if the container exists
            
   } else {
 
     std::vector<std::string>* systNames(nullptr);
-    RETURN_CHECK("TruthMatchAlgo::execute()", HelperFunctions::retrieve(systNames, m_inputAlgoMuonSystNames, 0, m_store, m_verbose) ,"");
-
-    // loop over systematic sets available
-    //
-    for ( auto systName : *systNames ) {
-
-      RETURN_CHECK("TruthMatchAlgo::execute()", HelperFunctions::retrieve(inputMuons, m_inContainerName_Muons+systName, m_event, m_store, m_verbose) ,"");
-      if ( m_debug ) { 
-        Info( "TruthMatchAlgo::execute()", "From %s%s", m_inContainerName_Muons.c_str(), systName.c_str() );
-        Info( "TruthMatchAlgo::execute()", "Number of muons: %i", static_cast<int>(inputMuons->size()) ); 
-      }
-
-      if ( m_isMC ) {
-        for ( auto muon_itr : *(inputMuons) ) {
-          if ( muon_itr->type() == xAOD::Type::Muon ) {
-           if ( m_debug ) { Info("execute()"," truth matching reco muon, pT = %2f ", muon_itr->pt() / 1e3 ); }
-           
-           if ( this->applyTruthMatchingMuon( muon_itr ) != EL::StatusCode::SUCCESS ) {
-             Error("execute()", "Problem with applyTruthMatchingMuon()! Aborting" );
-             return EL::StatusCode::FAILURE;
-            }
-          }
-        } // end loop over muons
-      }  // end check isMC
-
-    } // close loop on systematic sets available from upstream algo
-
+    //if ( m_store->contains<ConstDataVector<xAOD::MuonContainer> >(m_inContainerName_Muons) ) {
+       RETURN_CHECK("TruthMatchAlgo::execute()", HelperFunctions::retrieve(systNames, m_inputAlgoMuonSystNames, 0, m_store, m_verbose) ,"");
+       
+       // loop over systematic sets available
+       //
+       for ( auto systName : *systNames ) {
+       
+         RETURN_CHECK("TruthMatchAlgo::execute()", HelperFunctions::retrieve(inputMuons, m_inContainerName_Muons+systName, m_event, m_store, m_verbose) ,"");
+         if ( m_debug ) { 
+           Info( "TruthMatchAlgo::execute()", "From %s%s", m_inContainerName_Muons.c_str(), systName.c_str() );
+           Info( "TruthMatchAlgo::execute()", "Number of muons: %i", static_cast<int>(inputMuons->size()) ); 
+         }
+       
+         //if ( m_isMC ) {
+           for ( auto muon_itr : *(inputMuons) ) {
+             if ( muon_itr->type() == xAOD::Type::Muon ) {
+              if ( m_debug ) { Info("execute()"," truth matching reco muon, pT = %2f ", muon_itr->pt() / 1e3 ); }
+              
+              if ( this->applyTruthMatchingMuon( muon_itr ) != EL::StatusCode::SUCCESS ) {
+                Error("execute()", "Problem with applyTruthMatchingMuon()! Aborting" );
+                return EL::StatusCode::FAILURE;
+               }
+             }
+           } // end loop over muons
+         //}  // end check isMC
+       } // close loop on systematic sets available from upstream algo
+     //} // if container exists
   }
 
-  if ( m_isMC ) {
+  //if ( m_isMC ) {
     
     if ( this->applySignalTruthMatching( eventInfo ) != EL::StatusCode::SUCCESS ) {
       Error("execute()", "Problem with applySignalTruthMatching()! Aborting" );
@@ -318,7 +323,7 @@ EL::StatusCode TruthMatchAlgo :: execute ()
       return EL::StatusCode::FAILURE;
     }
   
-  } // end check isMC
+  //} // end check isMC
   
   
   m_numEventPass++;

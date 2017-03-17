@@ -18,6 +18,7 @@ from xAH_config import xAH_config
 alg = ROOT.xAH.Algorithm()
 del alg
 
+
 do_HIGG3D3 = True
 kernel = "HIGG3D3Kernel"
 use_truth_mu_cont = True
@@ -25,6 +26,37 @@ use_truth_mu_cont = True
 if not do_HIGG3D3:
   kernel = "EXOT12Kernel"
   use_truth_mu_cont = False
+
+
+
+# electron triggers
+trig_el_single = []
+trig_el_single.append('HLT_e24_lhmedium_L1EM20VH')
+trig_el_single.append('HLT_e60_lhmedium')
+trig_el_single.append('HLT_e60_lhmedium_nod0')
+
+trig_el_single.append('HLT_e17_lhloose')
+trig_el_single.append('HLT_e24_lhvloose_L1EM20VH')
+trig_el_single.append('HLT_e24_lhvloose_nod0_L1EM20VH')
+trig_el_single.append('HLT_e26_lhvloose_L1EM20VH')
+trig_el_single.append('HLT_e26_lhvloose_nod0_L1EM20VH')
+trig_el_single.append('HLT_e60_lhvloose')
+trig_el_single.append('HLT_e60_lhvloose_nod0')
+trig_el_single.append('HLT_e120_lhloose')
+trig_el_single.append('HLT_e120_lhloose_nod0')
+trig_el_single.append('HLT_e140_lhloose')
+trig_el_single.append('HLT_e140_lhloose_nod0')
+
+trig_el_single.append('HLT_e24_lhtight_nod0_ivarloose')
+trig_el_single.append('HLT_e26_lhtight_nod0_ivarloose')
+
+trig_el_double = []
+trig_el_double.append('HLT_2e12_lhloose_L12EM10VH')
+trig_el_double.append('HLT_2e17_lhloose')
+trig_el_double.append('HLT_2e17_lhvloose_nod0')
+
+trig_el_single_string = ",".join(trig_el_single)
+trig_el_double_string = ",".join(trig_el_double)
 
 # muon triggers
 trig_single_mu = []
@@ -42,10 +74,20 @@ trig_di_mu.append('HLT_2mu14')
 single_mu_triglist = ",".join(trig_single_mu)
 di_mu_triglist = ",".join(trig_di_mu)
 
-trigMuMuEMulist=",".join(trig_di_mu)
+#dilepton emu triggers
+trig_emu = []
+trig_emu.append('HLT_e17_lhloose_nod0_mu14')
+trig_emu.append('HLT_e26_lhmedium_nod0_L1EM22VHI_mu8noL1')
+trig_emu.append('HLT_e7_lhmedium_nod0_mu24')
+trig_emu.append('HLT_e17_lhloose_mu14')
+trig_emu.append('HLT_e24_lhmedium_L1EM20VHI_mu8noL1')
+trig_emu.append('HLT_e7_lhmedium_mu24')
+trigemulist=",".join(trig_emu)
+
+trigMuMuEMulist=",".join(trig_emu+trig_di_mu)
 
 # all triggers
-all_triggers = trig_single_mu + trig_di_mu
+all_triggers = trig_el_single + trig_el_double + trig_single_mu + trig_emu + trig_di_mu
 triglist = ",".join(all_triggers)
 
 # muon corrections
@@ -116,6 +158,7 @@ BasicEventSelectionDict = {"m_name"                       : "SSDiLep",
                            "m_applyGRLCut"                : True,
                            "m_GRLxml"                     : GRL_config,
                            "m_doPUreweighting"            : True,
+                           "m_doPUreweightingSys"         : True,
                            "m_reweightSherpa22"           : True,
                            "m_PRWFileNames"               : "dev/PileupReweighting/mc15c_v2_defaults.NotRecommended.prw.root",
                            "m_lumiCalcFileNames"          : LUMICALC_config,
@@ -177,6 +220,19 @@ MuonCalibratorDict =     { "m_name"                       : "muonCalib",
                            "m_do_sagittaMCDistortion"     : False,
                          }
 
+# https://twiki.cern.ch/twiki/bin/view/AtlasProtected/ElectronPhotonFourMomentumCorrection#Recommendations_for_data15_data1
+ElectronCalibratorDict = { "m_name"                       : "electronCalib",
+                           "m_debug"                      : False,
+                           "m_inContainerName"            : "Electrons",
+                           "m_outContainerName"           : "Electrons_Calib",
+                           "m_inputAlgoSystNames"         : "",
+                           "m_outputAlgoSystNames"        : "ElectronCalibrator_Syst",
+                           "m_esModel"                    : "es2016data_mc15c",
+                           "m_decorrelationModel"         : "1NPCOR_PLUS_UNCOR",
+                           #"m_systName"                   : "All",
+                           #"m_systVal"                    : 1.0,
+                         }
+
 
 JetSelectorDict =        { "m_name"                       :  "jetSelect_selection",
                            "m_debug"                      :  False,
@@ -229,6 +285,37 @@ MuonSelectorDict =       { "m_name"                       : "muonSelect_selectio
                          }
 
 
+ElectronSelectorDict = { "m_name"                      : "electronSelect_selection",
+                         "m_debug"                     :  False,
+                         "m_inContainerName"           : "Electrons_Calib",
+                         "m_outContainerName"          : "Electrons_Selected",
+                         "m_inputAlgoSystNames"        : "ElectronCalibrator_Syst",
+                         "m_outputAlgoSystNames"       : "ElectronSelector_Syst",
+                         "m_createSelectedContainer"   : True,
+                         "m_decorateSelectedObjects"   : True,
+                         "m_pass_min"                  : 0,
+                         "m_pT_min"                    : 30e3,
+                         "m_eta_max"                   : 2.47,
+                         "m_vetoCrack"                 : True,
+                         "m_d0sig_max"                 : 5.0,
+                         "m_z0sintheta_max"            : 0.5,
+                         "m_doAuthorCut"               : True,
+                         "m_doOQCut"                   : True,
+                         "m_doBLTrackQualityCut"       : True, # set this to True if reading ID flags from DAOD
+                         "m_readIDFlagsFromDerivation" : True,
+                         "m_doLHPIDcut"                : True,
+                         "m_LHOperatingPoint"          : "Loose", # for loose ID, use "LooseAndBLayer" if NOT reading ID flags from DAOD
+                         "m_doCutBasedPIDcut"          : False,
+                         "m_IsoWPList"                 : "LooseTrackOnly,Loose,GradientLoose,Gradient,FixedCutLoose,FixedCutTight,FixedCutTightTrackOnly,Tight",
+                         "m_CaloIsoEff"                : "0.05*x",
+                         "m_TrackIsoEff"               : "0.05*x",
+                         "m_CaloBasedIsoType"          : "topoetcone20",
+                         "m_TrackBasedIsoType"         : "ptvarcone20",
+                         "m_singleElTrigChains"        : trig_el_single_string,
+                         "m_diElTrigChains"            : trig_el_double_string,
+                         }
+
+
 METConstructorDict =     { "m_name"                       : "met",
                            "m_debug"                      : True,
                            "m_referenceMETContainer"      : "MET_Reference_AntiKt4EMTopo",
@@ -241,13 +328,13 @@ METConstructorDict =     { "m_name"                       : "met",
                            "m_doElectronCuts"             : True,                 # new addition
                            "m_useCaloJetTerm"             : True,
                            "m_useTrackJetTerm"            : False,
-                           "m_inputElectrons"             : "Electrons",
+                           "m_inputElectrons"             : "Electrons_Selected",
                            "m_inputPhotons"               : "Photons",
                            "m_inputMuons"                 : "Muons_Selected",
                            #"m_inputJets"                  : "AntiKt4EMTopoJets_Calib",
                            "m_inputJets"                  : "AntiKt4EMTopoJets_Selected",# not sure this is correct. All jets should be fed to the tool. Though this is still before OR
                            "m_runNominal"                 : False,
-                           #"m_eleSystematics"             : "ElectronSelector_Syst", 
+                           "m_eleSystematics"             : "ElectronSelector_Syst", 
                            "m_muonSystematics"            : "MuonSelector_Syst", 
                            "m_doJVTCut"                   : True,
                          }
@@ -275,9 +362,9 @@ OverlapRemoverDict =     { "m_name"                       : "overlap_removal_SSD
                            "m_inContainerName_Muons"      : "Muons_Selected",
                            "m_outContainerName_Muons"     : "Muons_OR",
                            "m_inputAlgoMuons"             : "MuonSelector_Syst",      # new addition
-                           #"m_inContainerName_Electrons"  : "Electrons_Selected",
-                           #"m_outContainerName_Electrons" : "Electrons_OR",
-                           #"m_inputAlgoElectrons"         : "ElectronSelector_Syst",  # new addition
+                           "m_inContainerName_Electrons"  : "Electrons_Selected",
+                           "m_outContainerName_Electrons" : "Electrons_OR",
+                           "m_inputAlgoElectrons"         : "ElectronSelector_Syst",  # new addition
                            "m_inContainerName_Jets"       : "AntiKt4EMTopoJets_Selected",
                            "m_outContainerName_Jets"      : "AntiKt4EMTopoJets_OR",
                            "m_outputAlgoSystNames"        : "ORAlgo_Syst",
@@ -363,28 +450,32 @@ TruthMatchAlgoDict       = { "m_name"                           : "truthMatching
                              "m_debug"                          : False,
                              "m_inContainerName_Muons"          : "Muons_EFF",
                              "m_inputAlgoMuonSystNames"         : "MuonEfficiencyCorrector_Syst",
-                             #"m_inContainerName_Electrons"      : "Electrons_EFF",
+                             "m_inContainerName_Electrons"      : "Electrons_EFF",
                              "m_doMuonTruthContMatching"        : use_truth_mu_cont,
                            }
 
-
+"""
 XSAlgoDict               = { "m_name"                           : "xsalgo",
                              "m_debug"                          : False,
                              "m_systNameKfactorTool"            : "All",
                              "m_systValKfactorTool"             : 1.0,
                            }
-
+"""
 SSDiLepTreeAlgoDict      = { "m_name"                  : "physics",
                              "m_debug"                 : True,
                              "m_muContainerName"       : "Muons_EFF",
-                             #"m_elContainerName"       : "Electrons_EFF",
-                             #"m_elSystsVec"            : "ElectronEfficiencyCorrector_Syst",
-                             "m_muSystsVec"            : "MuonEfficiencyCorrector_Syst",
-                             "m_jetContainerName"      : "AntiKt4EMTopoJets_OR",
+                             "m_elContainerName"       : "Electrons_OR",
                              "m_METContainerName"      : "MET",
-                             "m_metSystsVec"           : "MET_Syst",
+                             "m_muSystsVec"            : "MuonEfficiencyCorrector_Syst",
+                             "m_elSystsVec"            : "",
+                             
+                             "m_replaceDataCont"       : True, 
+                             "m_muContainerNameData"   : "Muons_OR",
+                             "m_elContainerNameData"   : "Electrons_OR",
+                             
+                             "m_jetContainerName"      : "AntiKt4EMTopoJets_OR",
                              "m_outHistDir"            : False,
-                             "m_evtDetailStr"          : "pileup",
+                             "m_evtDetailStr"          : "pileup pileupsys",
                              "m_trigDetailStr"         : "basic passTriggers menuKeys",
                              "m_muDetailStr"           : "kinematic trigger isolation quality trackparams effSF " + " ".join(trig_branches) + " Reco" + " Reco".join(mu_reco_corr) + " Iso" + " Iso".join(mu_iso_corr) + " isoEff_sysNames recoEff_sysNames trigEff_sysNames ttvaEff_sysNames",
                              #"m_elDetailStr"           : electronTrigWorkingPoints + electronPIDWorkingPoints + electronIsolWorkingPoints + "kinematic trigger isolation PID trackparams effSF",

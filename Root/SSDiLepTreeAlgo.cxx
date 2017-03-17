@@ -34,6 +34,8 @@ EL::StatusCode SSDiLepTreeAlgo :: initialize ()
   RETURN_CHECK("MuonEfficiencyCorrector::initialize()", HelperFunctions::retrieve(eventInfo, m_eventInfoContainerName, m_event, m_store, m_verbose) ,"");
   m_isMC = ( eventInfo->eventType( xAOD::EventInfo::IS_SIMULATION ) );
   
+  m_numEvent      = 0;
+  
   // get the file we created already
   TFile* treeFile = wk()->getOutputFile ("tree");
   treeFile->mkdir(m_name.c_str());
@@ -44,6 +46,17 @@ EL::StatusCode SSDiLepTreeAlgo :: initialize ()
 
 EL::StatusCode SSDiLepTreeAlgo :: execute ()
 {
+  
+  //m_numEvent++;
+
+  if ( !m_isMC && m_replaceDataCont ) {
+    m_muContainerName = m_muContainerNameData;
+    m_elContainerName = m_elContainerNameData;
+
+    m_muSystsVec  = ""; 
+    m_elSystsVec  = ""; 
+    m_metSystsVec = ""; 
+  }
 
   // what systematics do we need to process for this event?
   // handle the nominal case (merge all) on every event, always

@@ -67,5 +67,5 @@ c.setalg("ElectronEfficiencyCorrector", generateElectronEfficiencyCorrector(path
 SSDiLepTreeAlgoDict["m_elDetailStr"] = trigger_el_double_unrecommended + " " + trigger_el_double_recommended + " LooseAndBLayerLLH MediumLLH TightLLH isolNoRequirement isolLoose kinematic trigger isolation PID trackparams effSF"
 
 c.setalg("TruthMatchAlgo", TruthMatchAlgoDict)
-c.setalg("XSAlgo", XSAlgoDict)
+#c.setalg("XSAlgo", XSAlgoDict)
 c.setalg("SSDiLepTreeAlgo", SSDiLepTreeAlgoDict)
