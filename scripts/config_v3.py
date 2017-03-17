@@ -462,6 +462,7 @@ SSDiLepTreeAlgoDict      = { "m_name"                  : "physics",
                              "m_METContainerName"      : "MET",
                              "m_muSystsVec"            : "MuonEfficiencyCorrector_Syst",
                              "m_elSystsVec"            : "ElectronEfficiencyCorrector_Syst",
+                             "m_metSystsVec"           : "MET_Syst",
                              
                              "m_replaceDataCont"       : True, 
                              "m_muContainerNameData"   : "Muons_OR",
