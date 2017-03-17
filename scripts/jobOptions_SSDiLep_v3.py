@@ -10,7 +10,7 @@ from helperFunctions import generateElectronEfficiencyCorrector
 
 c = xAH_config()
 
-AFII = True
+AFII = False
 ElectronCalibratorDict["m_setAFII"] = AFII
 
 # Here order matters!
