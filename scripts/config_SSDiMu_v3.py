@@ -318,7 +318,7 @@ ElectronSelectorDict = { "m_name"                      : "electronSelect_selecti
 
 
 METConstructorDict =     { "m_name"                       : "met",
-                           "m_debug"                      : True,
+                           "m_debug"                      : False,
                            "m_referenceMETContainer"      : "MET_Reference_AntiKt4EMTopo",
                            "m_mapName"                    : "METAssoc_AntiKt4EMTopo",
                            "m_coreName"                   : "MET_Core_AntiKt4EMTopo",
@@ -463,7 +463,7 @@ XSAlgoDict               = { "m_name"                           : "xsalgo",
                            }
 """
 SSDiLepTreeAlgoDict      = { "m_name"                  : "physics",
-                             "m_debug"                 : True,
+                             "m_debug"                 : False,
                              "m_muContainerName"       : "Muons_EFF",
                              "m_elContainerName"       : "Electrons_OR",
                              "m_METContainerName"      : "MET",

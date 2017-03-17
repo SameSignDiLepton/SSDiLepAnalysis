@@ -50,14 +50,14 @@
 #sample="AOD.08536744._000001.pool.root.1" #p2666
 
 inDS="mc15_13TeV"
-#sample="DAOD_EXOT12.09529848._000001.pool.root.1"
+sample="DAOD_EXOT12.09529848._000001.pool.root.1"
 #sample="DAOD_EXOT12.09520445._000013.pool.root.1"
 #sample="Zmumu.root"
 #sample="DAOD_EXOT12.09520232._000002.pool.root.1"
 #sample="ttbar_EXOT12_410000.root"
 #sample="DAOD_EXOT12.DYmumu_TEST.10343620._000001.pool.root.1"
 
-sample="DAOD_HIGG3D3.09583262._000004.pool.root.1"
+#sample="DAOD_HIGG3D3.09583262._000004.pool.root.1"
 #sample="Wmunu_HIGG3D3_p2688.root"
 
 infilepath="/data/fscutti/${inDS}/${sample}"
@@ -68,9 +68,11 @@ infilepath="/data/fscutti/${inDS}/${sample}"
 # tokenize inDS using '.' as separator
 #
 tokens=(${inDS//./ })
-#configpath="$ROOTCOREBIN/user_scripts/SSDiLepAnalysis/jobOptions_SSDiMu.py"
-#configpath="$ROOTCOREBIN/user_scripts/SSDiLepAnalysis/jobOptions_SSDiLep_v3.py"
-configpath="$ROOTCOREBIN/user_scripts/SSDiLepAnalysis/jobOptions_SSDiMu_v3.py"
+
+configpath="$ROOTCOREBIN/user_scripts/SSDiLepAnalysis/jobOptions_SSDiLep_v3.py"
+
+# for HIGG3D3 or muon specific
+#configpath="$ROOTCOREBIN/user_scripts/SSDiLepAnalysis/jobOptions_SSDiMu_v3.py"
 
 current_time="$(date +'%d-%m-%Y-%T')"
 outdir=output_local_DxAOD-2016-13TeV_${tokens[2]}_${current_time}
