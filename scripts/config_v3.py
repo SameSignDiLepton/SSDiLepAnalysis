@@ -152,8 +152,7 @@ BasicEventSelectionDict = {"m_name"                       : "SSDiLep",
                            "m_PRWFileNames"               : "dev/PileupReweighting/mc15c_v2_defaults.NotRecommended.prw.root",
                            "m_lumiCalcFileNames"          : LUMICALC_config,
                            "m_useMetaData"                : True,
-                           #"m_derivationName"             : "EXOT12Kernel",
-                           "m_derivationName"             : "HIGG3D3Kernel",
+                           "m_derivationName"             : "EXOT12Kernel",
                            "m_applyPrimaryVertexCut"      : True,
                            "m_vertexContainerName"        : "PrimaryVertices",
                            #"m_PVNTrack"                   : 0,  #### remove the legacy run-1 cut
@@ -307,7 +306,7 @@ ElectronSelectorDict = { "m_name"                      : "electronSelect_selecti
 
 
 METConstructorDict =     { "m_name"                       : "met",
-                           "m_debug"                      : True,
+                           "m_debug"                      : False,
                            "m_referenceMETContainer"      : "MET_Reference_AntiKt4EMTopo",
                            "m_mapName"                    : "METAssoc_AntiKt4EMTopo",
                            "m_coreName"                   : "MET_Core_AntiKt4EMTopo",
@@ -441,8 +440,7 @@ TruthMatchAlgoDict       = { "m_name"                           : "truthMatching
                              "m_inContainerName_Muons"          : "Muons_EFF",
                              "m_inputAlgoMuonSystNames"         : "MuonEfficiencyCorrector_Syst",
                              "m_inContainerName_Electrons"      : "Electrons_EFF",
-                             #"m_doMuonTruthContMatching"        : False,
-                             "m_doMuonTruthContMatching"        : True,
+                             "m_doMuonTruthContMatching"        : False,
                            }
 
 
@@ -458,7 +456,7 @@ electronIsolWorkingPoints    = "isolNoRequirement isolLoose " # space at the end
 electronTrigWorkingPoints    = "SINGLE_E_2015_e24_lhmedium_L1EM20VH_OR_e60_lhmedium_OR_e120_lhloose_2016_e26_lhtight_nod0_ivarloose_OR_e60_lhmedium_nod0_OR_e140_lhloose_nod0 DI_E_2015_e17_lhloose_2016_e17_lhloose DI_E_2015_e12_lhloose_L1EM10VH_2016_e17_lhvloose_nod0 " # space at the end
 
 SSDiLepTreeAlgoDict      = { "m_name"                  : "physics",
-                             "m_debug"                 : True,
+                             "m_debug"                 : False,
                              "m_muContainerName"       : "Muons_EFF",
                              "m_elContainerName"       : "Electrons_EFF",
                              "m_METContainerName"      : "MET",
