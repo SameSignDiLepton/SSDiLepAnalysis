@@ -213,6 +213,7 @@ MuonCalibratorDict =     { "m_name"                       : "muonCalib",
 # https://twiki.cern.ch/twiki/bin/view/AtlasProtected/ElectronPhotonFourMomentumCorrection#Recommendations_for_data15_data1
 ElectronCalibratorDict = { "m_name"                       : "electronCalib",
                            "m_debug"                      : False,
+                           "m_setAFII"                    : False,
                            "m_inContainerName"            : "Electrons",
                            "m_outContainerName"           : "Electrons_Calib",
                            "m_inputAlgoSystNames"         : "",

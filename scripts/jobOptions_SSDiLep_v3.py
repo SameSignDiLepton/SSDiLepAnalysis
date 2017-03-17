@@ -10,6 +10,9 @@ from helperFunctions import generateElectronEfficiencyCorrector
 
 c = xAH_config()
 
+AFII = True
+ElectronCalibratorDict["m_setAFII"] = AFII
+
 # Here order matters!
 #
 # NB: here users can update values in the dictionaries before setting them to the algorithm
@@ -61,9 +64,9 @@ el_trigWPs = [trigger_el_double_recommended,trigger_el_double_unrecommended]
 
 for ID,isol in zip(el_IDWPs,el_isolWPs):
   for trig in el_trigWPs:
-    c.setalg("ElectronEfficiencyCorrector", generateElectronEfficiencyCorrector(path_el_eff,ID,isol,trig) )
-c.setalg("ElectronEfficiencyCorrector", generateElectronEfficiencyCorrector(path_el_eff,"TightLLH","","") )
-c.setalg("ElectronEfficiencyCorrector", generateElectronEfficiencyCorrector(path_el_eff,"LooseAndBLayerLLH","_isolLoose","") )
+    c.setalg("ElectronEfficiencyCorrector", generateElectronEfficiencyCorrector(path_el_eff,ID,isol,trig,AFII) )
+c.setalg("ElectronEfficiencyCorrector", generateElectronEfficiencyCorrector(path_el_eff,"TightLLH","","",AFII) )
+c.setalg("ElectronEfficiencyCorrector", generateElectronEfficiencyCorrector(path_el_eff,"LooseAndBLayerLLH","_isolLoose","",AFII) )
 SSDiLepTreeAlgoDict["m_elDetailStr"] = trigger_el_double_unrecommended + " " + trigger_el_double_recommended + " LooseAndBLayerLLH MediumLLH TightLLH isolNoRequirement isolLoose kinematic trigger isolation PID trackparams effSF"
 
 c.setalg("TruthMatchAlgo", TruthMatchAlgoDict)
