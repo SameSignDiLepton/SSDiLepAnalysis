@@ -51,6 +51,7 @@ trig_el_double_string = ",".join(trig_el_double)
 trig_single_mu = []
 trig_single_mu.append('HLT_mu20_L1MU15')
 trig_single_mu.append('HLT_mu24_L1MU15')
+trig_single_mu.append('HLT_mu24')
 trig_single_mu.append('HLT_mu26_imedium')
 trig_single_mu.append('HLT_mu24_imedium')     # new trigger !
 trig_single_mu.append('HLT_mu26_ivarmedium')
