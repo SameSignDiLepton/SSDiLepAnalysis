@@ -16,6 +16,10 @@ class SSDiLepTreeAlgo : public TreeAlgo
 public:
 
   // additional data members which are not already in xAH::TreeAlgo.h
+  bool m_replaceDataCont;
+
+  std::string m_muContainerNameData;
+  std::string m_elContainerNameData;
 
   // this is a standard constructor
   SSDiLepTreeAlgo () :
@@ -36,8 +40,9 @@ public:
   // this is needed to distribute the algorithm to the workers
   ClassDef(SSDiLepTreeAlgo, 1);
 
- private:
+private:
   bool m_isMC;
+  int m_numEvent;         
 
 };
 

@@ -18,6 +18,17 @@ from xAH_config import xAH_config
 alg = ROOT.xAH.Algorithm()
 del alg
 
+
+do_HIGG3D3 = True
+kernel = "HIGG3D3Kernel"
+use_truth_mu_cont = True
+
+if not do_HIGG3D3:
+  kernel = "EXOT12Kernel"
+  use_truth_mu_cont = False
+
+
+
 # electron triggers
 trig_el_single = []
 trig_el_single.append('HLT_e24_lhmedium_L1EM20VH')
@@ -153,7 +164,7 @@ BasicEventSelectionDict = {"m_name"                       : "SSDiLep",
                            "m_PRWFileNames"               : "dev/PileupReweighting/mc15c_v2_defaults.NotRecommended.prw.root",
                            "m_lumiCalcFileNames"          : LUMICALC_config,
                            "m_useMetaData"                : True,
-                           "m_derivationName"             : "EXOT12Kernel",
+                           "m_derivationName"             : kernel,
                            "m_applyPrimaryVertexCut"      : True,
                            "m_vertexContainerName"        : "PrimaryVertices",
                            #"m_PVNTrack"                   : 0,  #### remove the legacy run-1 cut
@@ -219,8 +230,8 @@ ElectronCalibratorDict = { "m_name"                       : "electronCalib",
                            "m_outputAlgoSystNames"        : "ElectronCalibrator_Syst",
                            "m_esModel"                    : "es2016data_mc15c",
                            "m_decorrelationModel"         : "1NPCOR_PLUS_UNCOR",
-                           "m_systName"                   : "All",
-                           "m_systVal"                    : 1.0,
+                           #"m_systName"                   : "All",
+                           #"m_systVal"                    : 1.0,
                          }
 
 
@@ -441,28 +452,23 @@ TruthMatchAlgoDict       = { "m_name"                           : "truthMatching
                              "m_inContainerName_Muons"          : "Muons_EFF",
                              "m_inputAlgoMuonSystNames"         : "MuonEfficiencyCorrector_Syst",
                              "m_inContainerName_Electrons"      : "Electrons_EFF",
-                             "m_doMuonTruthContMatching"        : False,
+                             "m_doMuonTruthContMatching"        : use_truth_mu_cont,
                            }
 
-
+"""
 XSAlgoDict               = { "m_name"                           : "xsalgo",
                              "m_debug"                          : False,
                              "m_systNameKfactorTool"            : "All",
                              "m_systValKfactorTool"             : 1.0,
                            }
-
-### electron working points to be written out
-electronPIDWorkingPoints     = "LooseAndBLayerLLH MediumLLH " # space at the end
-electronIsolWorkingPoints    = "isolNoRequirement isolLoose " # space at the end
-electronTrigWorkingPoints    = "SINGLE_E_2015_e24_lhmedium_L1EM20VH_OR_e60_lhmedium_OR_e120_lhloose_2016_e26_lhtight_nod0_ivarloose_OR_e60_lhmedium_nod0_OR_e140_lhloose_nod0 DI_E_2015_e17_lhloose_2016_e17_lhloose DI_E_2015_e12_lhloose_L1EM10VH_2016_e17_lhvloose_nod0 " # space at the end
-
+"""
 SSDiLepTreeAlgoDict      = { "m_name"                  : "physics",
                              "m_debug"                 : False,
                              "m_muContainerName"       : "Muons_EFF",
-                             "m_elContainerName"       : "Electrons_EFF",
+                             "m_elContainerName"       : "Electrons_OR",
                              "m_METContainerName"      : "MET",
                              "m_muSystsVec"            : "MuonEfficiencyCorrector_Syst",
-                             "m_elSystsVec"            : "ElectronEfficiencyCorrector_Syst",
+                             "m_elSystsVec"            : "",
                              "m_metSystsVec"           : "MET_Syst",
                              
                              "m_replaceDataCont"       : True, 
@@ -474,7 +480,7 @@ SSDiLepTreeAlgoDict      = { "m_name"                  : "physics",
                              "m_evtDetailStr"          : "pileup pileupsys",
                              "m_trigDetailStr"         : "basic passTriggers menuKeys",
                              "m_muDetailStr"           : "kinematic trigger isolation quality trackparams effSF " + " ".join(trig_branches) + " Reco" + " Reco".join(mu_reco_corr) + " Iso" + " Iso".join(mu_iso_corr) + " isoEff_sysNames recoEff_sysNames trigEff_sysNames ttvaEff_sysNames",
-                             "m_elDetailStr"           : electronTrigWorkingPoints + electronPIDWorkingPoints + electronIsolWorkingPoints + "kinematic trigger isolation PID trackparams effSF",
+                             #"m_elDetailStr"           : electronTrigWorkingPoints + electronPIDWorkingPoints + electronIsolWorkingPoints + "kinematic trigger isolation PID trackparams effSF",
                              "m_jetDetailStr"          : "kinematic energy flavorTag sfFTagFix77 truth",
                              "m_METDetailStr"          : "RefEle RefGamma Muons RefJet RefJetTrk SoftClus PVSoftTrk",
                            }

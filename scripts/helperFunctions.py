@@ -4,7 +4,7 @@ def generateElectronEfficiencyCorrector (path, PID, isol, trigger) :
   ElectronEfficiencyCorrector = { "m_name" : "EleEffCorr"+PID+isol+trigger,
   "m_debug"                 : True,
   "m_inContainerName"       : "Electrons_OR",   
-  "m_inputAlgoSystNames"    : "OR_Algo",
+  "m_inputAlgoSystNames"    : "ORAlgo_Syst",
   "m_outContainerName"      : "Electrons_EFF",
   "m_outputAlgoSystNames"   : "ElectronEfficiencyCorrector_Syst",
   # "m_systNameReco"          : "All",
