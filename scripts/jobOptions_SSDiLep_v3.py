@@ -10,8 +10,15 @@ from helperFunctions import generateElectronEfficiencyCorrector
 
 c = xAH_config()
 
+# AFII on/off (needed for electron calib/eff algorithms, as the info is not
+# read correctly from the derivations)
 AFII = False
 ElectronCalibratorDict["m_setAFII"] = AFII
+
+# Set the derivation name. This is needed
+# to read correctly the MetaData info.
+derivation = "EXOT12Kernel"
+BasicEventSelectionDict["m_derivationName"] = derivation
 
 # Here order matters!
 #
