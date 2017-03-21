@@ -15,6 +15,24 @@ c = xAH_config()
 AFII = False
 ElectronCalibratorDict["m_setAFII"] = AFII
 
+# Turn systematics ON/OFF
+SYS = False
+METConstructorDict["m_runNominal"] = not SYS
+calibratorList = [MuonCalibratorDict, ElectronCalibratorDict]
+for calibrator in calibratorList:
+  calibrator["m_systName"] = "All" if SYS else ""
+  calibrator["m_systVal"]  =  1.0  if SYS else 0.0
+muonEffCorrList = [MuonEfficiencyCorrectorMediumGradientDict, MuonEfficiencyCorrectorMediumFixedCutTightTrackOnlyDict]
+for effCorr in muonEffCorrList:
+  effCorr["m_systNameReco"] = "All" if SYS else ""
+  effCorr["m_systNameIso" ] = "All" if SYS else ""
+  effCorr["m_systNameTrig"] = "All" if SYS else ""
+  effCorr["m_systNameTTVA"] = "All" if SYS else ""
+  effCorr["m_systValReco" ] =  1.0  if SYS else 0.0
+  effCorr["m_systValIso"  ] =  1.0  if SYS else 0.0
+  effCorr["m_systValTrig" ] =  1.0  if SYS else 0.0
+  effCorr["m_systValTTVA" ] =  1.0  if SYS else 0.0
+
 # Set the derivation name. This is needed
 # to read correctly the MetaData info.
 derivation = "EXOT12Kernel"
@@ -71,9 +89,9 @@ el_trigWPs = [trigger_el_double_recommended,trigger_el_double_unrecommended]
 
 for ID,isol in zip(el_IDWPs,el_isolWPs):
   for trig in el_trigWPs:
-    c.setalg("ElectronEfficiencyCorrector", generateElectronEfficiencyCorrector(path_el_eff,ID,isol,trig,AFII) )
-c.setalg("ElectronEfficiencyCorrector", generateElectronEfficiencyCorrector(path_el_eff,"TightLLH","","",AFII) )
-c.setalg("ElectronEfficiencyCorrector", generateElectronEfficiencyCorrector(path_el_eff,"LooseAndBLayerLLH","_isolLoose","",AFII) )
+    c.setalg("ElectronEfficiencyCorrector", generateElectronEfficiencyCorrector(path_el_eff,ID,isol,trig,AFII,SYS) )
+c.setalg("ElectronEfficiencyCorrector", generateElectronEfficiencyCorrector(path_el_eff,"TightLLH","","",AFII,SYS) )
+c.setalg("ElectronEfficiencyCorrector", generateElectronEfficiencyCorrector(path_el_eff,"LooseAndBLayerLLH","_isolLoose","",AFII,SYS) )
 SSDiLepTreeAlgoDict["m_elDetailStr"] = trigger_el_double_unrecommended + " " + trigger_el_double_recommended + " LooseAndBLayerLLH MediumLLH TightLLH isolNoRequirement isolLoose kinematic trigger isolation PID trackparams effSF"
 
 c.setalg("TruthMatchAlgo", TruthMatchAlgoDict)
