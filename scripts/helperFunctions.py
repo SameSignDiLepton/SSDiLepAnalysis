@@ -1,6 +1,6 @@
 # tool for generating the ElectronEfficiencyCorrector dictionary 
 #___________________________________________________________________
-def generateElectronEfficiencyCorrector (path, PID, isol, trigger, AFII = False) :
+def generateElectronEfficiencyCorrector (path, PID, isol, trigger, AFII = False, sys = False) :
   ElectronEfficiencyCorrector = { 
   "m_name"                  : "EleEffCorr"+PID+isol+trigger,
   "m_debug"                 : False,
@@ -11,16 +11,16 @@ def generateElectronEfficiencyCorrector (path, PID, isol, trigger, AFII = False)
   "m_outContainerName"      : "Electrons_EFF",
   "m_outputAlgoSystNames"   : "ElectronEfficiencyCorrector_Syst",
   "m_decorateWithNomOnInputSys" : True,
-  "m_systNameReco"          : "All",
-  "m_systNameIso"           : "All",
-  "m_systNamePID"           : "All",
-  "m_systNameTrig"          : "All",
-  "m_systNameTrigMCEff"     : "All",
-  "m_systValPID"            : 1.0,
-  "m_systValIso"            : 1.0,
-  "m_systValReco"           : 1.0,
-  "m_systValTrig"           : 1.0,
-  "m_systValTrigMCEff"      : 1.0,
+  "m_systNameReco"          : "All" if sys else "" ,
+  "m_systNameIso"           : "All" if sys else "" ,
+  "m_systNamePID"           : "All" if sys else "" ,
+  "m_systNameTrig"          : "All" if sys else "" ,
+  "m_systNameTrigMCEff"     : "All" if sys else "" ,
+  "m_systValPID"            : 1.0   if sys else 0.0,
+  "m_systValIso"            : 1.0   if sys else 0.0,
+  "m_systValReco"           : 1.0   if sys else 0.0,
+  "m_systValTrig"           : 1.0   if sys else 0.0,
+  "m_systValTrigMCEff"      : 1.0   if sys else 0.0,
   "m_outputSystNamesReco"   : "EleEffCorr_RecoSyst",
   "m_outputSystNamesPID"    : "EleEffCorr_PIDSyst" ,
   "m_outputSystNamesIso"    : "EleEffCorr_IsoSyst" ,
