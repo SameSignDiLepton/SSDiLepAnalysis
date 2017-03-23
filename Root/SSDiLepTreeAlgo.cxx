@@ -126,7 +126,7 @@ EL::StatusCode SSDiLepTreeAlgo :: execute ()
 
     //m_units = 1e0; // use MeV by default!
 
-    m_trees[systName] = new SSDiLepTree( outTree, treeFile, m_event, m_store, m_units, m_debug, m_DC14 );
+    m_trees[systName] = new SSDiLepTree( outTree, treeFile, m_event, m_store, m_units, m_debug, m_DC14, systName );
     SSDiLepTree* helpTree = dynamic_cast<SSDiLepTree*>(m_trees[systName]);
 
     // tell the tree to go into the file

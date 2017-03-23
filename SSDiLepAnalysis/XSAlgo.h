@@ -53,7 +53,8 @@ private:
   /* Initialise decorators */
   SG::AuxElement::Decorator< double >*        m_xsDecor;           //!
   SG::AuxElement::Decorator< double >*        m_FiltEffDecor;      //!
-  SG::AuxElement::Decorator< std::vector<double> >*        m_KFactorDecor;      //!
+  SG::AuxElement::Decorator< double >*        m_KFactorNomDecor;      //!
+  SG::AuxElement::Decorator< std::vector<float> >*        m_KFactorDecor;      //!
   SG::AuxElement::Decorator< std::vector<std::string> >*   m_KFactorDecorSys;   //!
 
   /* Initialise accessors */

@@ -28,19 +28,21 @@ class SSDiLepTree : public HelpTreeBase
 
   private:
 
+    std::string       m_systName;
+
     /* event variables*/
-    int               m_is_mc;
-    double            m_KfactorWeight;
-    double            m_XS;
-    double            m_FiltEff;
-    double            m_BornMass;
+    int              m_is_mc;
+    float            m_KfactorWeight;
+    float            m_XS;
+    float            m_FiltEff;
+    float            m_BornMass;
     std::vector<int>  m_HLpp_Daughters;
     std::vector<int>  m_HLmm_Daughters;
     std::vector<int>  m_HRpp_Daughters;
     std::vector<int>  m_HRmm_Daughters;
 
     std::vector<int>  m_status3_leptons;
-    std::vector<double>       m_KfactorWeightXSAlgo;
+    std::vector<float>       m_KfactorWeightXSAlgo;
     std::vector<std::string>  m_KfactorWeightXSAlgoSysNames;
     
     /* jet variables */
@@ -74,7 +76,7 @@ class SSDiLepTree : public HelpTreeBase
 
   public:
 
-    SSDiLepTree( TTree* tree, TFile* file, xAOD::TEvent* event, xAOD::TStore* store, const float units = 1e3, bool debug = false, bool DC14 = false );
+    SSDiLepTree( TTree* tree, TFile* file, xAOD::TEvent* event, xAOD::TStore* store, const float units = 1e3, bool debug = false, bool DC14 = false, std::string systName = "" );
     ~SSDiLepTree();
 
     void AddEventUser(const std::string detailStrUser = "");

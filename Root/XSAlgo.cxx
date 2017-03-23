@@ -168,7 +168,8 @@ EL::StatusCode XSAlgo :: initialize ()
   // decorators
   m_xsDecor        = nullptr ;   m_xsDecor        = new SG::AuxElement::Decorator< double >("xsection");
   m_FiltEffDecor   = nullptr ;   m_FiltEffDecor   = new SG::AuxElement::Decorator< double >("FiltEff");
-  m_KFactorDecor   = nullptr ;   m_KFactorDecor   = new SG::AuxElement::Decorator< std::vector<double> >("KfactorWeightXSAlgo");
+  m_KFactorNomDecor= nullptr ;   m_KFactorNomDecor= new SG::AuxElement::Decorator< double >("KfactorWeightNom");
+  m_KFactorDecor   = nullptr ;   m_KFactorDecor   = new SG::AuxElement::Decorator< std::vector<float> >("KfactorWeightXSAlgo");
   m_KFactorDecorSys= nullptr ;   m_KFactorDecorSys= new SG::AuxElement::Decorator< std::vector<std::string> >("KfactorWeightXSAlgoSysNames");
   
   // accessors 
@@ -218,7 +219,7 @@ EL::StatusCode XSAlgo :: execute ()
   (*m_xsDecor)( *eventInfo ) = -999.;
   (*m_FiltEffDecor)( *eventInfo ) = -999.;
 
-  std::vector<double> dummyVec;
+  std::vector<float> dummyVec;
   dummyVec.push_back(-999);
   (*m_KFactorDecor)( *eventInfo ) = dummyVec;
 
@@ -228,7 +229,7 @@ EL::StatusCode XSAlgo :: execute ()
 
   //Apply the tool only if we are running on MC..
   if( m_isMC ) {
-    std::vector<double> kfactorVec;
+    std::vector<float> kfactorVec;
     std::vector<std::string> kfactorVecSys;
     static SG::AuxElement::Accessor< double > KfactorWeightAcc("KfactorWeight");
     for ( const auto& syst_it : m_systListKfactorTool ) {
@@ -239,7 +240,7 @@ EL::StatusCode XSAlgo :: execute ()
       // KFactor decoration is performed here 
       m_p_kfactorTool->execute();
       if ( KfactorWeightAcc.isAvailable( *eventInfo ) )   {
-        kfactorVec.push_back(KfactorWeightAcc( *eventInfo ));
+        kfactorVec.push_back( (float) (KfactorWeightAcc( *eventInfo )) );
         kfactorVecSys.push_back(syst_it.name());
       }
       else { 
@@ -250,6 +251,7 @@ EL::StatusCode XSAlgo :: execute ()
       if ( !syst_it.name().compare("") ) {
         (*m_xsDecor)( *eventInfo ) = m_p_kfactorTool->getMCCrossSection() * 1000.;
         (*m_FiltEffDecor)( *eventInfo ) = m_p_kfactorTool->getMCFilterEfficiency();
+        (*m_KFactorNomDecor)( *eventInfo ) =  KfactorWeightAcc( *eventInfo );
       }
     }
     if(kfactorVec.size()>0) {

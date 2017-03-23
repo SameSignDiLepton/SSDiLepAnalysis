@@ -1,7 +1,8 @@
 #include "SSDiLepAnalysis/SSDiLepTree.h"
 
-SSDiLepTree :: SSDiLepTree( TTree* tree, TFile* file, xAOD::TEvent* event, xAOD::TStore* store, const float units, bool debug, bool DC14 ) :
-  HelpTreeBase(tree, file, event, store, units, debug, DC14 )
+SSDiLepTree :: SSDiLepTree( TTree* tree, TFile* file, xAOD::TEvent* event, xAOD::TStore* store, const float units, bool debug, bool DC14, std::string systName ) :
+  HelpTreeBase(tree, file, event, store, units, debug, DC14 ),
+  m_systName(systName)
 {
   Info("SSDiLepTree", "Creating output TTree");
 }
@@ -18,7 +19,7 @@ void SSDiLepTree::AddEventUser(const std::string detailStrUser)
   m_tree->Branch("isMC",             &m_isMC, "isMC/B");
 
   // di-elec trigger match
-  m_tree->Branch("diElectronTrigMatchPairMap", &m_diElectronTrigMatchPairMap);
+  // m_tree->Branch("diElectronTrigMatchPairMap", &m_diElectronTrigMatchPairMap);
 
   if ( m_isMC ) {
     m_tree->Branch("HLpp_Daughters", &m_HLpp_Daughters);
@@ -28,13 +29,15 @@ void SSDiLepTree::AddEventUser(const std::string detailStrUser)
 
     m_tree->Branch("status3_leptons", &m_status3_leptons);
     
-    // m_tree->Branch("LPXKfactor",     &m_KfactorWeight , "LPXKfactor/D");
-    m_tree->Branch("BornMass",       &m_BornMass , "BornMass/D");
-    m_tree->Branch("XS",             &m_XS, "XS/D");
-    m_tree->Branch("FiltEff",        &m_FiltEff, "FiltEff/D");
+    m_tree->Branch("BornMass",       &m_BornMass , "BornMass/F");
+    m_tree->Branch("XS",             &m_XS, "XS/F");
+    m_tree->Branch("FiltEff",        &m_FiltEff, "FiltEff/F");
+    m_tree->Branch("LPXKfactor",     &m_KfactorWeight, "LPXKfactor/F");
 
-    m_tree->Branch("LPXKfactorVec",     &m_KfactorWeightXSAlgo);
-    m_tree->Branch("LPXKfactorVecNames",     &m_KfactorWeightXSAlgoSysNames);
+    if ( !m_systName.compare("") ){
+      m_tree->Branch("LPXKfactorVec",          &m_KfactorWeightXSAlgo);
+      m_tree->Branch("LPXKfactorVecNames",     &m_KfactorWeightXSAlgoSysNames);
+    }
 
   }
 }
@@ -157,16 +160,16 @@ void SSDiLepTree::FillEventUser( const xAOD::EventInfo* eventInfo )
   
   static SG::AuxElement::Accessor< double > xsAcc("xsection");
   static SG::AuxElement::Accessor< double > FiltEffAcc("FiltEff");
-  static SG::AuxElement::Accessor< double > KfactorWeightAcc("KfactorWeight");
+  static SG::AuxElement::Accessor< double > KfactorWeightAcc("KfactorWeightNom");
   static SG::AuxElement::Accessor< double > BornMassAcc("BornMass");
 
-  static SG::AuxElement::Accessor< std::vector<double> > KfactorWeightXSAlgoAcc("KfactorWeightXSAlgo");
+  static SG::AuxElement::Accessor< std::vector<float> > KfactorWeightXSAlgoAcc("KfactorWeightXSAlgo");
   static SG::AuxElement::Accessor< std::vector<std::string> > KfactorWeightXSAlgoSysNamesAcc("KfactorWeightXSAlgoSysNames");
 
-  static SG::AuxElement::Accessor< dielectron_trigmatch_pair_map > diElectronTrigMatchPairMapAcc( "diElectronTrigMatchPairMap" );
+  // static SG::AuxElement::Accessor< dielectron_trigmatch_pair_map > diElectronTrigMatchPairMapAcc( "diElectronTrigMatchPairMap" );
   
   std::vector<int> dummyCODE(1,-999); 
-  std::vector<double> dummyVec(1,-999); 
+  std::vector<float> dummyVec(1,-999); 
   std::vector<std::string> dummyVecString;
   dummyVecString.push_back(std::string("empty"));
   
@@ -182,22 +185,23 @@ void SSDiLepTree::FillEventUser( const xAOD::EventInfo* eventInfo )
   if ( status3_leptonsAcc.isAvailable( *eventInfo ) )   { m_status3_leptons = status3_leptonsAcc( *eventInfo ) ; }
   else   { m_status3_leptons = dummyCODE; }
   
-  if ( xsAcc.isAvailable( *eventInfo ) )   { m_XS = xsAcc( *eventInfo ) ; }
+  if ( xsAcc.isAvailable( *eventInfo ) )   { m_XS = (float) (xsAcc( *eventInfo ) ); }
   else   { m_XS = -999.; }
-  if ( FiltEffAcc.isAvailable( *eventInfo ) )   { m_FiltEff = FiltEffAcc( *eventInfo ) ; }
+  if ( FiltEffAcc.isAvailable( *eventInfo ) )   { m_FiltEff = (float) (FiltEffAcc( *eventInfo ) ) ; }
   else   { m_FiltEff = -999.; }
-  // if ( KfactorWeightAcc.isAvailable( *eventInfo ) )   { m_KfactorWeight = KfactorWeightAcc( *eventInfo ) ; }
-  // else   { m_KfactorWeight = -999.; }
-  if ( BornMassAcc.isAvailable( *eventInfo ) )   { m_BornMass = BornMassAcc( *eventInfo ) ; }
+  if ( KfactorWeightAcc.isAvailable( *eventInfo ) )   { m_KfactorWeight = (float) (KfactorWeightAcc( *eventInfo ) ) ; }
+  else   { m_KfactorWeight = -999.; }
+  if ( BornMassAcc.isAvailable( *eventInfo ) )   { m_BornMass = (float) (BornMassAcc( *eventInfo ) ) ; }
   else   { m_BornMass = -999.; }
 
-  if ( KfactorWeightXSAlgoAcc.isAvailable( *eventInfo ) )   { m_KfactorWeightXSAlgo = KfactorWeightXSAlgoAcc( *eventInfo ) ; }
-  else   { m_KfactorWeightXSAlgo = dummyVec; }
-  if ( KfactorWeightXSAlgoSysNamesAcc.isAvailable( *eventInfo ) )   { m_KfactorWeightXSAlgoSysNames = KfactorWeightXSAlgoSysNamesAcc( *eventInfo ) ; }
-  else   { m_KfactorWeightXSAlgoSysNames = dummyVecString; }
-
-  if ( diElectronTrigMatchPairMapAcc.isAvailable( *eventInfo ) )   { m_diElectronTrigMatchPairMap = diElectronTrigMatchPairMapAcc( *eventInfo ) ; }
-  else   { m_diElectronTrigMatchPairMap = dielectron_trigmatch_pair_map() ; }
+  if ( !m_systName.compare("") ){
+    if ( KfactorWeightXSAlgoAcc.isAvailable( *eventInfo ) )   { m_KfactorWeightXSAlgo = KfactorWeightXSAlgoAcc( *eventInfo ) ; }
+    else   { m_KfactorWeightXSAlgo = dummyVec; }
+    if ( KfactorWeightXSAlgoSysNamesAcc.isAvailable( *eventInfo ) )   { m_KfactorWeightXSAlgoSysNames = KfactorWeightXSAlgoSysNamesAcc( *eventInfo ) ; }
+    else   { m_KfactorWeightXSAlgoSysNames = dummyVecString; }
+  }
+  // if ( diElectronTrigMatchPairMapAcc.isAvailable( *eventInfo ) )   { m_diElectronTrigMatchPairMap = diElectronTrigMatchPairMapAcc( *eventInfo ) ; }
+  // else   { m_diElectronTrigMatchPairMap = dielectron_trigmatch_pair_map() ; }
   
 }
 
