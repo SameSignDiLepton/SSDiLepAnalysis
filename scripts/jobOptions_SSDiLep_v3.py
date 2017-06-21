@@ -12,11 +12,11 @@ c = xAH_config()
 
 # AFII on/off (needed for electron calib/eff algorithms, as the info is not
 # read correctly from the derivations)
-AFII = False
+AFII = True
 ElectronCalibratorDict["m_setAFII"] = AFII
 
 # Turn systematics ON/OFF
-SYS = False
+SYS = True
 METConstructorDict["m_runNominal"] = not SYS
 calibratorList = [MuonCalibratorDict, ElectronCalibratorDict]
 for calibrator in calibratorList:

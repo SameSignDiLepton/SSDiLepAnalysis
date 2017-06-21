@@ -18,6 +18,9 @@ sample="DAOD_EXOT12.10711285._000038.pool.root.1"
 # inDS="data16_13TeV.00302380.physics_Main.merge.DAOD_EXOT19.f711_m1620_p2950"
 # sample="DAOD_EXOT19.10324909._000047.pool.root.1"
 
+# inDS="data16_13TeV.00300784.physics_Main.merge.DAOD_EXOT19.f708_m1606_p2950"
+# sample="DAOD_EXOT19.10324844._000019.pool.root.1"
+
 infilepath="/afs/cern.ch/work/g/gorisek/miha/${inDS}/${sample}"
 
 # ------------------------------------------------------------------------------------
@@ -28,7 +31,7 @@ tokens=(${inDS//./ })
 configpath="$ROOTCOREBIN/user_scripts/SSDiLepAnalysis/jobOptions_SSDiLep_v3.py"
 current_time="$(date +'%d-%m-%Y-%T')"
 outdir=output_local_DxAOD-2015-13TeV_${tokens[2]}_${current_time}
-nevents=1000
+nevents=100
 
 echo ""
 echo "Input file path :"
